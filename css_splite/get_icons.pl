@@ -41,7 +41,7 @@ if(defined $::opts{css}){
 sub gen_css {
     my ($file, @names) = @_;
     my $fh = new IO::File "> $file" or die;
-    my $head = "span.icon{overflow:hidden;display:inline-block;height:0;background:url(icons.png);width:16px;padding-top:16px;margin-right:2px;margin-left:2px}";
+    my $head = "span.icon{overflow:hidden;display:inline-block;height:0;background:url(icons.png);width:16px;padding-top:16px;margin-right:2px;margin-left:2px;vertical-align:top}";
     print $fh $head;
 
     my $i=0;
