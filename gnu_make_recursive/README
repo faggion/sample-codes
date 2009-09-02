@@ -1,0 +1,15 @@
+以下のMakefileの場合、
+----
+.PHONY: foo bar
+foo bar:
+    echo $@
+----
+上のMakefileと下のMakefileは等価
+----
+.PHONY: foo bar
+foo:
+    echo $@
+bar:
+    echo $@
+----
+なので、
