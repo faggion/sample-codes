@@ -1,7 +1,5 @@
-.PHONY: test
-
-obama:
-	echo "change"
-
-test:
-	echo "foo"
+.PHONY: all
+all:
+	echo "foo directory"
+clean:
+	echo "foo clean"

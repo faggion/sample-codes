@@ -1,10 +1,10 @@
-.PHONY: all foo bar clean
-SUBDIR = foo bar
+.PHONY: all clean foo bar baz
+
+SUBDIR = baz foo bar
+
 all: $(SUBDIR)
-clean: 
+clean:
 	$(MAKE) TARGET=$@
-#	do clean
 
 $(SUBDIR):
 	$(MAKE) --directory=$@ $(TARGET)
-

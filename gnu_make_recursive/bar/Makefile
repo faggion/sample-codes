@@ -1,4 +1,5 @@
-.PHONY: test
-
-test:
-	echo "bar"
+.PHONY: all
+all:
+	echo "bar directory"
+clean:
+	echo "bar clean"
