@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>猫暦</title>
+<link rel="stylesheet" href="/css/fullcalendar.css" media="all">
+<script type="text/javascript" src="/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery/ui.core.js"></script>
+<!-- <script type="text/javascript" src="/js/jquery/ui.draggable.js"></script> -->
+<script type="text/javascript" src="/js/fullcalendar.js"></script>
+<script>
+    $(document).ready(function() {
+        
+        var d = new Date();
+        var y = d.getFullYear();
+        var m = d.getMonth();
+        
+        $('#calendar').fullCalendar({
+            editable: true,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                //right: ''
+                right: 'month,basicWeek,basicDay'
+            },
+            events: [
+                {
+                    id: 1,
+                    title: '<img src="http://farm2.static.flickr.com/1067/800637511_efd47617e6_s.jpg">',
+                    start: new Date(2009, 9, 9),
+                    allDay: true
+                },
+                {
+                    id: 2,
+                    title: '<img src="http://farm3.static.flickr.com/2178/2527755621_e9c6d3096c_t.jpg">',
+                    start: new Date(2009, 9, 10),
+                    allDay: true
+                }
+            ]
+        });
+        
+    });
+</script>
+</head>
+<body>
+<div style="width:800px">
+  <div id="calendar"></div>
+</div>
+</body>
+</html>
