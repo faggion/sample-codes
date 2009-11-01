@@ -1,0 +1,17 @@
+{#template MAIN}
+<table id="dataTable" border="1">
+    <tr>
+        <th>ID</th>
+        <th>名前</th>
+    </tr>
+{#foreach $T.Data as customer}
+    <tr>
+        <td>{$T.customer.ID}</td>
+        <td>{$T.customer.Name}</td>
+    </tr>
+{#/for}
+</table>
+<p>{$T.Version}</p>
+<p>{$T.Copyright}</p>
+<p>{$P.foo}</p>
+{#/template MAIN}
