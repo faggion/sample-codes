@@ -28,8 +28,7 @@ $(document).ready(function() {
         },
         success : function(json){
             $("#myad").setTemplateURL("js/templates/myad.txt");
-            $("#myad").setParam('foo','bar');
-            $("#myad").processTemplate(data);
+            $("#myad").processTemplate(json);
         },
         error : function(){
             console.log("ajax jsonp FAILED");
