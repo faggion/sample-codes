@@ -1,3 +1,16 @@
-{#template MAIN}
-<p>{$T.ResultSet.totalResultsReturned}</p>
-{#/template MAIN}
+<div style="text-align:left;width:590px;border:1px solid #bbb">
+<h2 style="border-bottom:1px solid #bbb;font-size:larger;padding:3px;background-color:#eee"><b>{$T.title}</b></h2>
+<div style="padding:0 5px 5px 5px;min-height:127px;height:auto!important;height:127px">
+{#foreach $T.items as i}
+<div style="float:left;width:49%;margin-top:5px">
+<img style="float:left" src="{$T.i.img}" alt="">
+<span style="vertical-align:top;padding:5px;">
+<a href="{$T.i.url}">{$T.i.title}</a></span><br>
+<span style="vertical-align:top;padding:5px;">
+{$T.i.desc}
+</span>
+</div>
+<div style="{#cycle values=['','clear:both',]}"></div>
+{#/for}
+</div>
+
