@@ -1,0 +1,13 @@
+<div style="text-align:left;width:{$T.width}px;border:1px solid {$T.color.border}">
+<h2 style="color:{$T.color.font};border-bottom:1px solid {$T.color.border};font-size:larger;padding:3px;background-color:{$T.color.title}"><b>{$T.title}</b></h2>
+<div style="padding:0 5px 5px 5px;min-height:127px;height:auto!important;height:127px">
+{#foreach $T.items as i}
+<div style="float:left;width:100%;margin-top:5px">
+  <img style="float:left;padding-right:5px" src="{$T.i.img}" alt="" width="87px" height="65px">
+  <span style="vertical-align:top;padding:5px;">
+    <a href="{$T.i.url}">{$T.i.title}</a>
+  </span>
+</div>
+{#/for}
+<div style="clear:both"></div>
+</div>
