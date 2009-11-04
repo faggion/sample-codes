@@ -20,7 +20,10 @@ var custom = {
     title:"Yahoo!ショッピング(EUC-JPで表示)",
     brand_id: 643, // GUCCI
     max_items:5,
-    width: 230
+    width: 230,
+    border_color: "#bbb",
+    title_color: "#eee",
+    font_color: "#ff0000",
 };
 $(document).ready(function() {
     $.ajax({
@@ -37,6 +40,11 @@ $(document).ready(function() {
             var tmpl_vars = {
                 title: custom.title,
                 width: custom.width,
+                color: {
+                    title: custom.title_color,
+                    font: custom.font_color,
+                    border: custom.border_color
+                },
                 items:[]
             }
             for(var i=0;i<json.ResultSet.totalResultsReturned;i++){
