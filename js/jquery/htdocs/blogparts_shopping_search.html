@@ -11,10 +11,10 @@ h1, h2 {
 font-weight:bold;
 padding:5px 0 5px 3px;
 color:#e47911;
-border:1px solid #c9e1f4;
 font-size:110%;
 background-color:#e9eef5;
 }
+h1{border:1px solid #c9e1f4;}
 </style>
     <script type="text/javascript" src="http://www.geocities.jp/tanarky/syntaxhighlighter/shCore.js"></script>
     <script type="text/javascript" src="http://www.geocities.jp/tanarky/syntaxhighlighter/shBrushXml.js"></script>
@@ -29,7 +29,7 @@ background-color:#e9eef5;
           <div class="yui-b">
             <div class="yui-g">
               <h1>Yahoo!ショッピングの商品検索APIを使った広告ブログパーツの使い方</h1>
-              <p>以下のコードを貼り付けるだけで、このページの左側に表示されている広告モジュールを好きなページに表示できます</p>
+              <p>以下のコードを貼り付けるだけで、このページの右側に表示されている広告モジュールを好きなページに表示できます</p>
 
 <textarea name="code" class="html" cols="75" rows="5">
 &lt;!--&nbsp;blogparts_shopping_search&nbsp;--&gt;
@@ -46,6 +46,7 @@ var&nbsp;custom&nbsp;=&nbsp;{
 &nbsp;&nbsp;&nbsp;&nbsp;title:&quot;売れ筋商品ランキング&quot;,
 &nbsp;&nbsp;&nbsp;&nbsp;brand_id:&nbsp;643,&nbsp;//&nbsp;GUCCI
 &nbsp;&nbsp;&nbsp;&nbsp;max_items:5,
+&nbsp;&nbsp;&nbsp;&nbsp;query:&quot;&quot;,
 &nbsp;&nbsp;&nbsp;&nbsp;width:&nbsp;180,
 &nbsp;&nbsp;&nbsp;&nbsp;sort:&nbsp;&quot;-sold&quot;,
 &nbsp;&nbsp;&nbsp;&nbsp;availability:&nbsp;1,
@@ -54,7 +55,7 @@ var&nbsp;custom&nbsp;=&nbsp;{
 &nbsp;&nbsp;&nbsp;&nbsp;font_color:&nbsp;&quot;#E47911&quot;,
 &nbsp;&nbsp;&nbsp;&nbsp;tag_id:&nbsp;&quot;#result&quot;
 };
-$(document).ready(do_remote);
+$(document).ready(show_blogparts_shopping_search);
 &lt;/script&gt;
 &lt;!--&nbsp;/blogparts_shopping_search&nbsp;--&gt;
 </textarea>
@@ -68,6 +69,16 @@ dp.SyntaxHighlighter.HighlightAll('code');
 <li>・モジュール幅、線の色、タイトル部分の色などのデザインは var custom部分を変更することでカスタマイズできます。</li>
 <li>・APIにリクエストするパラメータも変更できます。</li>
 </ul>
+
+<h2>サポートをご希望の方は</h2>
+1ヶ月1050円になります。ご希望の方は以下のPayPalリンクから送金をおねがいします。<br><br>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHdwYJKoZIhvcNAQcEoIIHaDCCB2QCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBPKRzEWkf3HWwIal1DnRQHAp+Z06hcaA+fWUei3O9S4BcRzF+yUJS4EsmCT0VzgvJAzgWafnjGSbIGUFdvqadYqAGKXyiFPLfcOj0OBgbvORGavIm1ZRGJsyX10N70JJpS4k+S8X44qzlgEfjBNoZxW/+5gXQmZ3g/+ZtEasm2SjELMAkGBSsOAwIaBQAwgfQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIV5VUL6K57H6AgdCTjlVJzQdlXUbf0u5/vAsNktDZAlXUe4SBJEQmRBgwWNoTXoNMYyjz8KRy0+HL9c0X8tjLo6Ice32tuOF5QVFAdrJFH1PKhoqnqATYGBu5bfsqsqup8o3dvafIeWa3jsNe2PSOCzHVSy490OjANCF1dv5RuNw8BcjrnFdO0JDhdo7Lj21B8Q9+J5/3Vija8EG0E6eTmUf+r5AUQO6tEmTHKpc27dJfpCpTUJd3+HtFn6AXOMYL4AIB6gjjxLAcPgxYe2dT9TwjiA+K2ud5Il6loIIDhzCCA4MwggLsoAMCAQICAQAwDQYJKoZIhvcNAQEFBQAwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMB4XDTA0MDIxMzEwMTMxNVoXDTM1MDIxMzEwMTMxNVowgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBR07d/ETMS1ycjtkpkvjXZe9k+6CieLuLsPumsJ7QC1odNz3sJiCbs2wC0nLE0uLGaEtXynIgRqIddYCHx88pb5HTXv4SZeuv0Rqq4+axW9PLAAATU8w04qqjaSXgbGLP3NmohqM6bV9kZZwZLR/klDaQGo1u9uDb9lr4Yn+rBQIDAQABo4HuMIHrMB0GA1UdDgQWBBSWn3y7xm8XvVk/UtcKG+wQ1mSUazCBuwYDVR0jBIGzMIGwgBSWn3y7xm8XvVk/UtcKG+wQ1mSUa6GBlKSBkTCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb22CAQAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOBgQCBXzpWmoBa5e9fo6ujionW1hUhPkOBakTr3YCDjbYfvJEiv/2P+IobhOGJr85+XHhN0v4gUkEDI8r2/rNk1m0GA8HKddvTjyGw/XqXa+LSTlDYkqI8OwR8GEYj4efEtcRpRYBxV8KxAW93YDWzFGvruKnnLbDAF6VR5w/cCMn5hzGCAZowggGWAgEBMIGUMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMDkxMTA4MDMzNDQ3WjAjBgkqhkiG9w0BCQQxFgQUwldX/x79CT/VShvEpJsV+F5NfQEwDQYJKoZIhvcNAQEBBQAEgYB8RLuu1j0NQf+mMoFVNeyfc0eSAOftpTRjLNwUkd3mo6JK2oEdsGjMvh0O9xNsvXqiCrSy5bpQzisbPQxgjXgXYGi0I3+4pvXfLjH1Ee60w3AfDXWTKJZ+N7bZufS0zmiqtwS6SZ99lOBG/v7W6XY7LObzPNQfGmHlL/AnKAV7vg==-----END PKCS7-----
+">
+<input type="image" src="https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインで安全・簡単にお支払い">
+<img alt="" border="0" src="https://www.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
+</form>
             </div>
           </div>
         </div>
@@ -85,6 +96,7 @@ var custom = {
     affiliate_type:"yid",
     affiliate_id:"NqNP7flCUN49xU3KOQg-",
     title:"売れ筋商品ランキング",
+    query: "",
     brand_id: 643, // GUCCI
     max_items:5,
     width: 180,
@@ -95,12 +107,14 @@ var custom = {
     font_color: "#E47911",
     tag_id: "#result"
 };
-$(document).ready(do_remote);
+$(document).ready(show_blogparts_shopping_search);
 </script>
 <!-- /blogparts_shopping_search -->
         </div>
       </div>
-      <div id="ft"><p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p></div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
     </div>
   </body>
 </html>

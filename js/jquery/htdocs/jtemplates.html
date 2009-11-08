@@ -12,7 +12,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $.getJSON("js/data/test.js", function(data) {
-            $("#result").setTemplateURL("js/templates/test.tmpl");
+            $("#result").setTemplateURL("js/templates/test.txt");
             $("#result").setParam('foo','bar');
             $("#result").processTemplate(data);
         });

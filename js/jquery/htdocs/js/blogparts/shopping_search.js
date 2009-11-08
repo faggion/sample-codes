@@ -1,4 +1,4 @@
-function do_remote(){
+function show_blogparts_shopping_search(){
     if(typeof custom == 'undefined'){
         return;
     }
@@ -31,6 +31,7 @@ function do_remote(){
             brand_id : custom.brand_id,
             affiliate_type : custom.affiliate_type,
             affiliate_id : custom.affiliate_id,
+            query: custom.query,
             sort: custom.sort,
             hits: custom.max_items
         },

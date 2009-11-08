@@ -1,24 +1,92 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<head>
-  <title>jquery sample index page</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-   <script type="text/javascript">google.load("jquery", "1.3");</script>
-</head> 
-</head>
-<body>
-  <div>
-    <h1>jquery sample</h1>
-    <h2>ブログパーツ</h2>
+  <head>
+    <title>jquery sample index page</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+}
+h1{border:1px solid #c9e1f4;}
+</style>
+
+  </head>
+  <body>
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <h1 style="margin-top:5px">jquery sample</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+    <br>
+    <h2>コピペで使えるブログパーツ</h2>
     <p><a href="./blogparts_shopping_search.html">Yahoo!ショッピング商品検索を使った広告モジュール</a></p>
-    <h2>サンプルコード</h2>
+    <br>
+    <h2>jqueryのサンプルコード集</h2>
     <p><a href="./ajax.html">ajax()を使ってJSONP APIと連携する その1</a></p>
     <p><a href="./jtemplates.html">jtemplatesを使ってJavascriptでTempalte Engine</a></p>
     <p><a href="./myad.html">jtemplates+ajax()を使ったYahoo!ショッピングのおすすめモジュール</a></p>
     <p><a href="./brands.html">jtemplates+ajax()を使ったYahoo!ショッピングの商品検索モジュール（ブランドID絞り込み）</a></p>
     <p><a href="./brands_euc.html">jtemplates+ajax()を使ったYahoo!ショッピングの商品検索モジュール（文字コードをEUC-JPで）</a></p>
     <p><a href="./auc_search.html">jtemplates+ajax()を使ったYahoo!オークションの商品検索モジュール</a></p>
-  </div>
-</body>
+    <br>
+    <h2>寄付受付</h2>
+    いつでも寄付を受け付けています。寄付していただける方は以下のPayPalリンクからおねがいします。一口1050円になります。
+    <br><br>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+<input type="image" src="https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインで安全・簡単にお支払い">
+<img alt="" border="0" src="https://www.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
+</form>
+            </div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+          <br>
+<!-- blogparts_shopping_search -->
+<div id="result"></div>
+<script type="text/javascript"src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("jquery", "1.3");</script>
+<script type="text/javascript" src="http://www.geocities.jp/tanarky/jquery/js/plugins/jquery-jtemplates.js"></script>
+<script type="text/javascript" src="http://www.geocities.jp/tanarky/jquery/js/blogparts/shopping_search.js"></script>
+<script type="text/javascript">
+var custom = {
+    appid:"vbQglqGxg65YDwPxyXTnUvxZxonbuDAc1Y1griEo2dV8piOpR9nvOJmdP6dHiA--",
+    affiliate_type:"yid",
+    affiliate_id:"NqNP7flCUN49xU3KOQg-",
+    title:"売れ筋商品ランキング",
+    query: "",
+    brand_id: 643, // GUCCI
+    max_items:5,
+    width: 180,
+    sort: "-sold",
+    availability: 1,
+    border_color: "#C9E1F4",
+    title_color: "#E9EEF5",
+    font_color: "#E47911",
+    tag_id: "#result"
+};
+$(document).ready(show_blogparts_shopping_search);
+</script>
+<!-- /blogparts_shopping_search -->
+
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
 </html>
+
