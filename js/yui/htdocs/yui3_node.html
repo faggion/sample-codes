@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>YUI3 sample | use node</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | use node</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3でハローワールド</p>
+<p><div id="message"></div></p>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script tyle="text/javascript">
+YUI().use("node", function(Y) {
+    Y.one("#message").setContent("はろーわーるど");
+});
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+

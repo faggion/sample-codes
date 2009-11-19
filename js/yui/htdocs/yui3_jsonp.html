@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>YUI3 sample | use node</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2, h3 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | use node</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3でJSONP API</p>
+<p><div id="upcoming"></div></p>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script tyle="text/javascript">
+    YUI({
+        modules: {
+            'gallery-jsonp': {
+                fullpath: 'http://yui.yahooapis.com/gallery-2009.10.27/build/gallery-jsonp/gallery-jsonp-min.js',
+                requires: ['selector-css3'],
+                optional: [],
+                supersedes: []
+            }
+ 
+        }
+    }).use('gallery-jsonp', "node", function(Y) {
+ 
+        var url = "http://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemSearch?"+
+            "appid=vbQglqGxg65YDwPxyXTnUvxZxonbuDAc1Y1griEo2dV8piOpR9nvOJmdP6dHiA--&"+
+            "affiliate_type=yid&affiliate_id=NqNP7flCUN49xU3KOQg-&brand_id=643&hits=5";
+ 
+        var upcoming = Y.one('#upcoming');
+ 
+        Y.jsonp(url, function (data) {
+            var hits = data.ResultSet.totalResultsReturned;
+            for(var i=0;i<hits;i++){
+                var item = data.ResultSet[0].Result[i];
+                upcoming.append('<h3><a href="'+ item.Url +'">' + item.Name + "</a></h3><p>" + item.Description + "</p>");
+            }
+        });
+     });
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+
