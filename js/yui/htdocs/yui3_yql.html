@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>YUI3 sample | YQLでFlickr検索</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2, h3 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | YQLでFlickr検索</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YQLでFlickr検索</p>
+<p><div id="flickr"></div></p>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://github.com/davglass/yui-yql/raw/master/yql-min.js"></script>
+<script tyle="text/javascript">
+// yqlとnodeを使う
+YUI().use('yql', "node", function(Y) {
+    // flickrから"Cat"を含む画像を最大10件検索する。検索結果はrという変数に格納する
+    var q1 = new Y.yql('select * from flickr.photos.search where text="Cat" limit 10', function (r){
+        var content = "";
+        // 画像のURLを作成してcontent変数に文字列として連結
+        for(var i=0;i<r.query.count;i++){
+            var p = r.query.results.photo[i];
+            content += '<img src="http://farm'+p.farm+'.static.flickr.com/'+p.server+'/'+p.id+'_'+p.secret+'_m.jpg"><br>';
+        }
+        // idがflickrのタグ内にcontent変数の文字列をHTMLとして展開する
+        Y.one("#flickr").setContent(content);
+    });
+});
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+

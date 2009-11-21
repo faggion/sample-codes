@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>YUI3 sample | Event</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t6">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | Event</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3でイベント処理</p>
+<div id="foo" style="cursor:pointer;border:1px solid #ccc;width:100px;height:100px;margin:10px;padding:5px">foo</div>
+<div id="bar" style="cursor:pointer;border:1px solid #c00;width:100px;height:100px;margin:10px;padding:5px">bar</div>
+<input id="query" type="text" name="query" value="cat">
+<button id="search">検索</button>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script tyle="text/javascript">
+YUI().use("console", "console-filters", "dump", "node-base", function (Y) {
+    new Y.Console({boundingBox: '#mylogconsole',style:"block"}).render();
+
+    function handle(e, name){
+        Y.log("event_type="+ e.type+ ", node="+ name, "info");
+    }
+
+    function search(e){
+        var q = Y.one("#query");
+        Y.log("query="+ q.get('value'), "info");
+    }
+
+    Y.on('click',    handle, '#foo', {}, "foo");
+    Y.on('dblclick', handle, '#foo', {}, "foo");
+    Y.on('click',    handle, '#bar', {}, "bar");
+    Y.on('dblclick', handle, '#bar', {}, "bar");
+    Y.on('click',    search, '#search');
+});
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+          <div class="yui-skin-sam"><div id="mylogconsole"></div></div>
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+
