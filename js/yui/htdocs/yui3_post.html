@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>YUI3 sample | http post request</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | http post request</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3で外部ドメインにPOST</p>
+<div>
+  <form>
+    <input type="button" id="external_post" value="do post!">
+  </form>
+</div>
+<div id="container"></div>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script tyle="text/javascript">
+YUI({combine: true, timeout: 10000}).use("io-xdr","node", function(Y) {
+    //Data fetched will be displayed in a UL in the
+    //element #output:
+    var output = Y.Node.get("#container");
+
+    //Configure the cross-domain protocol:
+    var xdrConfig = {
+        id:'flash', //We'll reference this id in the xdr configuration of our transaction.
+        yid: Y.id,  //The yid provides a link from the Flash-based XDR engine
+        //and the YUI instance.
+        src:'./io.swf?t=' + new Date().valueOf().toString() //Relative path to the .swf file from the current page.
+    };
+    Y.io.transport(xdrConfig);
+
+    //Event handler called when the transaction begins:
+    var handleStart = function(id, a) {
+        Y.log("io:start firing.", "info", "example");
+        output.set("innerHTML", "<li>Loading news stories via Yahoo! Pipes feed...</li>");
+    }
+
+    //Event handler for the success event -- use this handler to write the fetched
+    //RSS items to the page.
+    var handleSuccess = function(id, o, a) {
+        Y.log("success!", "info");
+        output.set('innerHTML', o.responseText);
+    }
+
+    //In the event that the HTTP status returned is > 399, a
+    //failure is reported and this function is called:
+    var handleFailure = function(id, o, a) {
+        Y.log("ERROR " + id + " " + a, "info", "example");
+    }
+
+    //With all the aparatus in place, we can now configure our
+    //io call.
+    var cfg = {
+        method: "POST",
+        //data:"hoge=foo&fuga=baz",
+        data:'{foo:1,bar:2}',
+        arguments:{
+            start:"aaa",
+            complete:"bbb",
+            end:"ccc"
+        },
+        xdr: {use:'flash'},
+        on: {
+            //Our event handlers previously defined:
+            start: handleStart,
+            success: handleSuccess,
+            failure: handleFailure
+        }
+    };
+
+    //Wire the buttton to a click handler to fire our request each
+    //time the button is clicked:
+    var handleClick = function(o) {
+        Y.log("Click detected; beginning io request to Yahoo! Pipes.", "info", "example");
+        var obj = Y.io(
+            //this is a specific Pipes feed, populated with cycling news:
+            "http://61.196.211.219/post.php",
+            cfg
+        );
+    }
+
+    //add the clickHandler as soon as the xdr Flash module has
+    //loaded:
+    Y.on('io:xdrReady', function() {
+        var fetch = Y.Node.get("#external_post");
+        fetch.set("disabled", false);
+        Y.on("click", handleClick, fetch);
+    });
+
+});
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
