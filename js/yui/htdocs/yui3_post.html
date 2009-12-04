@@ -72,7 +72,6 @@ YUI({combine: true, timeout: 10000}).use("io-xdr","node", function(Y) {
     //io call.
     var cfg = {
         method: "POST",
-        //data:"hoge=foo&fuga=baz",
         data:'{foo:1,bar:2}',
         arguments:{
             start:"aaa",
@@ -94,7 +93,8 @@ YUI({combine: true, timeout: 10000}).use("io-xdr","node", function(Y) {
         Y.log("Click detected; beginning io request to Yahoo! Pipes.", "info", "example");
         var obj = Y.io(
             //this is a specific Pipes feed, populated with cycling news:
-            "http://example.com/api.php",
+            //"http://61.196.211.219/post.php",
+            "http://localhost:8080/works/bar",
             cfg
         );
     }
