@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>YUI3 sample | use jsonp</title>
+    <title>YUI3 sample | はじめてのYUI3 gallery(Query String Parser)</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
     <link rel="stylesheet" href="http://www.geocities.jp/tanarky/syntaxhighlighter/SyntaxHighlighter.css" type="text/css">
     <script type="text/javascript" src="http://www.geocities.jp/tanarky/syntaxhighlighter/shCore.js"></script>
@@ -22,59 +22,72 @@ border:1px solid #c9e1f4;
   <body class="">
     <div id="doc2" class="yui-t7">
       <div id="hd">
-        <h1 style="margin-top:5px">YUI3 sample | YUI3でbit.lyを使ってショートURLを作る</h1>
+        <h1 style="margin-top:5px">YUI3 sample | はじめてのYUI3 gallery(Query String Parser)</h1>
       </div>
       <div id="bd">
         <div id="yui-main">
           <div class="yui-b">
             <div class="yui-g">
               <!-- YOUR DATA GOES HERE -->
-<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3でbit.lyを使ってショートURLを作る</p>
-<p id="bitly"></p>
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; original YUI3 gallery(Query String Parser)</p>
+<br>
+<p id="qs"></p>
+<div>
+  <form action="#" method="GET">
+    <input type="text" name="foo">
+    <input type="submit">
+  </form>
+</div>
 <script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
 <script type="text/javascript">
 YUI({
     modules: {
-        'gallery-bitly': {
-            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.09-19/build/gallery-bitly/gallery-bitly-min.js',
-            requires: ['base','get'],
+        'gallery-querystring': {
+            fullpath: './gallery/gallery-querystring/gallery-querystring.js',
+            requires: ['base'],
             optional: [],
             supersedes: []
         }
     }
-}).use('node', 'gallery-bitly', function(Y) {
-    // bitly api の "login" と "apiKey" を設定する
-    var b = new Y.bitly({
-        username: 'tanarky',
-        key: 'R_e0cbd9274f2301ce3f0bc62e45b975f7'
-    });
-    // 今のURLからショートURLを作成する
-    b.shorten(location.href, function(e) {
-        Y.one('#bitly').setContent('このページのショートURLは、「<a href="'+e.shortUrl+'"><b>'+e.shortUrl+'</b></a>」です。');
-    });
+}).use('node', 'gallery-querystring', function(Y) {
+    /* query stringを取得してparseする */
+    var qs  = new Y.querystring();
+    var key = 'foo';
+    var mes = '';
+    if(qs.contains(key)){
+        mes = 'query stringに含まれる"'+key+'"というキーの値は「<b>' + qs.get(key) + '</b>」です';
+    }
+    else{
+        mes = 'query stringに"'+key+'"というキーはありません。';
+    }
+    Y.one('#qs').setContent(mes);
 });
 </script>
 <textarea name="code" class="html" cols="60" rows="5">
-&lt;p&nbsp;id=&quot;bitly&quot;&gt;&lt;/p&gt;
+&lt;p&nbsp;id=&quot;qs&quot;&gt;&lt;/p&gt;
 &lt;script&nbsp;type=&quot;text/javascript&quot;&nbsp;src=&quot;http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js&quot;&gt;&lt;/script&gt;
 &lt;script&nbsp;tyle=&quot;text/javascript&quot;&gt;
 YUI({
 &nbsp;&nbsp;&nbsp;&nbsp;modules:&nbsp;{
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'gallery-bitly':&nbsp;{
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullpath:&nbsp;'http://yui.yahooapis.com/gallery-2009.11.09-19/build/gallery-bitly/gallery-bitly-min.js',
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requires:&nbsp;['base','get'],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'gallery-querystring':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullpath:&nbsp;'./gallery/gallery-querystring/gallery-querystring.js',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requires:&nbsp;['base'],
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optional:&nbsp;[],
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;supersedes:&nbsp;[]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 &nbsp;&nbsp;&nbsp;&nbsp;}
-}).use('node',&nbsp;'gallery-bitly',&nbsp;function(Y)&nbsp;{
-&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;b&nbsp;=&nbsp;new&nbsp;Y.bitly({
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username:&nbsp;'tanarky',
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key:&nbsp;'R_e0cbd9274f2301ce3f0bc62e45b975f7'
-&nbsp;&nbsp;&nbsp;&nbsp;});
-&nbsp;&nbsp;&nbsp;&nbsp;b.shorten(location.href,&nbsp;function(e)&nbsp;{
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y.one('#bitly').setContent('このページのショートURLは、「&lt;a&nbsp;href=&quot;'+e.shortUrl+'&quot;&gt;&lt;b&gt;'+e.shortUrl+'&lt;/b&gt;&lt;/a&gt;」です。');
-&nbsp;&nbsp;&nbsp;&nbsp;});
+}).use('node',&nbsp;'gallery-querystring',&nbsp;function(Y)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;query&nbsp;stringを取得してparseする&nbsp;*/
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;qs&nbsp;&nbsp;=&nbsp;new&nbsp;Y.querystring();
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;key&nbsp;=&nbsp;'foo';
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;mes&nbsp;=&nbsp;'';
+&nbsp;&nbsp;&nbsp;&nbsp;if(qs.contains(key)){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mes&nbsp;=&nbsp;'query&nbsp;stringに含まれる&quot;'+key+'&quot;というキーの値は「&lt;b&gt;'&nbsp;+&nbsp;qs.get(key)&nbsp;+&nbsp;'&lt;/b&gt;」です';
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mes&nbsp;=&nbsp;'query&nbsp;stringに'+key+'&quot;というキーはありません。';
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;Y.one('#qs').setContent(mes);
 });
 &lt;/script&gt;
 </textarea>
