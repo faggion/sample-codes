@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>YUI3 sample | use jsonp</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+    <link rel="stylesheet" href="http://www.geocities.jp/tanarky/syntaxhighlighter/SyntaxHighlighter.css" type="text/css">
+    <script type="text/javascript" src="http://www.geocities.jp/tanarky/syntaxhighlighter/shCore.js"></script>
+    <script type="text/javascript" src="http://www.geocities.jp/tanarky/syntaxhighlighter/shBrushXml.js"></script>
+<style type="text/css">
+p,li { margin:5px; }
+h1, h2, h3 {
+font-weight:bold;
+padding:5px 0 5px 3px;
+color:#e47911;
+font-size:110%;
+background-color:#e9eef5;
+border:1px solid #c9e1f4;
+}
+</style>
+  </head>
+  <body class="">
+    <div id="doc2" class="yui-t7">
+      <div id="hd">
+        <h1 style="margin-top:5px">YUI3 sample | YUI3でbit.lyを使ってショートURLを作る</h1>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <!-- YOUR DATA GOES HERE -->
+<p><a href="./index.html">YUIサンプルコード集トップ</a> &gt; YUI3でbit.lyを使ってショートURLを作る</p>
+<p id="bitly"></p>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script tyle="text/javascript">
+YUI({
+    modules: {
+        'gallery-bitly': {
+            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.09-19/build/gallery-bitly/gallery-bitly-min.js',
+            requires: ['base','get'],
+            optional: [],
+            supersedes: []
+        }
+    }
+}).use('node', 'gallery-bitly', function(Y) {
+    // bitly api の "login" と "apiKey" を設定する
+    var b = new Y.bitly({
+        username: 'tanarky',
+        key: 'R_e0cbd9274f2301ce3f0bc62e45b975f7'
+    });
+    // 今のURLからショートURLを作成する
+    b.shorten(location.href, function(e) {
+        Y.one('#bitly').setContent('このページのショートURLは、「<a href="'+e.shortUrl+'"><b>'+e.shortUrl+'</b></a>」です。');
+    });
+});
+</script>
+<textarea name="code" class="html" cols="60" rows="5">
+&lt;p&nbsp;id=&quot;bitly&quot;&gt;&lt;/p&gt;
+&lt;script&nbsp;type=&quot;text/javascript&quot;&nbsp;src=&quot;http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js&quot;&gt;&lt;/script&gt;
+&lt;script&nbsp;tyle=&quot;text/javascript&quot;&gt;
+YUI({
+&nbsp;&nbsp;&nbsp;&nbsp;modules:&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'gallery-bitly':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullpath:&nbsp;'http://yui.yahooapis.com/gallery-2009.11.09-19/build/gallery-bitly/gallery-bitly-min.js',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requires:&nbsp;['base','get'],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optional:&nbsp;[],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;supersedes:&nbsp;[]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}).use('node',&nbsp;'gallery-bitly',&nbsp;function(Y)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;b&nbsp;=&nbsp;new&nbsp;Y.bitly({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username:&nbsp;'tanarky',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key:&nbsp;'R_e0cbd9274f2301ce3f0bc62e45b975f7'
+&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;b.shorten(location.href,&nbsp;function(e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y.one('#bitly').setContent('このページのショートURLは、「&lt;a&nbsp;href=&quot;'+e.shortUrl+'&quot;&gt;&lt;b&gt;'+e.shortUrl+'&lt;/b&gt;&lt;/a&gt;」です。');
+&nbsp;&nbsp;&nbsp;&nbsp;});
+});
+&lt;/script&gt;
+</textarea>
+<script type="text/javascript">
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+            <br></div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <!-- YOUR NAVIGATION GOES HERE -->
+        </div>
+      </div>
+      <div id="ft">
+        <p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
+
