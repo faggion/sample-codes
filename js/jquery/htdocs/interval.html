@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>jquery sample &gt; yomiowatter - written by tanarky</title>
+  <title>jquery sample &gt; setIntervalで定期的にAPIをcall - written by tanarky</title>
   <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
   <link rel="stylesheet" href="./css/common.css" type="text/css">
   <script type="text/javascript"src="http://www.google.com/jsapi"></script>
@@ -17,9 +17,9 @@
         <div id="yui-main">
           <div class="yui-b">
             <div class="yui-g">
-              <h1>jquery sample &gt; yomiowatter</h1>
-<div id="yomiowatter"></div>
-<p id="stop" style="width:100px;height:30px;border:1px dashed #888;cursor:pointer">stop</p>
+              <h1>jquery sample &gt; setIntervalで定期的にAPIをcall(10秒ごとに自動で更新チェックします)</h1>
+<div id="interval"></div>
+<button id="stop">stop</button>
 <script type="text/javascript">
 var yom = {
     initSuccess:function(r){
@@ -29,7 +29,7 @@ var yom = {
         }
     },
     Error:function(){
-        console.log('error occured');
+        //console.log('error occured');
     },
     updateSuccess:function(r){
         var ul = $(this.p.root+' ul');
@@ -41,7 +41,7 @@ var yom = {
             });
         }
         else{
-            console.log('no update');
+            //console.log('no update');
         }
     },
     search:function(p,success,error){
@@ -79,16 +79,16 @@ var yom = {
 };
 $(document).ready(function(){
     var custom = {
-        query:'読了',
-        root:'#yomiowatter',
-        count:3,
+        query:'yahoo',
+        root:'#interval',
+        count:10,
         refresh:10 // sec
     };
     yom.init(custom);
     var refresh = setInterval(function(){yom.update()}, custom.refresh*1000);
     //
     $('#stop').click(function(){
-        console.log('stopped');
+        //console.log('stopped');
         clearInterval(refresh);
     });
 });
