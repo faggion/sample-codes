@@ -18,7 +18,8 @@
           <div class="yui-b">
             <div class="yui-g">
               <h1>jquery sample &gt; setIntervalで定期的にAPIをcall(10秒ごとに自動で更新チェックします)</h1>
-<div id="interval"></div>
+<div id="interval">
+</div>
 <button id="stop">stop</button>
 <script type="text/javascript">
 var yom = {
@@ -65,10 +66,33 @@ var yom = {
     init:function(p){
         this.p=p;
         this.p.template=function(r){
-            var tt = $('<img/>').attr({src:r.item.img});
-            var li = $('<li/>').attr({title:r.id}).html(r.text);
-            li.append(tt);
-            return li;
+      //<div style="border:1px solid #ddd; padding:5px;margin-bottom:10px">
+      //  <div style="float:left">
+      //    <a href="">
+      //      <img src="http://ecx.images-amazon.com/images/I/418bv41i6jL._SL160_.jpg" alt="">
+      //    </a>
+      //  </div>
+      //  <div style="padding-left:120px;">
+      //    <h3><a style="text-align:top" href="">フリー~〈無料〉からお金を生みだす新戦略</a></h3>
+      //    <p>クリス•アンダーソン「フリー」読了。ウェブに限らず仕事で少しでもメディアに関わっている人には必読の書でありましょう。</p>
+      //    <p><img src="http://a1.twimg.com/profile_images/319475256/00_normal.jpg"> yosuke_umeda[2010年 1月 5日 火曜日 23:46:12]</p>
+      //  </div>
+      //  <br style="clear:both">
+      //</div>
+            var url = "http://www.amazon.co.jp/dp/"+r.item.id+"?tag=livedoorblogt-22";
+            var tt = $('<div/>').
+                attr({style:"border:1px solid #ddd; padding:5px;margin-bottom:10px"}).
+                append($('<div/>').attr({style:"float:left"}).append(
+                    $('<a/>').attr({href:url}).append(
+                        $('<img/>').attr({src:r.item.img})
+                    )
+                )).append($('<div/>').attr({style:"padding-left:120px"}).
+                          append($('<h3/>').append($('<a/>').attr({style:"text-align:top",href:url}).html(r.item.name))).
+                          append($('<p/>').html(r.text)).
+                          append($('<p/>').append($('<img/>').attr({src:r.user.img,style:"float:left"}).width(48).height(48))).
+                          append($('<p/>').attr({style:"padding-left:55px"}).html(r.user.name))
+                         ).append($('<br/>').attr({style:"clear:both"}));
+            return $('<li/>').attr({title:r.id}).append(tt);
         };
         $(p.root).append($('<ul/>'));
         this.search(p, this.initSuccess, this.Error);
