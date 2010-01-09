@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>jquery sample &gt; Yahoo!Shopping カテゴリーランキング - written by tanarky</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+  <link rel="stylesheet" href="./css/common.css" type="text/css">
+  <script type="text/javascript"src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">google.load("jquery", "1.3");</script>
+</head>
+  <body>
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <br>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <h1>jquery sample &gt; Yahoo!Shopping カテゴリーランキング</h1>
+
+<script type="text/javascript" src="http://www.geocities.jp/tanarky/jquery/js/plugins/jquery-jtemplates.js"></script>
+<div id="yshop_category_ranking"></div>
+<script type="text/javascript">
+var BLOGPARTS = {};
+BLOGPARTS.template = '<div>{#foreach $T.items as i}<p>{$T.i.title}</p>{#/for}</div>';
+BLOGPARTS.showRanking = function (params){
+    var url  = 'http://shopping.yahooapis.jp/ShoppingWebService/V1/json/categoryRanking';
+    $.ajax({
+        url:url,
+        dataType:'jsonp',
+        data:{
+            appid: params.appid,
+        },
+        success:function(r){
+            var vars = {
+                items: []
+            };
+            for(var i=0;i<r.ResultSet.totalResultsReturned;i++){
+                var e = r.ResultSet[0].Result[i];
+                var item = {
+                    url: e.Url + "#ItemInfo",
+                    img: e.Image.Small,
+                    title: e.Name.substr(0, 20),
+                    rank: i+1
+                }
+                vars.items.push(item);
+                if(params.max == vars.items.length) break;
+            }
+            $(params.tag).setTemplate(BLOGPARTS.template);
+            $(params.tag).processTemplate(vars);
+        },
+    });
+};
+BLOGPARTS.show = function (type, params){
+    var name = 'show' + type;
+    if(typeof this[name] == 'function'){
+        this[name](params);
+    }
+};
+//-----
+$(document).ready(function(){
+    BLOGPARTS.show('Ranking', {
+        max: 3,
+        appid: 'tanarky_devel',
+        tag: '#yshop_category_ranking'
+    });
+});
+</script>
+
+            </div>
+          </div>
+        </div>
+        <div class="yui-b">
+        </div>
+      </div>
+      <div id="ft"><p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
