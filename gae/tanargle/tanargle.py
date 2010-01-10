@@ -13,7 +13,17 @@ class Page(webapp.RequestHandler):
     else:
       self.response.out.write("fooパラメータは「%s」です" % foo.encode('utf-8'))
 
-application = webapp.WSGIApplication([('/', Page)], debug=True)
+class REST(webapp.RequestHandler):
+  def get(self):
+    self.response.out.write("このURLに対して、PUT/DELETEも受け付けています。")
+
+  def put(self):
+    self.response.out.write("PUT Methodを受け付けました")
+
+  def delete(self):
+    self.response.out.write("DELETE Methodを受け付けました")
+
+application = webapp.WSGIApplication([('/', Page),('/rest_test', REST)], debug=True)
 
 def main():
   run_wsgi_app(application)

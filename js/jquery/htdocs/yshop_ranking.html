@@ -21,46 +21,13 @@
 
 <script type="text/javascript" src="http://www.geocities.jp/tanarky/jquery/js/plugins/jquery-jtemplates.js"></script>
 <div id="yshop_category_ranking"></div>
+<script type="text/javascript" src="http://www.geocities.jp/tanarky/jquery/js/blogparts/shopping_ranking.js"></script>
 <script type="text/javascript">
-var BLOGPARTS = {};
-BLOGPARTS.template = '<div>{#foreach $T.items as i}<p>{$T.i.title}</p>{#/for}</div>';
-BLOGPARTS.showRanking = function (params){
-    var url  = 'http://shopping.yahooapis.jp/ShoppingWebService/V1/json/categoryRanking';
-    $.ajax({
-        url:url,
-        dataType:'jsonp',
-        data:{
-            appid: params.appid,
-        },
-        success:function(r){
-            var vars = {
-                items: []
-            };
-            for(var i=0;i<r.ResultSet.totalResultsReturned;i++){
-                var e = r.ResultSet[0].Result[i];
-                var item = {
-                    url: e.Url + "#ItemInfo",
-                    img: e.Image.Small,
-                    title: e.Name.substr(0, 20),
-                    rank: i+1
-                }
-                vars.items.push(item);
-                if(params.max == vars.items.length) break;
-            }
-            $(params.tag).setTemplate(BLOGPARTS.template);
-            $(params.tag).processTemplate(vars);
-        },
-    });
-};
-BLOGPARTS.show = function (type, params){
-    var name = 'show' + type;
-    if(typeof this[name] == 'function'){
-        this[name](params);
-    }
-};
-//-----
 $(document).ready(function(){
     BLOGPARTS.show('Ranking', {
+        affiliate_type: 'yid',
+        affiliate_id: 'NqNP7flCUN49xU3KOQg-',
+        category_id: 2494,
         max: 3,
         appid: 'tanarky_devel',
         tag: '#yshop_category_ranking'
