@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>jquery sample &gt; setIntervalで定期的にAPIをcall - written by tanarky</title>
+  <title>こちらのページは移動になりました</title>
   <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
   <link rel="stylesheet" href="./css/common.css" type="text/css">
   <script type="text/javascript"src="http://www.google.com/jsapi"></script>
@@ -17,104 +17,9 @@
         <div id="yui-main">
           <div class="yui-b">
             <div class="yui-g">
-              <h1>jquery sample &gt; setIntervalで定期的にAPIをcall(10秒ごとに自動で更新チェックします)</h1>
-<div id="interval">
-</div>
-<button id="stop">stop</button>
-<script type="text/javascript">
-var yom = {
-    initSuccess:function(r){
-        var ul = $(this.p.root+' ul');
-        for(var i=0;i<this.p.count;i++){
-            ul.append(this.p.template(r.results[i]));
-        }
-    },
-    Error:function(){
-        //console.log('error occured');
-    },
-    updateSuccess:function(r){
-        var ul = $(this.p.root+' ul');
-        var t  = this.p.template;
-        // FIXME: APIが更新判定＋1個ずつ返せばいいような気がする
-        if(r.results[0]){
-            $(this.p.root+' ul li:visible:last').fadeOut("slow", function(){
-                ul.prepend(t(r.results[0]).fadeIn("slow"));
-            });
-        }
-        else{
-            //console.log('no update');
-        }
-    },
-    search:function(p,success,error){
-        var since    = $(p.root+' ul li:first').get(0);
-        var since_id = "";
-        if(since){
-            since_id=since.title;
-        }
-        $.ajax({
-            url:'http://yomiowatter.appspot.com/timeline',
-            dataType:'jsonp',
-            data:{
-                since_id:since_id,
-                hits:p.count
-            },
-            p:p,
-            success:success,
-            error:error
-        });
-    },
-    init:function(p){
-        this.p=p;
-        this.p.template=function(r){
-      //<div style="border:1px solid #ddd; padding:5px;margin-bottom:10px">
-      //  <div style="float:left">
-      //    <a href="">
-      //      <img src="http://ecx.images-amazon.com/images/I/418bv41i6jL._SL160_.jpg" alt="">
-      //    </a>
-      //  </div>
-      //  <div style="padding-left:120px;">
-      //    <h3><a style="text-align:top" href="">フリー~〈無料〉からお金を生みだす新戦略</a></h3>
-      //    <p>クリス•アンダーソン「フリー」読了。ウェブに限らず仕事で少しでもメディアに関わっている人には必読の書でありましょう。</p>
-      //    <p><img src="http://a1.twimg.com/profile_images/319475256/00_normal.jpg"> yosuke_umeda[2010年 1月 5日 火曜日 23:46:12]</p>
-      //  </div>
-      //  <br style="clear:both">
-      //</div>
-            var url = "http://www.amazon.co.jp/dp/"+r.item.id+"?tag=livedoorblogt-22";
-            var tt = $('<div/>').
-                attr({style:"border:1px solid #ddd; padding:5px;margin-bottom:10px"}).
-                append($('<div/>').attr({style:"float:left"}).append(
-                    $('<a/>').attr({href:url}).append(
-                        $('<img/>').attr({src:r.item.img})
-                    )
-                )).append($('<div/>').attr({style:"padding-left:120px"}).
-                          append($('<h3/>').append($('<a/>').attr({style:"text-align:top",href:url}).html(r.item.name))).
-                          append($('<p/>').html(r.text)).
-                          append($('<p/>').append($('<img/>').attr({src:r.user.img,style:"float:left"}).width(48).height(48))).
-                          append($('<p/>').attr({style:"padding-left:55px"}).html(r.user.name))
-                         ).append($('<br/>').attr({style:"clear:both"}));
-            return $('<li/>').attr({title:r.id}).append(tt);
-        };
-        $(p.root).append($('<ul/>'));
-        this.search(p, this.initSuccess, this.Error);
-    },
-    update:function(){
-        this.search(this.p, this.updateSuccess, this.Error);
-    }
-};
-$(document).ready(function(){
-    var custom = {
-        root:'#interval',
-        count:10,
-        refresh:10 // sec
-    };
-    yom.init(custom);
-    var refresh = setInterval(function(){yom.update()}, custom.refresh*1000);
-    //
-    $('#stop').click(function(){
-         clearInterval(refresh);
-    });
-});
-</script>
+              <h1>こちらのページは移動になりました。
+                <a href="http://www.geocities.jp/tanarky/yomiowatter/">http://www.geocities.jp/tanarky/yomiowatter/</a>
+              </h1>
             </div>
           </div>
         </div>
