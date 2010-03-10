@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="compile" basedir=".">
+
+  <property name="source" value="src"/>
+  <property name="dest" value="classes"/>
+  
+  <target name="mkdir" description="ディレクトリを作成">
+    <mkdir dir="${dest}"/>
+  </target>
+
+  <target name="compile" depends="mkdir" description="コンパイルを実行">
+    <javac srcdir="${source}" destdir="${dest}"/>
+  </target>
+
+  <target name="exec" depends="compile" description="実行">
+    <java classname="bar.mymain" classpath="${dest}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${dest}" />
+  </target>
+</project>
