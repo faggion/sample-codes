@@ -22,12 +22,13 @@ try {
 
     $predicate  = new cassandra_SlicePredicate();
     //$sliceRange = new cassandra_SliceRange();
-    //$sliceRange->start = "";
+    //$sliceRange->start  = "";
     //$sliceRange->finish = "";
     //$predicate->slice_range = $sliceRange;
     $predicate->column_names = array('price');
 
     $result = $client->multiget_slice('Keyspace1', array('store1','store2'), $columnParent, $predicate, cassandra_ConsistencyLevel::ONE);
+    //$result = $client->multiget_slice('Keyspace1', array('store1'), $columnParent, $predicate, cassandra_ConsistencyLevel::ONE);
 
     print_r($result);
     $transport->close();

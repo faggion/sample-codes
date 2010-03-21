@@ -18,14 +18,14 @@ try {
     // Specify what Column Family to query against.
     $columnParent = new cassandra_ColumnParent();
     $columnParent->column_family = "Super1";
-    $columnParent->super_column = 'item1';
+    //$columnParent->super_column = 'item1';
 
+    $predicate  = new cassandra_SlicePredicate();
     $sliceRange = new cassandra_SliceRange();
-    $sliceRange->start = "";
-    $sliceRange->finish = "";
-    $predicate = new cassandra_SlicePredicate();
-    list() = $predicate->column_names;
+    $sliceRange->start      = "";
+    $sliceRange->finish     = "";
     $predicate->slice_range = $sliceRange;
+    //$predicate->column_names = array('item1');
 
     $result = $client->get_slice('Keyspace1', 'store1', $columnParent, $predicate, cassandra_ConsistencyLevel::ONE);
 
