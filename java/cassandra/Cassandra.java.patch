@@ -1,0 +1,211 @@
+*** /home/satoshi/Cassandra.java	2010-03-21 22:04:55.000000000 +0900
+--- interface/thrift/gen-java/org/apache/cassandra/thrift/Cassandra.java	2010-03-21 22:08:30.000000000 +0900
+***************
+*** 2433,2440 ****
+      }
+  
+      public get_args() {
+!         //this.consistency_level = 1;
+!         this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public get_args(
+--- 2433,2440 ----
+      }
+  
+      public get_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public get_args(
+***************
+*** 3631,3638 ****
+      }
+  
+      public get_slice_args() {
+!         //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public get_slice_args(
+--- 3631,3638 ----
+      }
+  
+      public get_slice_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public get_slice_args(
+***************
+*** 4861,4868 ****
+      }
+  
+      public multiget_args() {
+!         //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public multiget_args(
+--- 4861,4868 ----
+      }
+  
+      public multiget_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public multiget_args(
+***************
+*** 6014,6021 ****
+      }
+  
+      public multiget_slice_args() {
+!         //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public multiget_slice_args(
+--- 6014,6021 ----
+      }
+  
+      public multiget_slice_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public multiget_slice_args(
+***************
+*** 7265,7272 ****
+      }
+  
+      public get_count_args() {
+!         //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public get_count_args(
+--- 7265,7272 ----
+      }
+  
+      public get_count_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public get_count_args(
+***************
+*** 8395,8402 ****
+  
+        this.row_count = 100;
+  
+!       //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public get_range_slice_args(
+--- 8395,8402 ----
+  
+        this.row_count = 100;
+  
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public get_range_slice_args(
+***************
+*** 9789,9796 ****
+      }
+  
+      public get_range_slices_args() {
+!         //this.consistency_level = 1;
+!       this.consistency_level = ConsistencyLevel.ONE;
+      }
+  
+      public get_range_slices_args(
+--- 9789,9796 ----
+      }
+  
+      public get_range_slices_args() {
+!       this.consistency_level = 1;
+! 
+      }
+  
+      public get_range_slices_args(
+***************
+*** 11031,11038 ****
+      }
+  
+      public insert_args() {
+!         //this.consistency_level = 0;
+!       this.consistency_level = ConsistencyLevel.ZERO;
+      }
+  
+      public insert_args(
+--- 11031,11038 ----
+      }
+  
+      public insert_args() {
+!       this.consistency_level = 0;
+! 
+      }
+  
+      public insert_args(
+***************
+*** 12225,12232 ****
+      }
+  
+      public batch_insert_args() {
+!         //this.consistency_level = 0;
+!       this.consistency_level = ConsistencyLevel.ZERO;
+      }
+  
+      public batch_insert_args(
+--- 12225,12232 ----
+      }
+  
+      public batch_insert_args() {
+!       this.consistency_level = 0;
+! 
+      }
+  
+      public batch_insert_args(
+***************
+*** 13277,13284 ****
+      }
+  
+      public remove_args() {
+!         //this.consistency_level = 0;
+!       this.consistency_level = ConsistencyLevel.ZERO;
+      }
+  
+      public remove_args(
+--- 13277,13284 ----
+      }
+  
+      public remove_args() {
+!       this.consistency_level = 0;
+! 
+      }
+  
+      public remove_args(
+***************
+*** 14377,14384 ****
+      }
+  
+      public batch_mutate_args() {
+!         //this.consistency_level = 0;
+!       this.consistency_level = ConsistencyLevel.ZERO;
+      }
+  
+      public batch_mutate_args(
+--- 14377,14384 ----
+      }
+  
+      public batch_mutate_args() {
+!       this.consistency_level = 0;
+! 
+      }
+  
+      public batch_mutate_args(
