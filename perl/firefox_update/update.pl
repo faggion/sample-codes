@@ -4,8 +4,8 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-my $NOW_VER = '3.6';
-my $NEW_VER = '3.6.2';
+my $NOW_VER = '3.6.2';
+my $NEW_VER = '3.6.3';
 
 my $local_file  = "/tmp/firefox-$NEW_VER.tar.bz2";
 my $remote_file = "http://download.mozilla.org/?product=firefox-$NEW_VER&os=linux&lang=ja";
@@ -23,6 +23,6 @@ if(-e $install_path){
 my $untar_file = "sudo tar -jxvf $local_file -C /usr/lib/";
 system($untar_file);
 
-#my $set_icon = "sudo cp $rename_current_dir/icons/mozicon50.xpm $install_path/icons/";
-#system($set_icon);
+my $set_icon = "sudo cp $rename_current_dir/icons/mozicon50.xpm $install_path/icons/";
+system($set_icon);
 
