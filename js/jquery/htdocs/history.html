@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>history plugin</title>
+  <script type="text/javascript"src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">google.load("jquery", "1.4");</script>
+  <script type="text/javascript" src="./js/plugins/jquery.history.js"></script>
+  <script type="text/javascript">
+	// PageLoad function
+	// This function is called when:
+	// 1. after calling $.historyInit();
+	// 2. after calling $.historyLoad();
+	// 3. after pushing "Go Back" button of a browser
+	function pageload(hash) {
+	    if(hash) {
+                //console.log("hash: "+hash);
+                $.ajax({
+                    url : "http://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemSearch",
+                    dataType : "jsonp",
+                    data : {
+                        appid : 'tanarky_devel',
+                        affiliate_type : 'yid',
+                        affiliate_id : 'NqNP7flCUN49xU3KOQg-',
+                        query: 'ipod',
+                        //sort: custom.sort,
+                        offset: hash,
+                        hits: 10
+                    },
+                    success : function(json){
+                        var res = "";
+                        for(var i=0;i<json.ResultSet.totalResultsReturned;i++){
+                            var e = json.ResultSet[0].Result[i];
+                            res += '<a href="' + e.Url + '">' + e.Name + "</a><br>";
+                        }
+                        $('#load').html(res);
+                    }
+                });
+	    } else {
+		// start page
+		$("#load").empty();
+	    }
+	}
+	
+	$(document).ready(function(){
+	    $.historyInit(pageload, "history.html");
+	    
+	    $("a[rel='history']").click(function(){
+		var hash = this.href;
+		hash = hash.replace(/^.*#/, '');
+		// moves to a new page. 
+		// pageload is called at once. 
+		// hash don't contain "#", "?"
+		$.historyLoad(hash);
+		return false;
+	    });
+	});
+</script>
+</head>
+<body>
+	<h1>jquery history plugin</h1>
+	This plugin helps you make your Ajax-driven page available for "Go Back" button and "bookmark" of browser.<br>
+	source: <a href="jquery.history.js">jquery.history.js</a> (Last Update: 2009/10/14)<br>
+	<br>
+	<a href="history/rbbs.cgi">jquery history bbs</a><br>
+	<br>
+	Work on IE8, FireFox 4.0, Opera9, Safari 4.0, Chrome 2.0. <br>
+	<br>
+	<br>
+	[<a href="jquery_history_xhtml.html">xhtml 1.0 test</a>]
+	[<a href="jquery_history_ie7.html">IE7 compatible mode test</a>]
+	<br>
+	<hr>
+	Ajax load<br>
+	<a href="#10" rel="history">load 1</a><br>
+	<a href="#20" rel="history">load 2</a><br>
+	<a href="#30" rel="history">load 3</a><br>
+	<br>
+	<hr>
+	Loaded API:<br>
+	<div id="load"></div>
+	<hr>
+</body>
+</html>

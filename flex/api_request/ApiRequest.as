@@ -13,11 +13,19 @@ package {
             var myRequest:URLRequest = new URLRequest(url);
             myLoader.addEventListener(Event.COMPLETE, this.onComplete);
             myLoader.load(myRequest);
+
         }
 
         public function onComplete (eventObject:Event):void {
+            var ns:Namespace = new Namespace('urn:yahoo:jp:getModule');
             var my_str:String = eventObject.target.data
-            this.showMessage(my_str);
+            var api:XML = new XML(my_str);
+            //this.showMessage(my_str);
+            //this.showMessage(api.toXMLString());
+            //this.showMessage(api.bar + ":aaa");
+            this.showMessage(api.ns::Result.ns::CategoryId + ":aaa");
+            //this.showMessage(api.result.toXMLString());
+            //ExternalInterface.call("console.log", my_str);
         }
 
         public function showMessage(str:String):void {
