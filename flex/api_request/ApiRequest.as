@@ -11,26 +11,28 @@ package {
             var url:String = "http://shopping.yahooapis.jp/ShoppingWebService/V1/getModule?appid=tanarky_devel&position=hotitem";
             var myLoader:URLLoader   = new URLLoader();
             var myRequest:URLRequest = new URLRequest(url);
+            // イベントを登録
             myLoader.addEventListener(Event.COMPLETE, this.onComplete);
             myLoader.load(myRequest);
-
         }
 
         public function onComplete (eventObject:Event):void {
+            // Namespaceの定義
             var ns:Namespace = new Namespace('urn:yahoo:jp:getModule');
-            var my_str:String = eventObject.target.data
-            var api:XML = new XML(my_str);
-            //this.showMessage(my_str);
-            //this.showMessage(api.toXMLString());
-            //this.showMessage(api.bar + ":aaa");
-            this.showMessage(api.ns::Result.ns::CategoryId + ":aaa");
-            //this.showMessage(api.result.toXMLString());
-            //ExternalInterface.call("console.log", my_str);
+            // XMLオブジェクトを作成
+            var api:XML      = new XML(eventObject.target.data);
+            this.showMessage(api.ns::Result.ns::Hit[0].ns::Title);
         }
 
+        // テキストを表示
         public function showMessage(str:String):void {
-            var textField:TextField = new TextField();
-            textField.text = str;
+            var textFormat:TextFormat = new TextFormat()
+            textFormat.size = 10;
+            var textField:TextField   = new TextField();
+            textField.defaultTextFormat = textFormat;
+            textField.text   = str;
+            textField.width  = 200;
+            textField.height = 50;
             addChild(textField);
         }
     }
