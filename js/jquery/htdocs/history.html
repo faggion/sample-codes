@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>history plugin</title>
+  <title>jquery history pluginのサンプルコード</title>
   <script type="text/javascript"src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">google.load("jquery", "1.4");</script>
   <script type="text/javascript" src="./js/plugins/jquery.history.js"></script>
@@ -59,22 +59,14 @@
 </head>
 <body>
 	<h1>jquery history plugin</h1>
-	This plugin helps you make your Ajax-driven page available for "Go Back" button and "bookmark" of browser.<br>
-	source: <a href="jquery.history.js">jquery.history.js</a> (Last Update: 2009/10/14)<br>
-	<br>
-	<a href="history/rbbs.cgi">jquery history bbs</a><br>
-	<br>
-	Work on IE8, FireFox 4.0, Opera9, Safari 4.0, Chrome 2.0. <br>
-	<br>
-	<br>
-	[<a href="jquery_history_xhtml.html">xhtml 1.0 test</a>]
-	[<a href="jquery_history_ie7.html">IE7 compatible mode test</a>]
+	loadしたりブラウザの戻る／進むボタンで動作確認してみると理解しやすいです<br>
+	source: <a href="./js/plugins/jquery.history.js">jquery.history.js</a> (Last Update: 2009/10/14)<br>
 	<br>
 	<hr>
 	Ajax load<br>
-	<a href="#10" rel="history">load 1</a><br>
-	<a href="#20" rel="history">load 2</a><br>
-	<a href="#30" rel="history">load 3</a><br>
+	<a href="#10" rel="history">「ipod」で商品検索した10件を表示（offset=10）</a><br>
+	<a href="#20" rel="history">「ipod」で商品検索した10件を表示（offset=20）</a><br>
+	<a href="#30" rel="history">「ipod」で商品検索した10件を表示（offset=30）</a><br>
 	<br>
 	<hr>
 	Loaded API:<br>
