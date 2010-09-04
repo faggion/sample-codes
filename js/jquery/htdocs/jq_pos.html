@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>jquery sample &gt; jQuery UI position</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+  <link rel="stylesheet" href="./css/common.css" type="text/css">
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">google.load("jquery", "1.4");</script>
+  <script type="text/javascript">google.load("jqueryui", "1");</script>
+</head>
+  <body>
+    <div id="doc2" class="yui-t4">
+      <div id="hd">
+        <br>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+
+              <script type="text/javascript">
+$(function() {
+  function position(using) {
+    $('.positionable').position({
+      of: $('#parent'),
+      my: 'left top',
+      at: 'left top',
+      offset: '50 50',
+      using: using,
+      collision: '0 0'
+    });
+  }
+  position();
+});
+              </script>
+
+              <div class="demo">
+                <div id="parent">
+                  <img src="http://farm3.static.flickr.com/2677/4523211463_1e7fcd2f7c.jpg">
+                </div>
+                <br>
+                <div style="background-color:#fff;opacity: 0.5;width: 100px;text-align: center;font-size:240%;" class="positionable">
+                  <p>桜</p>
+                </div>
+              </div><!-- End demo -->
+
+            </div>
+          </div>
+        </div>
+        <div class="yui-b">
+        </div>
+      </div>
+      <div id="ft"><p style="text-align:center;margin-top:10px">Copyright (C) 2009 tanarky All Rights Reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
