@@ -1,0 +1,3 @@
+
+/home/satoshi/Dropbox/github/sample-codes/java/mecab% javac -cp /usr/share/java/MeCab.jar TestMecab.java
+/home/satoshi/Dropbox/github/sample-codes/java/mecab% java -cp /usr/share/java/MeCab.jar:. TestMecab
