@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="compile" basedir=".">
+  <property name="basedir"       value="."/>
+  <property name="lib.dir"       value="/home/satoshi/sdk/lucene-ja/lib"/>
+  <property name="build.dir"     value="${basedir}/build"/>
+  <property name="source"        value="src"/>
+  <property name="build.classes" value="${build.dir}/classes"/>
+
+  <path id="classpath">
+      <fileset dir="${lib.dir}">
+          <include name="*.jar"/>
+      </fileset>
+  </path>
+
+  <property name="sen.home" location="/home/satoshi/sdk/sen-1.2.2.1"/>
+
+  <target name="mkdir" description="ディレクトリを作成">
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="mkdir" description="">
+    <javac srcdir="${source}"
+           destdir="${build.classes}"
+           classpathref="classpath"/>
+  </target>
+
+  <target name="exec" depends="compile" description="実行">
+    <java classname="my.SenTokenTest"
+          classpathref="classpath"
+          classpath="${build.classes}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete file="/tmp/test.log" />
+  </target>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="compile" basedir=".">
+  <property name="base.dir" value="."/>
+  <property name="lib.dir" value="/home/satoshi/sdk/lucene-3.0.2/build"/>
+  <property name="src.dir" value="src"/>
+  <property name="build.dir" value="${basedir}/build"/>
+  <property name="build.classes" value="${build.dir}/classes"/>
+  <property name="jarfile" value="${build.dir}/foo.jar"/>
+
+  <property name="exec.class" value="my.TestSA"/>
+  <path id="classpath">
+      <fileset dir="${lib.dir}">
+        <include name="lucene-core-3.0.2-dev.jar"/>
+        <include name="lucene-analyzers-3.0.2.jar"/>
+      </fileset>
+  </path>
+
+  <!-- jarファイル作成 -->
+  <target name="jar" depends="compile" description="jar file 作成">
+    <jar jarfile="${jarfile}"/>
+  </target>
+
+  <target name="mkdir" description="ディレクトリを作成">
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="mkdir" description="">
+    <javac srcdir="${src.dir}"
+           destdir="${build.classes}"
+           classpathref="classpath"/>
+  </target>
+  <target name="exec" depends="compile" description="実行">
+    <java classname="${exec.class}"
+          classpathref="classpath"
+          classpath="${build.classes}"/>
+  </target>
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete file="${test.log}" />
+  </target>
+</project>
