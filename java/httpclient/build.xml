@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="compile" basedir=".">
+  <!-- プロジェクトのbase directory. 普通はこのままでOK -->
+  <property name="base.dir" value="."/>
+
+  <!-- aptなどでinstallされるjarファイル置き場。普通は/usr/share/java -->
+  <property name="lib.dir" value="/usr/share/java"/>
+
+  <!-- 自分で書いたコード置き場 -->
+  <property name="src.dir" value="src"/>
+
+  <!-- ビルド後の*.classファイル置き場 -->
+  <property name="build.dir" value="${basedir}/build"/>
+  <property name="build.classes" value="${build.dir}/classes"/>
+  <property name="jarfile" value="${build.dir}/httpclientmysample.jar"/>
+
+  <property name="exec.class" value="com.tanarky.sample.TestHttpClient"/>
+  <!-- その他独自設定ここから
+  <property name="test.log"   value="/tmp/test.log"/>
+  その他独自設定ここまで -->
+
+  <!-- 依存するjarなどのclasspathを指定する -->
+  <path id="classpath">
+      <fileset dir="${lib.dir}">
+        <include name="commons-logging.jar"/>
+        <include name="httpcore.jar"/>
+        <include name="httpclient.jar"/>
+        <include name="log4j-1.2.jar"/>
+      </fileset>
+  </path>
+
+  <!--
+     target: ant *** で指定するビルドターゲット設定
+     -->
+  <!-- コンパイル済みのファイル置き場なので通常はこのままでOK -->
+  <target name="mkdir" description="ディレクトリを作成">
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <!-- コンパイルターゲット。propertyを適切に指定していればこのままでいけるはず -->
+  <target name="compile" depends="mkdir" description="">
+    <!-- 
+       srcdir : *.javaファイルを置いているディレクトリ。階層構造可。
+       destdir: コンパイル済みの*.classが置かれるディレクトリ。
+       classpathref: 依存するjarへのPATH。<path/>で指定されているものを指定
+      -->
+    <javac srcdir="${src.dir}"
+           destdir="${build.classes}"
+           classpathref="classpath"/>
+  </target>
+
+  <!-- jarファイル作成 -->
+  <target name="jar" depends="compile" description="jar file 作成">
+    <jar jarfile="${jarfile}"/>
+  </target>
+
+  <!-- コンパイル後の実行ファイルを起動するターゲット -->
+  <target name="exec" depends="compile" description="実行">
+    <java classname="${exec.class}"
+          classpathref="classpath"
+          classpath="${build.classes}"/>
+  </target>
+
+  <!-- コンパイル済みファイルや単体テスト用ファイルのクリーンアップ -->
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete file="${test.log}" />
+  </target>
+</project>
