@@ -58,7 +58,9 @@
   <target name="exec" depends="compile" description="実行">
     <java classname="${exec.class}"
           classpathref="classpath"
-          classpath="${build.classes}"/>
+          classpath="${build.classes}">
+      <sysproperty key="org.apache.commons.logging.Log" value="org.apache.commons.logging.impl.SimpleLog"/>
+    </java>
   </target>
 
   <!-- コンパイル済みファイルや単体テスト用ファイルのクリーンアップ -->

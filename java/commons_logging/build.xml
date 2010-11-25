@@ -6,35 +6,28 @@
   <property name="build.dir" value="${basedir}/build"/>
   <property name="build.classes" value="${build.dir}/classes"/>
 
-  <!-- ここを変更する -->
-  <property name="jarfile" value="${build.dir}/foo.jar"/>
-  <property name="exec.class" value="HelloLog4j"/>
-  <!--
-     <property name="test.log"   value="/tmp/test.log"/>
-     -->
-  <!-- /ここを変更する -->
-
+  <property name="jarfile" value="${build.dir}/tanarkytestlog.jar"/>
+  <property name="exec.class" value="com.tanarky.sample.TestLog"/>
   <path id="classpath">
       <fileset dir="${lib.dir}">
         <include name="commons-logging.jar"/>
       </fileset>
   </path>
 
-  <!-- target -->
   <target name="mkdir" description="ディレクトリを作成">
     <mkdir dir="${build.classes}"/>
   </target>
+
   <target name="compile" depends="mkdir" description="">
     <javac srcdir="${src.dir}"
            destdir="${build.classes}"
            classpathref="classpath"/>
   </target>
 
-  <!-- jarファイル作成 -->
   <target name="jar" depends="compile" description="jar file 作成">
     <jar jarfile="${jarfile}"/>
   </target>
-  <!-- コンパイル後の実行ファイルを起動するターゲット -->
+
   <target name="exec" depends="compile" description="実行">
     <java classname="${exec.class}"
           classpathref="classpath"
@@ -42,6 +35,7 @@
       <sysproperty key="org.apache.commons.logging.Log" value="org.apache.commons.logging.impl.SimpleLog"/>
     </java>
   </target>
+
   <target name="clean">
     <delete dir="${build.dir}" />
   </target>
