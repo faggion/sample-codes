@@ -3,7 +3,7 @@
   <property name="base.dir" value="."/>
   <property name="lib.dir" value="/usr/share/java"/>
   <property name="src.dir" value="src"/>
-  <property name="build.dir" value="${basedir}/build"/>
+  <property name="build.dir" value="${basedir}/target"/>
   <property name="build.classes" value="${build.dir}/classes"/>
 
   <!-- ここを変更する -->
