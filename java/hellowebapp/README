@@ -1,0 +1,35 @@
+
+- create command
+
+::
+  
+  % mvn archetype:create -DgroupId=com.tanarky.sample -DartifactId=hellowebapp -DarchetypeArtifactId=maven-archetype-webapp
+
+- add pom.xml
+
+::
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <configuration>
+          <contextPath>/yourapp</contextPath>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <connectors>
+            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+              <port>8021</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+- do test jetty
+
+::
+  
+  % mvn jetty:run
