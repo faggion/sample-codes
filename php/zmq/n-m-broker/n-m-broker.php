@@ -46,6 +46,7 @@ while (true) {
 
             // point1
             // be(worker)側でイベント発生
+            //if($ep["bind"][0] === $bs){
             if($r === $be){
                 try {
                     $worker_addr = $be->recv();
@@ -76,6 +77,7 @@ while (true) {
                 }
             }
             // fe(client)側でイベント発生
+            //if($ep["bind"][0] === $fs){
             if($r === $fe){
                 try {
                     // client側からのメッセージを受け取る
