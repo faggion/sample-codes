@@ -1,56 +1,57 @@
 <?php
-//$id = "broker_server:". php_uname("n"). ":". getmypid();
-$host = "127.0.0.1";
-$id = "broker_client:$host:". getmypid();
-error_log("i am '$id'");
 
-$poll = new ZMQPoll();
-$ctxt = new ZMQContext();
+// my name
+if(empty($argv[1])){
+    error_log("empty my name");
+    exit(1);
+}
 
-$fs  = "ipc:///tmp/zmq_clients.sock";
-$bs  = "tcp://$host:5556";
+$myname  = $argv[1];
+$conf    = parse_ini_file("servers.ini");
+$poll    = new ZMQPoll();
+$ctxt    = new ZMQContext();
 
-$fe  = $ctxt->getSocket(ZMQ::SOCKET_XREP);
-$be  = $ctxt->getSocket(ZMQ::SOCKET_XREP);
+// remote tcp 
+$all_bs       = array(); // 全server list
+$available_bs = array(); // 処理可能なserver list
+foreach($conf["servers"] as $c){
+    //error_log($c);
+    $sock = $ctxt->getSocket(ZMQ::SOCKET_XREP);
+    $sock->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $c);
+    $sock->connect($c);
+    $server = array("name"=>$c, "sock"=>$sock);
+    array_push($all_bs,       $server);
+    array_push($available_bs, $server);
+}
 
-$fe->bind($fs);
-$be->bind($bs);
+if(empty($all_bs) || empty($available_bs)){
+    error_log("empty all_bs or available_bs");
+    exit(1);
+}
 
-// 処理可能なworkerのpid list
-$workers        = array();
-$broker_clients = array();
+// local tcp
+$local = $ctxt->getSocket(ZMQ::SOCKET_XREP);
+$local->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $myname);
+$local->bind($myname);
 
 $readable = array();
 $writable = array();
 
 while (true) {
+    $ids = array();
+
     try {
-        if(empty($workers)){
-            // broker serverがない場合はFrontendからのPOLL_INを受けない
-            $beid   = $poll->add($be, ZMQ::POLL_IN);
-
-            // broker serverに接続
-            $server = new ZMQSocket(new ZMQContext(), ZMQ::SOCKET_PUSH);
-            $server->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $id);
-            $server->connect("tcp://127.0.0.1:5555");
-
-            $server->send("$id",   ZMQ::MODE_SNDMORE);
-            $server->send("",      ZMQ::MODE_SNDMORE);
-            //$server->send("READY", ZMQ::MODE_NOBLOCK);
-            $server->send("READY");
-            error_log("connect request");
-        }
-        else{
-            // broker serverがあるのでFrontendとBackend両方のPOLL_INを受ける
-            $beid   = $poll->add($be, ZMQ::POLL_IN);
-            $feid   = $poll->add($fe, ZMQ::POLL_IN);
+        $id[] = $poll->add($local, ZMQ::POLL_IN);
+        foreach($all_bs as $bs){
+            $id[] = $poll->add($bs["sock"], ZMQ::POLL_IN);
         }
 
         // イベントが発生するまで待機
-        error_log("WAITING FOR SOCKET EVENT.");
+        error_log("waiting for socket event...");
         $events = $poll->poll($readable, $writable, -1);
-        error_log("... GOT EVENT !");
+        error_log("got event !");
         $errors = $poll->getLastErrors();
+
     } catch (ZMQPollException $e) {
         echo "poll failed: " . $e->getMessage() . "\n";
         exit();
@@ -60,66 +61,53 @@ while (true) {
     if ($events > 0) {
         foreach ($readable as $r) {
 
-            // broker server側でイベント発生
-            //if($ep["bind"][0] === $bs){
-            if($r === $be){
+            // localからリクエストが到着
+            if($r === $local){
                 try {
-                    $worker_id = $be->recv();
-                    $empty     = $be->recv();
-                    $packet    = $be->recv();
 
-                    $recv = implode(",", array($worker_id,$packet));
+                    $clientid = $r->recv();
+                    $empty    = $r->recv();
+                    $request  = $r->recv();
 
-                    // 1. 新規broker_serverからの接続要求がきた
-                    if($packet === "READY"){
-                        error_log("New worker connected.");
-                        error_log("I have accepted $worker_id.");
-                    }
-                    // 4. worker側で処理が完了したので値を返却
-                    else {
-                        $broker_clients[$broker_client_id]->send($packet);
-                        error_log("bc res:". $broker_clients[$broker_client_id]->recv());
+                    // $available_serversが空だったらエラーを返す
+                    if(0){
+                        // 未実装
                     }
 
-                    // workerプロセスの処理が完了しているので、
-                    // 処理可能なworker process queueに入れる
-                    array_push($workers, $worker_id);
+                    $bs = array_shift($available_bs);
+                    $bs["sock"]->send($bs["name"],ZMQ::MODE_SNDMORE); // どこに
+                    $bs["sock"]->send("",         ZMQ::MODE_SNDMORE);
+                    $bs["sock"]->send($clientid,  ZMQ::MODE_SNDMORE); // どこから
+                    $bs["sock"]->send("",         ZMQ::MODE_SNDMORE);
+                    $bs["sock"]->send($request);
 
                 } catch (ZMQException $e) {
-                    echo "recv failed: " . $e->getMessage() . "\n";
+                    error_log("failed request: " . $e->getMessage());
                 }
             }
-            // fe(remote)側でイベント発生
-            //if($ep["bind"][0] === $fs){
-            if($r === $fe){
-                try {
-                    $broker_client_id = $fe->recv();
-                    $empty            = $fe->recv();
-                    $packet           = $fe->recv();
+            // serverからのレスポンスが到着
+            else {
+                foreach($all_bs as $bs){
+                    if($r === $bs["sock"]){
+                        //
+                        try {
 
-                    // 2. 新規remote broker clientが追加された
-                    if($packet === "READY"){
-                        //$broker_client_host = $fe->recv();
-                        $broker_client_host = "tcp:127.0.0.1:5556";
-                        error_log("New broker client has come.");
-                        error_log("I have connected $broker_client_id.");
+                            $from_bs     = $bs["sock"]->recv();
+                            $empty       = $bs["sock"]->recv();
+                            $from_client = $bs["sock"]->recv();
+                            $empty       = $bs["sock"]->recv();
+                            $response    = $bs["sock"]->recv();
 
-                        $cli = new ZMQSocket(new ZMQContext(), ZMQ::SOCKET_REQ);
-                        $cli->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $id);
-                        $cli->connect($broker_client_host);
+                            $local->send($from_client, ZMQ::MODE_SNDMORE);
+                            $local->send("",           ZMQ::MODE_SNDMORE);
+                            $local->send($response);
 
-                        $broker_clients[$broker_client_id] = $cli;
+                            array_push($available_bs, $bs);
+
+                        } catch (ZMQException $e) {
+                            error_log("failed response: " . $e->getMessage());
+                        }
                     }
-                    // 3. remote broker clientからリクエストが来た
-                    else {
-                        $be->send($workers[0], ZMQ::MODE_SNDMORE);
-                        $be->send("",          ZMQ::MODE_SNDMORE);
-                        $be->send($packet);
-                        // workerからレスポンスが返ってくるまでqueueから除いておく
-                        array_shift($workers);
-                    }
-                } catch (ZMQException $e) {
-                    echo "send failed: " . $e->getMessage() . "\n";
                 }
             }
         }
