@@ -1,0 +1,10 @@
+
+1. broker_serverの起動
+2. workerの起動+broker_serverへの接続
+3. broker_clientの起動+broker_serverへの接続
+
+xrep xrepで送信するとき、
+to_addrを指定しなければいけない=fail over不可能?
+
+xreqで送信できたけど、これもfailoverできてない
+
