@@ -2,15 +2,22 @@
 
 $BROKERS = array(
     'SERVERS' => array(
-        'tcp://127.0.0.1:6665',
-        'tcp://127.0.0.1:6666',
+        array('fe'=>'tcp://127.0.0.1:6665', 'be'=>'ipc:///tmp/workers.sock'),
         ),
     'CLIENTS' => array(
-        'tcp://127.0.0.1:5555',
-        'tcp://127.0.0.1:5556',
+        array('fe'=>'ipc:///tmp/clients.sock'),
         ),
     );
 
 function genSockID($addr=""){
     return getmypid(). ",". $addr;
+}
+function checkinput(&$a){
+    if(!isset($a[1])){
+        error_log("invalid argv");
+        exit(1);
+    }
+}
+function dbg($msg){
+    if(1) error_log($msg);
 }

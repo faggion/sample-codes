@@ -1,4 +1,32 @@
 
+動作確認コマンド
+-----------------------
+
+::
+  
+  % php broker_server.php 0 2>/dev/null
+  ---
+  % php worker.php 0 2>/dev/null
+  ---
+  % php broker_client.php 0 2>/dev/null
+  ---
+  % time php client.php 0 10000 2>/dev/null
+  or
+  % time php memcached_client 10000 2>/dev/null
+
+
+セットアップ
+-----------------------
+
+::
+  
+  sudo aptitude install \
+    php5 php5-cli php5-dev uuid uuid-dev \
+    git-core memcached php5-memcache php5-memcached
+
+その他メモ
+------------------------
+
 1. broker_serverの起動
 2. workerの起動+broker_serverへの接続
 3. broker_clientの起動+broker_serverへの接続

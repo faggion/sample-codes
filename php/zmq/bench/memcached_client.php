@@ -1,9 +1,14 @@
 <?php
 
-// need 'sudo aptitude install php5-memcache'
+if(empty($argv[1])){
+    error_log('ERROR: empty argv');
+    exit();
+}
 $m = new Memcache();
-$m->connect('localhost', 11211);
-//        key    value, flg, expire(sec)
-//$m->set('foo', 'bar', 0, 0);
-error_log($m->get('foo')); // loop
-$m->close();
+$n = $argv[1];
+for($i=0;$i<$n;$i++){
+    $m->connect('localhost', 11211);
+    $m->set('hoge', '1234567890', 0, 0);
+    $m->get('hoge');
+    $m->close();
+}

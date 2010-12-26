@@ -1,38 +1,32 @@
 <?php
 
-if(!isset($argv[1])){
-    error_log("invalid argv");
-    exit(1);
-}
-
 require_once('common.php');
+checkinput($argv);
 
 $readable      = array();
 $writable      = array();
 $pollids       = array();
 $empty         = "";
-$my_uri        = $BROKERS['CLIENTS'][$argv[1]];
-$my_sockid     = genSockID($my_uri);
 $poll          = new ZMQPoll();
 $ctxt          = new ZMQContext();
 
 // local clientとのsocket
-$sock = $ctxt->getSocket(ZMQ::SOCKET_XREP);
-$sock->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $my_sockid);
-$sock->bind($my_uri);
+$fe = $ctxt->getSocket(ZMQ::SOCKET_XREP);
+$fe_uri = $BROKERS['CLIENTS'][$argv[1]]['fe'];
+$fe->setSockOpt(ZMQ::SOCKOPT_IDENTITY, genSockID($fe_uri));
+$fe->bind($fe_uri);
 
 // remote broker serverとのsocket
-// FIXME: connectなので1つのソケットで連続connectすればいい。foreachする
-$remote        = $ctxt->getSocket(ZMQ::SOCKET_XREP);
-$remote_uri    = $BROKERS['SERVERS'][$argv[1]];
-$remote_sockid = genSockID($my_uri);
-$remote->setSockOpt(ZMQ::SOCKOPT_IDENTITY, $remote_sockid);
-$remote->connect($remote_uri);
+// FIXME: connectなので1つのソケットで連続connectすればいい。foreach
+$be        = $ctxt->getSocket(ZMQ::SOCKET_XREQ);
+$be_uri    = $BROKERS['SERVERS'][$argv[1]]['fe'];
+$be->setSockOpt(ZMQ::SOCKOPT_IDENTITY, genSockID($be_uri));
+$be->connect($be_uri);
 
-$pollids[] = $poll->add($sock,   ZMQ::POLL_IN);
-$pollids[] = $poll->add($remote, ZMQ::POLL_IN);
+$pollids[] = $poll->add($fe, ZMQ::POLL_IN);
+$pollids[] = $poll->add($be, ZMQ::POLL_IN);
 
-error_log("i am $my_sockid");
+dbg("i have 1 bind socket[$fe_uri], 1 connect socket[$be_uri]:".getmypid());
 
 while(true){
     $events = $poll->poll($readable, $writable, -1);
@@ -40,27 +34,35 @@ while(true){
 
     if ($events > 0) {
         foreach ($readable as $r) {
-            if($r === $sock){
+            if($r === $fe){
                 $client_id = $r->recv();
                 $empty     = $r->recv();
                 $request   = $r->recv();
-                error_log('cliend id is '. $client_id);
-                error_log('request   is '. $request);
+                dbg('cliend id is '. $client_id);
+                dbg('empty is '.     $empty);
+                dbg('request   is '. $request);
                 //sleep(3);
-                $remote->send($client_id, ZMQ::MODE_SNDMORE);
-                $remote->send('', ZMQ::MODE_SNDMORE);
-                $remote->send("$my_sockid got message");
+                //$remote->send($client_id, ZMQ::MODE_SNDMORE);
+                //$remote->send('', ZMQ::MODE_SNDMORE);
+                $be->send($client_id, ZMQ::MODE_SNDMORE);
+                $be->send('',         ZMQ::MODE_SNDMORE);
+                $be->send($request);
             }
-            if($r === $remote){
-                $client_id = $r->recv();
+            if($r === $be){
+                //$bs_id     = $r->recv();
+                //dbg('bs id is '. $bs_id);
                 $empty     = $r->recv();
-                $request   = $r->recv();
-                error_log('cliend id is '. $client_id);
-                error_log('request   is '. $request);
+                dbg("empt = $empty");
+                $client_id = $r->recv();
+                dbg('cl id is '. $client_id);
+                $empty     = $r->recv();
+                dbg("empt = $empty");
+                $response  = $r->recv();
+                dbg('response   is '. $response);
                 //sleep(3);
-                $sock->send($client_id, ZMQ::MODE_SNDMORE);
-                $sock->send('', ZMQ::MODE_SNDMORE);
-                $sock->send("$my_sockid got message");
+                $fe->send($client_id, ZMQ::MODE_SNDMORE);
+                $fe->send('',         ZMQ::MODE_SNDMORE);
+                $fe->send($response);
             }
         }
     }
