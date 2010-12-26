@@ -19,5 +19,5 @@ function checkinput(&$a){
     }
 }
 function dbg($msg){
-    if(1) error_log($msg);
+    if(0) error_log($msg);
 }

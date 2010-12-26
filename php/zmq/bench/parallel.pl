@@ -27,5 +27,5 @@ else{
     warn "子プロセス[$$]: 処理開始";
     #sleep 1;
     #system("php client.php 0 $loop")
-    system("time php memcached_client.php $loop")
+    system("php memcached_client.php $loop")
 }

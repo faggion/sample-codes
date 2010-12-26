@@ -1,4 +1,75 @@
 
+xdebug install後性能
+-----------------------
+
+/home/satoshi/github/sample-codes/php/zmq/bench% time php client.php 0 10000 2>/dev/null
+php client.php 0 10000 2> /dev/null  0.59s user 0.89s system 7% cpu 19.115 total
+/home/satoshi/github/sample-codes/php/zmq/bench% time php memcached_client.php 10000    
+php memcached_client.php 10000  2.82s user 3.20s system 44% cpu 13.422 total
+
+
+通常時性能
+-----------------------
+
+/home/satoshi/github/sample-codes/php/zmq/bench% time php parallel.php 8 
+CHILD : loop=1250, 27694
+CHILD : loop=1250, 27695
+CHILD : loop=1250, 27696
+
+- PHPで希望の挙動はできた
+  -> Cに移植して性能を測るべき、1プロセス複数Threadで書かないとprofilingが厄介
+- ZMQ::SOCKET_* の組み合わせは1パターンじゃないので、一番軽量な組合せにするべき
+  ただ、REP impl with XREP, REQ impl with XREQ、らしいので大差ないかも
+- 物理的に異なるサーバ間では動作確認していない
+- client数の超増加でどういうパフォーマンスになるか
+
+
+
+
+
+
+
+
+CHILD : loop=1250, 27697
+CHILD : loop=1250, 27698
+PARENT: waiting...
+CHILD : loop=1250, 27700
+CHILD : loop=1250, 27701
+CHILD : loop=1250, 27707
+php parallel.php 8  0.10s user 0.10s system 1% cpu 11.563 total
+/home/satoshi/github/sample-codes/php/zmq/bench% time php parallel.php 8 1
+CHILD : loop=1250, 27754
+CHILD : loop=1250, 27755
+CHILD : loop=1250, 27756
+CHILD : loop=1250, 27757
+CHILD : loop=1250, 27760
+CHILD : loop=1250, 27764
+PARENT: waiting...
+CHILD : loop=1250, 27765
+CHILD : loop=1250, 27770
+php parallel.php 8 1  0.32s user 0.46s system 8% cpu 9.035 total
+/home/satoshi/github/sample-codes/php/zmq/bench% time php parallel.php 4  
+PARENT: waiting...
+CHILD : loop=2500, 27804
+CHILD : loop=2500, 27805
+CHILD : loop=2500, 27807
+CHILD : loop=2500, 27806
+php parallel.php 4  0.18s user 0.11s system 2% cpu 10.978 total
+/home/satoshi/github/sample-codes/php/zmq/bench% time php parallel.php 4 1
+PARENT: waiting...
+CHILD : loop=2500, 27842
+CHILD : loop=2500, 27843
+CHILD : loop=2500, 27844
+CHILD : loop=2500, 27845
+php parallel.php 4 1  0.58s user 0.88s system 16% cpu 8.590 total
+
+
+/home/satoshi/github/sample-codes/php/zmq/bench% time php client.php 0 10000
+php client.php 0 10000  0.47s user 0.24s system 6% cpu 10.635 total
+/home/satoshi/github/sample-codes/php/zmq/bench% time php memcached_client.php 10000
+php memcached_client.php 10000  2.06s user 3.24s system 64% cpu 8.158 total
+
+
 動作確認コマンド
 -----------------------
 

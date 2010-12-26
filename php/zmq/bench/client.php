@@ -16,5 +16,5 @@ $sock->connect($broker_client_uri);
 
 dbg("i am $my_sockid");
 for($i=0;$i<$argv[2];$i++){
-    dbg($sock->send("hoge=fuga")->recv());
+    dbg($sock->send("hoge")->recv());
 }
