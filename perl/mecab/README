@@ -1,0 +1,1 @@
+% head -2 log.2011-01-04 | awk '{print $4}' | perl test.pl | grep 名詞
