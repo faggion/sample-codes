@@ -4,6 +4,9 @@ use strict;
 use warnings;
 use Data::Dumper;
 use Getopt::Long;
+# sudo aptitude install libxml-atom-perl
+# sudo cpan Atompub::Client
+# で環境構築
 use Atompub::Client;
 use XML::Atom::Entry;
 
