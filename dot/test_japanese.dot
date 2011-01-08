@@ -1,0 +1,7 @@
+digraph test_png {
+  node [fontname="/usr/share/fonts/truetype/ttf-japanese-gothic.ttf"];
+  hoge -> piyo -> hoge -> hoge;
+  hoge -> fuga;
+  piyo -> fuga;
+  hoge [label = "テスト"];
+}
