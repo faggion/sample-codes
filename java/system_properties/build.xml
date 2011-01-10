@@ -33,6 +33,7 @@
   <target name="compile" depends="mkdir" description="">
     <javac srcdir="${src.dir}"
            destdir="${build.classes}"
+           includeantruntime="false"
            classpathref="classpath"/>
   </target>
 

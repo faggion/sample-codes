@@ -38,6 +38,7 @@
   <target name="exec" depends="compile" description="実行">
     <java classname="${exec.class}"
           classpathref="classpath"
+          includeantruntime="false"
           classpath="${build.classes}">
       <sysproperty key="org.apache.commons.logging.Log" value="org.apache.commons.logging.impl.SimpleLog"/>
     </java>
