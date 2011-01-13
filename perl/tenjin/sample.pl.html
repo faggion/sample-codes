@@ -1,0 +1,6 @@
+<h1>[=$title=]</h1>
+<ul>
+<?pl foreach my $e (@$entries) { ?>
+ <li><a href="[==$e->{url}=]">[=$e->{name}=]</a></li>
+<?pl } ?>
+</ul>
