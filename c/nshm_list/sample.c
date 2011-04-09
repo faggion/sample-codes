@@ -29,14 +29,13 @@ int init(const char *key){
         if(it_tmp != NULL){
             SET_NSHMBASE(n);
             it->next = vos_assign(int, it_tmp);
-            fprintf(stderr, "next ptr [%d][%p]\n", it->id, it->next);
+            fprintf(stderr, "next ptr [%d][%d]\n", it->id, it->next);
             DEF_NSHMBASE(n);
         }
         it_tmp = it;
     }
     ret = nshm_set(n, key, (int)strlen(key), (const void *)it);
-    fprintf(stderr, "ret[%d]\n", ret);
-
+    //fprintf(stderr, "ret[%d]\n", ret);
     nshm_detach(n);
     return 0;
 }
@@ -55,7 +54,6 @@ int dump(const char *key){
         DEF_NSHMBASE(n);
     } while(it->next);
     nshm_detach(n);
-
     return 0;
 }
 
