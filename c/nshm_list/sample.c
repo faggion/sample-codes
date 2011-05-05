@@ -21,16 +21,14 @@ int init(const char *key){
 
     n  = nshm_create(PATH, SIZE, 0666);
     fprintf(stderr, "size of item: %d\n", sizeof(item));
-
+    SET_NSHMBASE(n);
     for(i=0;i<10;i++){
         it = (item *)nshm_memalloc(n, sizeof(item));
         it->id    = i;
         it->price = 1000 + i;
         if(it_tmp != NULL){
-            SET_NSHMBASE(n);
             it->next = vos_assign(int, it_tmp);
             fprintf(stderr, "next ptr [%d][%d]\n", it->id, it->next);
-            DEF_NSHMBASE(n);
         }
         it_tmp = it;
     }
@@ -47,11 +45,10 @@ int dump(const char *key){
 
     n  = nshm_attach(PATH);
     it = (item *)nshm_get(n, key, (int)strlen(key));
+    SET_NSHMBASE(n);
     do {
         fprintf(stderr, "item id[%d],price[%d]\n", it->id, it->price);
-        SET_NSHMBASE(n);
-        it = vos_ptr(int, it->next);
-        DEF_NSHMBASE(n);
+        it = vos_ptr(item *, it->next);
     } while(it->next);
     nshm_detach(n);
     return 0;
