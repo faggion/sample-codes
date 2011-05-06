@@ -95,18 +95,15 @@ int init(){
     return ret;
 }
 
-int lookup(int64_t id){
+int lookup(NShm *n, int64_t id){
     void *_nshm_base=NULL;
     int64_t *items;
     Item    *item;
     Seller  *seller;
-    NShm    *n;
     char    *item_name, *seller_name;
 
-    n  = nshm_attach(PATH);
-    items = (int64_t *)nshm_get(n, TABLE_NAME, (int)strlen(TABLE_NAME));
     SET_NSHMBASE(n);
-
+    items = (int64_t *)nshm_get(n, TABLE_NAME, (int)strlen(TABLE_NAME));
     fprintf(stderr, "item id[%ld]\n", (long)id);
     item = vos_ptr(Item *, items[id]);
     fprintf(stderr, "item price[%ld]\n", (long)item->price);
@@ -118,12 +115,12 @@ int lookup(int64_t id){
     seller_name = vos_ptr(char *, seller->name_offset);
     fprintf(stderr, "seller name[%s]\n", seller_name);
 
-    nshm_detach(n);
     return 0;
 }
 
 int main(int argc, const char **argv){
     int ix;
+    NShm *n;
 
     if(argc < 2){
         goto error;
@@ -135,13 +132,17 @@ int main(int argc, const char **argv){
     }
     else if(2 < argc &&
             !strcmp(argv[1], "lookup")){
-        lookup((int64_t)atoi(argv[2]));
+        n = nshm_attach(PATH);
+        lookup(n, (int64_t)atoi(argv[2]));
+        nshm_detach(n);
         return 0;
     }
     else if(!strcmp(argv[1], "bench")){
+        n = nshm_attach(PATH);
         for(ix=0;ix<100000;ix++){
-            lookup((int64_t)(ix % ITEM_BUCKET_SIZ));
+            lookup(n, (int64_t)(ix % ITEM_BUCKET_SIZ));
         }
+        nshm_detach(n);
         return 0;
     }
     goto error;
