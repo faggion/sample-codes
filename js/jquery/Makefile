@@ -1,6 +1,7 @@
 .PHONY: all install
 
-INSTALL_DIR = /var/www/nginx-default/tanarky/jquery
+#INSTALL_DIR = /var/www/nginx-default/tanarky/jquery
+INSTALL_DIR = /usr/share/tanarky/htdocs/tmp/jquery
 
 all: install
 
