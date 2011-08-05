@@ -17,6 +17,7 @@ int main(void){
     sprintf(buf, "%d", ix);
 
     fprintf(stderr, "sizeof(char): %d\n", sizeof(char));
+    fprintf(stderr, "sizeof(buf) : %d\n", sizeof(buf));
     fprintf(stderr, "sizeof(pthread_spinlock_t): %d\n", sizeof(pthread_spinlock_t));
     fprintf(stderr, "sizeof(int64_t): %d\n", sizeof(int64_t));
     fprintf(stderr, "sizeof(time_t): %d\n", sizeof(time_t));
