@@ -11,7 +11,9 @@ MODULE_DESCRIPTION("\"hello world\" MODULE");
 MODULE_LICENSE("GPL");
 
 static int hello_open( struct inode* inode, struct file* filp ){
-    printk( KERN_INFO "hello_dev:open\n" );
+    printk( KERN_INFO "hello_dev:open: major=%d, minor=%d\n",
+            MAJOR(inode->i_rdev),
+            MINOR(inode->i_rdev));
     return 0;
 }
 
@@ -23,9 +25,9 @@ static int hello_release( struct inode* inode, struct file* filp ){
 
 //fread
 static ssize_t hello_read( struct file* filp, char* buf, size_t count, loff_t* pos ){
-    char msg[] = "hello world\n";
-    printk( KERN_INFO "hello_dev:reading: %s = %d\n", msg, sizeof(msg) );
-    copy_to_user(buf, msg, sizeof(msg));
+    //char msg[] = "hello world\n";
+    //printk( KERN_INFO "hello_dev:reading: %s = %d\n", msg, sizeof(msg) );
+    //copy_to_user(buf, msg, sizeof(msg));
     return count;
 }
 

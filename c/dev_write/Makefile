@@ -2,29 +2,29 @@ ifndef LINUX_HEADERS
 LINUX_HEADERS:=$(shell if [ -e /usr/src/linux-headers-`uname -r` ] ;	then echo /usr/src/linux-headers-`uname -r` ; else echo /usr/src/linux-`uname -r` ; fi)
 endif
 
-TARGET:= hello.ko
+TARGET:= write.ko
 
 all: ${TARGET}
 
-hello.ko: hello.c
+write.ko: write.c
 	make -C ${LINUX_HEADERS} M=`pwd` V=1 modules
 
 clean:
 	make -C ${LINUX_HEADERS} M=`pwd` V=1 clean
 
 install: all
-	sudo mknod /dev/hello.1 c 0x0721 1
-	sudo mknod /dev/hello.2 c 0x0721 2
-	sudo chmod 0666 /dev/hello.1
-	sudo chmod 0666 /dev/hello.2
-	sudo insmod hello.ko
+	sudo mknod /dev/write.1 c 0x0721 1
+	sudo mknod /dev/write.2 c 0x0721 2
+	sudo chmod 0666 /dev/write.1
+	sudo chmod 0666 /dev/write.2
+	sudo insmod write.ko
 
 uninstall:
-	sudo rmmod hello
-	sudo rm -f /dev/hello.1
-	sudo rm -f /dev/hello.2
+	sudo rmmod write
+	sudo rm -f /dev/write.1
+	sudo rm -f /dev/write.2
 
-obj-m:= hello.o
+obj-m:= write.o
 
 clean-files := *.o *.ko *.mod.[co] *~
 
