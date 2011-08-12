@@ -11,13 +11,13 @@ class HttpRequest
         $this->results = array();
     }
 
-    public function add($id, $url, $cookie=null)
+    public function add($id, $url, $opts=array())
     {
         if(empty($id) || empty($url)) return false;
         $this->results = array();
-        $this->queue[] = array('id'    => $id,
-                               'url'   => $url,
-                               'cookie'=> $cookie);
+        $this->queue[] = array('id'   => $id,
+                               'url'  => $url,
+                               'opts' => $opts);
         return true;
     }
 
