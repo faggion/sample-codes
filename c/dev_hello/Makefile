@@ -13,16 +13,10 @@ clean:
 	make -C ${LINUX_HEADERS} M=`pwd` V=1 clean
 
 install: all
-	sudo mknod /dev/hello.1 c 0x0721 1
-	sudo mknod /dev/hello.2 c 0x0721 2
-	sudo chmod 0666 /dev/hello.1
-	sudo chmod 0666 /dev/hello.2
 	sudo insmod hello.ko
 
 uninstall:
 	sudo rmmod hello
-	sudo rm -f /dev/hello.1
-	sudo rm -f /dev/hello.2
 
 obj-m:= hello.o
 

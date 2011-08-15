@@ -2,14 +2,14 @@
 #include <linux/module.h>
 #include <linux/errno.h>
 #include <linux/fs.h>
+// for copy_to_user/copy_from_user
 #include <asm/uaccess.h>
-#include <linux/random.h>
-#include <linux/slab.h>
-#include <linux/time.h>
 
+#define WRITE_BUF_SIZ 64
+#define MAJOR_ID 280
 
-MODULE_AUTHOR("PSI");
-MODULE_DESCRIPTION("\"write world\" MODULE");
+MODULE_AUTHOR("tanarky");
+MODULE_DESCRIPTION("read write sample");
 MODULE_LICENSE("GPL");
 
 static int write_open( struct inode* inode, struct file* filp ){
@@ -19,32 +19,39 @@ static int write_open( struct inode* inode, struct file* filp ){
     return 0;
 }
 
-//fclose
 static int write_release( struct inode* inode, struct file* filp ){
     printk( KERN_INFO "write_dev:release\n");
     return 0;
 }
 
-//fread
 static ssize_t write_read( struct file* filp, char* buf, size_t count, loff_t* pos ){
-    char msg[] = "write world\n";
-    printk( KERN_INFO "write_dev:reading: %s = %d\n", msg, sizeof(msg) );
-    //copy_to_user(buf, msg, sizeof(msg));
+    char msg[] = "message from kernel to user\n";
+    copy_to_user(buf, msg, sizeof(msg));
     return count;
 }
 
-//fwrite
-static ssize_t write_write(struct file* filp, const char* buf, size_t count, loff_t* pos ){
-    printk( KERN_INFO "write_dev:writing1\n" );
-    DECLARE_WAIT_QUEUE_HEAD(wait);
-    sleep_on_timeout(&wait, 250 * 5); // 250で1秒だった、なぜ？
-    printk( KERN_INFO "write_dev:writing2\n" );
+static ssize_t write_write(struct file* filp,
+                           const char* buf,
+                           size_t count,
+                           loff_t* pos ){
+    char msg[WRITE_BUF_SIZ];
+    if(WRITE_BUF_SIZ <= count){
+        printk(KERN_INFO "write_dev:too much data. max = %d\n", WRITE_BUF_SIZ - 1);
+        return -EFAULT;
+    }
+    if( copy_from_user( msg, buf, count ) ){
+        printk(KERN_INFO "copy_from_user failed\n");
+        return -EFAULT;
+    }
+    msg[count] = '\0';
+    printk(KERN_INFO "receiced message = %s", msg);
+    printk(KERN_INFO "position = %d\n", *pos);
+    *pos += count; // 分割して読み込むときに必要っぽい
     return count;
 }
 
-//fwrite
 static ssize_t write_poll(struct file* filp, const char* buf, size_t count, loff_t* pos ){
-    printk( KERN_INFO "write_dev:polling\n" );
+    printk(KERN_INFO "write_dev:polling\n");
     return count;
 }
 
@@ -58,17 +65,17 @@ static struct file_operations write_fops = {
 };
 
 int init_module( void ){
-    if(register_chrdev( 0x0721, "write_dev", &write_fops)){
-        printk( KERN_INFO "write_dev: init error\n" );
+    if(register_chrdev( MAJOR_ID, "write_dev", &write_fops)){
+        printk(KERN_INFO "write_dev: init error\n");
         return -EBUSY;
     }
-    printk( KERN_INFO "write_dev:init\n" );
+    printk(KERN_INFO "write_dev:init\n");
     return 0;
 }
 
 void cleanup_module( void ){
-    unregister_chrdev( 0x0721, "write_dev" );
-    printk( KERN_INFO "write_dev:cleanup");
+    printk(KERN_INFO "write_dev:cleanup\n");
+    unregister_chrdev( MAJOR_ID, "write_dev" );
 }
 
 
