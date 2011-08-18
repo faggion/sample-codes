@@ -12,8 +12,6 @@ MODULE_AUTHOR("tanarky");
 MODULE_DESCRIPTION("read write sample");
 MODULE_LICENSE("GPL");
 
-static int global_incr = 0;
-
 static int write_open( struct inode* inode, struct file* filp ){
     printk( KERN_INFO "write_dev:open: major=%d, minor=%d\n",
             MAJOR(inode->i_rdev),
@@ -47,11 +45,7 @@ static ssize_t write_write(struct file* filp,
     }
     msg[count] = '\0';
     printk(KERN_INFO "receiced message = %s", msg);
-    printk(KERN_INFO "position = %d\n", *pos);
     *pos += count; // 分割して読み込むときに必要っぽい
-
-    printk(KERN_INFO "global incr = %d\n", global_incr);
-    global_incr++;
     return count;
 }
 

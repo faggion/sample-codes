@@ -24,7 +24,7 @@ fifo_read(int fd, short event, void *arg)
     struct event *ev = arg;
 
     /* Reschedule this event */
-    event_add(ev, NULL);
+    //event_add(ev, NULL);
 
     fprintf(stderr, "fifo_read called with fd: %d, event: %d, arg: %p\n",
             fd, event, arg);
@@ -49,7 +49,6 @@ main (int argc, char **argv)
     struct stat st;
     char *fifo = "event.fifo";
     int socket;
- 
     if (lstat (fifo, &st) == 0) {
         if ((st.st_mode & S_IFMT) == S_IFREG) {
             errno = EEXIST;
@@ -57,7 +56,6 @@ main (int argc, char **argv)
             exit (1);
         }
     }
-
     unlink (fifo);
     if (mkfifo (fifo, 0600) == -1) {
         perror("mkfifo");
