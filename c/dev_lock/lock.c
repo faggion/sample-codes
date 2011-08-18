@@ -7,6 +7,9 @@
 #include <linux/slab.h>
 #include <linux/time.h>
 
+// Need for global variable "current"
+#include <linux/sched.h>
+
 //#include <linux/spinlock.h>
 //static spinlock_t global_lock = SPIN_LOCK_UNLOCKED;
 static int dummy_lock = 0;
@@ -16,14 +19,16 @@ MODULE_DESCRIPTION("\"lock world\" MODULE");
 MODULE_LICENSE("GPL");
 
 static int lock_open( struct inode* inode, struct file* filp ){
-    printk( KERN_INFO "lock_dev:open: major=%d, minor=%d\n",
+    pid_t pid = current->pid;
+    printk( KERN_INFO "lock_dev:open: current_pid=%ld, major=%d, minor=%d\n",
+            pid,
             MAJOR(inode->i_rdev),
             MINOR(inode->i_rdev));
     return 0;
 }
 
 static int lock_close( struct inode* inode, struct file* filp ){
-    printk( KERN_INFO "lock_dev:release\n");
+    printk( KERN_INFO "lock_dev:release pid=%ld\n", current->pid);
     return 0;
 }
 
@@ -35,7 +40,9 @@ static ssize_t lock_read( struct file* filp, char* buf, size_t count, loff_t* po
 }
 
 static ssize_t lock_write(struct file* filp, const char* buf, size_t count, loff_t* pos ){
-    printk( KERN_INFO "lock_dev:dummy_lock=%d\n", dummy_lock );
+    pid_t pid = current->pid;
+
+    printk( KERN_INFO "lock_dev:dummy_lock=%d, pid=%ld\n", dummy_lock, pid );
     dummy_lock++;
 
     //// 以下はOSが固まるので危険
