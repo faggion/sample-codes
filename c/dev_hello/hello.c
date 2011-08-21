@@ -18,7 +18,7 @@ int init_module( void ){
         printk( KERN_INFO "hello_dev: init error\n" );
         return -EBUSY;
     }
-    printk(KERN_INFO "hello_dev:init\n");
+    printk(KERN_INFO "hello_dev:init %ld %ld\n", PAGE_SIZE, GFP_KERNEL);
     return 0;
 }
 

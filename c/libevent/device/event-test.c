@@ -47,7 +47,8 @@ main (int argc, char **argv)
     struct event evfifo;
     struct stat st;
     int socket;
-    char *fifo = "/dev/poll.1";
+    char fifo[] = "/dev/poll.1";
+    //char *fifo = "/dev/poll.2";
     //char *fifo = "event.fifo";
     //if (lstat (fifo, &st) == 0) {
     //    if ((st.st_mode & S_IFMT) == S_IFREG) {
