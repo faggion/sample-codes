@@ -29,7 +29,8 @@ static int poll_open( struct inode* inode, struct file* filp ){
 }
 
 static int poll_release( struct inode* inode, struct file* filp ){
-    printk( KERN_INFO "poll_dev:release\n");
+    int64_t test = 777;
+    printk( KERN_INFO "poll_dev:release: %lld\n", test);
     return 0;
 }
 
@@ -69,6 +70,7 @@ static ssize_t poll_write(struct file* filp, const char* buf, size_t count, loff
         if ( filp->f_flags & O_NONBLOCK ) {
             return -EAGAIN;
         }
+        // プロセスを街状態にする
         if ( wait_event_interruptible( write_q, ( buf_pos != BUF_SIZ ) ) )
             return -ERESTARTSYS;
     }
@@ -88,19 +90,25 @@ static ssize_t poll_write(struct file* filp, const char* buf, size_t count, loff
 }
 
 static unsigned int poll_poll(struct file* filp, poll_table* wait){
+    struct inode *inode;
     unsigned int retmask = 0;
 
-    printk( KERN_INFO "poll_dev:polling\n");
+    inode = filp->f_dentry->d_inode;
+
+    printk( KERN_INFO "poll_dev:polling start:%d, %d, %d\n", current->pid, MAJOR(inode->i_rdev), MINOR(inode->i_rdev));
     poll_wait(filp, &read_q,  wait);
     poll_wait(filp, &write_q, wait);
     
     if ( buf_pos != 0 ) {
+        printk( KERN_INFO "poll_dev:polling readable\n");
         retmask |= ( POLLIN  | POLLRDNORM );
     }
     
     if ( buf_pos != BUF_SIZ ) {
+        printk( KERN_INFO "poll_dev:polling writable\n");
         retmask |= ( POLLOUT | POLLWRNORM );
     }
+    printk( KERN_INFO "poll_dev:polling end\n");
     return retmask;
 }
 

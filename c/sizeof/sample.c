@@ -16,6 +16,10 @@ int main(void){
     int ix=1;
     sprintf(buf, "%d", ix);
 
+    fprintf(stderr, "sizeof(short): %d\n", sizeof(short));
+    fprintf(stderr, "sizeof(unsigned short): %d\n", sizeof(unsigned short));
+    fprintf(stderr, "sizeof(int): %d\n", sizeof(int));
+    fprintf(stderr, "sizeof(unsigned int): %d\n", sizeof(unsigned int));
     fprintf(stderr, "sizeof(char): %d\n", sizeof(char));
     fprintf(stderr, "sizeof(buf) : %d\n", sizeof(buf));
     fprintf(stderr, "sizeof(pthread_spinlock_t): %d\n", sizeof(pthread_spinlock_t));
