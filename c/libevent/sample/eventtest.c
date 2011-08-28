@@ -24,7 +24,7 @@ fifo_read(int fd, short event, void *arg)
     struct event *ev = arg;
 
     /* Reschedule this event */
-    //event_add(ev, NULL);
+    event_add(ev, NULL);
 
     fprintf(stderr, "fifo_read called with fd: %d, event: %d, arg: %p\n",
             fd, event, arg);

@@ -11,16 +11,36 @@
 
 #include <tcutil.h>
 
-int main (int argc, char **argv){
+struct fdinfo {
+    int fd;
+    int dev;
+    int is_remote;
+    int group;
+};
+
+int main (void){
     TCMAP *mymap = tcmapnew();
-    int a,b,*ret,c,d;
+    //struct fdinfo fdi, *f;
+    struct fdinfo fdi;
+    const struct fdinfo *f;
+    int a,b,c,d,e;
+    const int *ret;
     a = 10;
     b = 100;
 
     tcmapput(mymap, &a, sizeof(int), &b, sizeof(int));
-    ret = (int *)tcmapget(mymap, &a, sizeof(int), &c);
-
+    ret = tcmapget(mymap, &a, sizeof(int), &c);
     printf("ret=%d sp=%d\n", *ret, c);
+
+    d = 7;
+    fdi.fd  = 3;
+    fdi.dev = 2;
+    fdi.is_remote = false;
+    fdi.group = 103;
+    tcmapput(mymap, &d, sizeof(int), &fdi, sizeof(struct fdinfo));
+    f = tcmapget(mymap, &d, sizeof(int), &e);
+    printf("fdinfo->group=%d size=%d\n", f->group, e);
+
     tcmapdel(mymap);
     return 0;
 }
