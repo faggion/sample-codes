@@ -16,8 +16,10 @@ MODULE_LICENSE("GPL");
 #define MAJOR_ID 280
 #define NDEV 4
 
-static int req[] = {-1,-1,-1,-1};
-static wait_queue_head_t server_q;
+static struct {
+    int status;
+    wait_queue_head_t wait;
+} device[NDEV];
 
 static int multiplex1_open( struct inode* inode, struct file* filp ){
     printk( KERN_INFO "multiplex1_dev:open: pid=%d, major=%d, minor=%d\n",
@@ -51,8 +53,9 @@ static ssize_t multiplex1_read(struct file* filp, char* buf, size_t count, loff_
 
     // server用device すなわち server側からrequestをreadした場合
     if(minor % 2 == 0){
-        req[minor] = -1; // server側の処理が終わったので-1にする
-        wake_up_interruptible( &server_q );
+        device[minor].status = -1; // server側の処理が終わったので-1にする
+        //wake_up_interruptible( &device[minor].wait );
+        wake_up( &device[minor].wait );
     }
     // client用device
     else{
@@ -81,11 +84,13 @@ static ssize_t multiplex1_write(struct file* filp, const char* buf, size_t count
     }
     // client用device すなわち client側からrequestをwriteした場合
     else{
-        req[minor-1] = 1; // server側をreadableに
-        printk(KERN_INFO "multiplex1_dev:write(%d): req[server]: %d\n",
+        device[minor-1].status = 1; // server側をreadableに
+        printk(KERN_INFO "multiplex1_dev:write(%d -> %d): req[server]: %d\n",
                minor,
-               req[minor-1]);
-        wake_up_interruptible( &server_q );
+               minor-1,
+               device[minor-1].status);
+        //wake_up_interruptible( &device[minor-1].wait );
+        wake_up( &device[minor-1].wait );
     }
     return count;
 }
@@ -105,15 +110,15 @@ static unsigned int multiplex1_poll(struct file* filp, poll_table* wait){
         return 0;
     }
 
-    poll_wait(filp, &server_q,  wait);
+    poll_wait(filp, &device[minor].wait,  wait);
     
-    printk(KERN_INFO "multiplex1_dev:poll(%d): req = %d\n", minor, req[minor]);
+    printk(KERN_INFO "multiplex1_dev:poll(%d): req = %d\n", minor, device[minor].status);
 
-    if (0 < req[minor]){
-        printk( KERN_INFO "multiplex1_dev:poll(%d): readable request[%d]\n", minor, req[minor]);
+    if (0 < device[minor].status){
+        printk( KERN_INFO "multiplex1_dev:poll(%d): readable request[%d]\n", minor, device[minor].status);
         retmask |= ( POLLIN  | POLLRDNORM );
     }
-    if (req[minor] < 0){
+    if (device[minor].status < 0){
         printk( KERN_INFO "multiplex1_dev:poll(%d): empty request. now, writable\n", minor);
         retmask |= ( POLLOUT | POLLWRNORM );
     }
@@ -130,11 +135,16 @@ static struct file_operations multiplex1_fops = {
 };
 
 int init_module( void ){
+    int i;
     if(register_chrdev( MAJOR_ID, "multiplex1_dev", &multiplex1_fops)){
         printk( KERN_INFO "multiplex1_dev: init error\n" );
         return -EBUSY;
     }
-    init_waitqueue_head( &server_q );
+    for(i=0;i<NDEV;i++){
+        printk( KERN_INFO "multiplex1_dev:initialize %d\n", i);
+        device[i].status = -1;
+        init_waitqueue_head( &device[i].wait );
+    }
     printk( KERN_INFO "multiplex1_dev:init\n" );
     return 0;
 }

@@ -38,7 +38,6 @@ server_read(int fd, short event, void *arg)
     /* find minor id from fd */
     f = tcmapget(mymap, &fd, sizeof(int), &size);
     if(f != 0){
-        printf("null \n");
         len = read(fd, (void *)&receive, 1);
         if (len < 0) {
             perror("read");
@@ -51,7 +50,7 @@ server_read(int fd, short event, void *arg)
 
 //int main (int argc, char **argv){
 int main (void){
-    struct event ev;
+    struct event ev0, ev2;
     struct fdmap fm;
     int sock0,sock2;
     char dev0[] = "/dev/multiplex1.0";
@@ -59,17 +58,6 @@ int main (void){
 
     mymap = tcmapnew();
     event_init();
-
-    sock0 = open (dev0, O_RDWR | O_NONBLOCK, 0);
-    if (sock0 == -1) {
-        perror("open sock0");
-        exit (1);
-    }
-    fm.fd    = sock0;
-    fm.minor = 0;
-    tcmapput(mymap, &sock0, sizeof(int), &fm, sizeof(struct fdmap));
-    printf("polling device %s(%d)\n", dev0, sock0);
-    event_set(&ev, sock0, EV_READ, server_read, &ev);
 
     sock2 = open (dev2, O_RDWR | O_NONBLOCK, 0);
     if (sock2 == -1) {
@@ -80,9 +68,21 @@ int main (void){
     fm.minor = 2;
     tcmapput(mymap, &sock2, sizeof(int), &fm, sizeof(struct fdmap));
     printf("polling device %s(%d)\n", dev2, sock2);
-    event_set(&ev, sock2, EV_READ, server_read, &ev);
+    event_set(&ev0, sock2, EV_READ, server_read, &ev0);
 
-    event_add(&ev, NULL);
+    sock0 = open (dev0, O_RDWR | O_NONBLOCK, 0);
+    if (sock0 == -1) {
+        perror("open sock0");
+        exit (1);
+    }
+    fm.fd    = sock0;
+    fm.minor = 0;
+    tcmapput(mymap, &sock0, sizeof(int), &fm, sizeof(struct fdmap));
+    printf("polling device %s(%d)\n", dev0, sock0);
+    event_set(&ev2, sock0, EV_READ, server_read, &ev2);
+
+    event_add(&ev0, NULL);
+    event_add(&ev2, NULL);
     event_dispatch();
     return (0);
 }

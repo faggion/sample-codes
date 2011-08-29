@@ -76,8 +76,10 @@ main (int argc, char **argv)
 
     /* Initalize one event */
     event_set(&evfifo, socket, EV_READ, fifo_read, &evfifo);
+
     /* Add it to the active events, without a timeout */
     event_add(&evfifo, NULL);
+
     event_dispatch();
     return (0);
 }
