@@ -14,7 +14,23 @@ typedef struct _foo
 int main(void){
     char buf[128];
     int ix=1;
+    long long ll=1;
+    u_long u_l = 1;
+    unsigned long ul = 1;
+    unsigned long long llu=1;
     sprintf(buf, "%d", ix);
+
+    fprintf(stderr, "sizeof(long long): %d\n", sizeof(long long));
+    fprintf(stderr, "long long: %lld\n", ll);
+
+    fprintf(stderr, "sizeof(unsigned long long): %d\n", sizeof(unsigned long long));
+    fprintf(stderr, "unsigned long long: %llu\n", llu);
+
+    fprintf(stderr, "sizeof(u_long): %d\n", sizeof(u_long));
+    fprintf(stderr, "u_long: %ld\n", u_l);
+
+    fprintf(stderr, "sizeof(unsigned long): %d\n", sizeof(unsigned long));
+    fprintf(stderr, "unsigned long: %ld\n", ul);
 
     fprintf(stderr, "sizeof(short): %d\n", sizeof(short));
     fprintf(stderr, "sizeof(unsigned short): %d\n", sizeof(unsigned short));
