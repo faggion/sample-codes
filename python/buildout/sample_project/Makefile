@@ -1,7 +1,7 @@
 .PHONY: all
 
 all: 
-	python bootstrap.py && bin/buildout
+	python bootstrap.py --distribute && bin/buildout
 
 clean:
 	rm -rf bin/ develop-eggs/ eggs/ parts/ *.egg-info/
