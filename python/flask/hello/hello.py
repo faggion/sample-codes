@@ -7,10 +7,10 @@ class Person(Entity):
     name = Field(Unicode)
     age = Field(Float)
 
-from restful.api import api
+#from restful.api import api
 from flask import Flask
 app = Flask(__name__)
-app.register_module(api, url_prefix='/myrestapi/')
+#app.register_module(api, url_prefix='/myrestapi/')
 
 @app.route('/')
 def hello_world():

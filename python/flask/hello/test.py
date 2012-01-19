@@ -1,14 +1,19 @@
-import requests
+import os
+import hello
+import unittest
+import tempfile
 import logging
 
-r = requests.get('http://localhost:10080/')
-logging.error(r.content)
+class FlaskrTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = hello.app.test_client()
 
-r = requests.post('http://localhost:10080/')
-logging.error(r.content)
+    def tearDown(self):
+        pass
 
-r = requests.put('http://localhost:10080/')
-logging.error(r.content)
+    def mytest(self):
+        ret = self.app.get('/')
+        assert u'hello' in ret.data
 
-r = requests.delete('http://localhost:10080/')
-logging.error(r.content)
+if __name__ == '__main__':
+    unittest.main()
