@@ -6,9 +6,9 @@
 #
 *~
 
-#
+# -----------------
 # python
-#
+# -----------------
 *.py[co]
 *.egg
 *.egg-info
@@ -26,10 +26,12 @@ pip-log.txt
 .tox
 *.mo
 .mr.developer.cfg
+downloads
+*.zip
 
-#
-# C++
-#
+# -----------------
+# C/C++
+# -----------------
 *.slo
 *.lo
 *.o
@@ -37,3 +39,8 @@ pip-log.txt
 *.lai
 *.la
 *.a
+
+# -----------------
+# blogofile
+# -----------------
+_site
