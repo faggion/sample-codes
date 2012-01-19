@@ -11,8 +11,10 @@ def main():
     logging.debug(im.format)
     logging.debug(im.size)
     logging.debug(im.mode)
+
+    im.thumbnail((1200,900), Image.ANTIALIAS)
     #im.thumbnail((400,300), Image.ANTIALIAS)
-    im.thumbnail(size=(400,300))
+    #im.thumbnail(size=(400,300))
     im.save(thumbname, 'JPEG')
 
 if __name__ == '__main__':
