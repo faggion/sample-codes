@@ -12,5 +12,6 @@
     }
     var f = new Foo();
     console.debug(f);
+    console.debug(f.a);
     console.debug(f.get()); // 3
 })();
