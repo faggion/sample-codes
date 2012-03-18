@@ -15,9 +15,11 @@ pub  = RSA.importKey(open('pubkey_rsa.pem', 'r').read())
 priv = RSA.importKey(open('privkey_rsa.pem', 'r').read())
  
 text = '12345678'
+#text = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 print text
 
-crypto = pub.encrypt(text, '')
+#crypto = pub.encrypt(text, '')
+crypto = pub.encrypt(text, 1024)
 crypto_enc = base64.b64encode(str(crypto))
 print crypto_enc
 print priv.decrypt(crypto)
