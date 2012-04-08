@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+<script>
+
+YUI().use('console','test',function(Y){
+
+    // generate uid
+    function genUID(output_length, chars) {
+        var output = '';
+        var char_length = chars.length;
+        for (var i = 0; i < output_length; i++) {
+            output += chars.charAt(Math.floor(Math.random() * char_length));
+        }
+        return output;
+    }
+
+    new Y.Console({style: 'inline'}).render();
+    var has_error = false;
+    var LENGTH    = 28;
+
+    for(var i=0;i<10000;i++){
+        var _unique_id = genUID(LENGTH, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
+        if(_unique_id.length !== LENGTH){
+            has_error = true;
+            Y.log(_unique_id, "error");
+            Y.log(_unique_id.length, "error");
+            break;
+        }
+    }
+    if(!has_error){
+        Y.log("success", "info");
+    }
+});
+
+</script>
+</body>
+</html>
