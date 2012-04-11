@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="compile" basedir=".">
+  <property name="base.dir" value="."/>
+  <property name="lib.dir" value="/opt/local/share/java"/>
+  <property name="src.dir" value="src"/>
+  <property name="build.dir" value="${basedir}/target"/>
+  <property name="build.classes" value="${build.dir}/classes"/>
+
+  <!-- ここを変更する -->
+  <property name="jarfile" value="${build.dir}/tanarky_test_iostream.jar"/>
+  <property name="exec.class" value="com.tanarky.test.HashMapSerialize"/>
+  <!-- /ここを変更する -->
+
+  <path id="classpath">
+      <fileset dir="${lib.dir}">
+        <include name="commons-logging.jar"/>
+      </fileset>
+  </path>
+
+  <!-- target -->
+  <target name="mkdir" description="ディレクトリを作成">
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="mkdir" description="">
+    <javac srcdir="${src.dir}"
+           includeantruntime="false"
+           destdir="${build.classes}"
+           classpathref="classpath"/>
+  </target>
+
+  <!-- jarファイル作成 -->
+  <target name="jar" depends="compile" description="jar file 作成">
+    <jar jarfile="${jarfile}"/>
+  </target>
+  <!-- コンパイル後の実行ファイルを起動するターゲット -->
+  <target name="exec" depends="compile" description="実行">
+    <java classname="${exec.class}"
+          classpathref="classpath"
+          classpath="${build.classes}">
+      <sysproperty key="org.apache.commons.logging.Log" value="org.apache.commons.logging.impl.SimpleLog"/>
+    </java>
+  </target>
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+</project>
