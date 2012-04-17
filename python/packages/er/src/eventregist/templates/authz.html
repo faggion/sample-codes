@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>authz</title>
+</head>
+<body>
+<h1>Are you OK ?</h1>
+<form action="{{ url_for('submit') }}" method="POST">
+<ul>
+  <li>client: <input type="text" name="appid" value="{{ T.appid }}"</li>
+  <li>scope:  <input type="text" name="scope" value="{{ T.scope }}"</li>
+<ul>
+<input type="hidden" name="redirect_url" value="{{ T.redirect_url }}">
+<input type="submit" name="deny" value="許可しない">
+<input type="submit" value="許可する">
+</form>
+</body>
+</html>
