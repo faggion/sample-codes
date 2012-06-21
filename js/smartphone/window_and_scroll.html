@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="yui3-skin-sam" style="margin:0;padding:0;">
+
+<h1>javascript tests ( window and scroll properties )</h1>
+
+<div id="ad" style="display:none;position:absolute;bottom:0px;">
+<a href="http://www.yahoo.co.jp/" target="_blank"><img src="/v3_client/creative/SD.png"></a>
+</div>
+
+<span id="screen-height"></span> : screen.height<br>
+<span id="screen-availheight"></span> : screen.availHeight<br>
+<span id="innerheight"></span> : innerHeight<br>
+<span id="outerheight"></span> : outerHeight<br>
+<span id="d-de-clientheight"></span> : document.documentElement.clientHeight<br>
+<span id="d-height"></span> : document.height<br>
+<span id="scrolly"></span> : scrollY<br>
+<span id="d-body-scrolltop"></span> : document.body.scrollTop<br>
+<span id="d-de-scrolltop"></span> : document.documentElement.scrollTop<br>
+<span id="pageyoffset"></span> : pageYOffset<br>
+<span id="d-body-clientheight"></span> : document.body.clientHeight<br>
+<span id="d-body-scrollheight"></span> : document.body.scrollHeight<br>
+<button onclick="update();">update</button>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div class="adlantis-custom" data-adlantis-custom-key="greeid" data-adlantis-custom-value="greeid123"></div>
+<div class="adlantis-custom" data-adlantis-custom-key="g" data-adlantis-custom-value="2"></div>
+<div class="adlantis-custom" data-adlantis-custom-key="b" data-adlantis-custom-value="1979"></div>
+<div id="adlantis-spid" data-adlantis-spid="12345678"></div>
+
+<!--[if lte IE 8 ]>
+<script src="static/json2.js"></script>
+<![endif]-->
+<script>
+function update(){
+    document.getElementById('screen-height').innerHTML = screen.height;
+    document.getElementById('screen-availheight').innerHTML = screen.availHeight;
+    document.getElementById('innerheight').innerHTML = window.innerHeight;
+    document.getElementById('outerheight').innerHTML = window.outerHeight;
+    document.getElementById('d-de-clientheight').innerHTML = document.documentElement.clientHeight;
+    //document.getElementById('d-de-clientheight').innerHTML = 30;
+    document.getElementById('d-height').innerHTML = document.height;
+    document.getElementById('scrolly').innerHTML = window.scrollY;
+    document.getElementById('d-body-scrolltop').innerHTML = document.body.scrollTop;
+    document.getElementById('d-de-scrolltop').innerHTML = document.documentElement.scrollTop;
+    document.getElementById('pageyoffset').innerHTML = window.pageYOffset;
+    document.getElementById('d-body-clientheight').innerHTML = document.body.clientHeight;
+    document.getElementById('d-body-scrollheight').innerHTML = document.body.scrollHeight;
+}
+</script>
+<hr>
+<footer>&copy; tanarky</footer>
+</body>
+</html>

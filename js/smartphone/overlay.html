@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="yui3-skin-sam" style="margin:0;padding:0;">
+
+<h1>javascript tests ( overlay ad - setinterbal implement )</h1>
+
+<div id="ad" style="display:none">
+<a href="http://www.yahoo.co.jp/" target="_blank"><img src="/v3_client/creative/SD.png" border="0"></a>
+</div>
+<div id="ev"></div>
+<div id="scr"></div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<!--[if lte IE 8 ]>
+<script src="static/json2.js"></script>
+<![endif]-->
+<script>
+var scroll = parseInt(document.body.scrollTop);
+setInterval(function(){
+    if(scroll === document.body.scrollTop){
+        //console.debug("a");
+        document.getElementById('ev').innerHTML += ",a";
+        document.getElementById('ad').style.display = "block";
+    }
+    else {
+        //console.debug("b");
+        document.getElementById('ev').innerHTML += ",b";
+        document.getElementById('ad').style.display = "none";
+    }
+    document.getElementById('scr').innerHTML = document.body.scrollTop;
+    //console.debug("scroll: " + scroll + " , document.body.scrollTop: " + document.body.scrollTop);
+    scroll = document.body.scrollTop;
+}, 1000);
+</script>
+<hr>
+<footer>&copy; tanarky</footer>
+</body>
+</html>

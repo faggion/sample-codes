@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="yui3-skin-sam" style="margin:0;padding:0;">
+
+<h1>javascript tests ( dom events )</h1>
+
+<div id="ad" style="">
+<a href="http://www.yahoo.co.jp/" target="_blank"><img src="/v3_client/creative/SD.png"></a>
+</div>
+
+<input type="text">
+<ul>
+  <li>firefox on aquos phone: resizeイベント発生しない</li>
+  <li>chrome on aquos phone: navibar内でのスクロールは、Y軸の値が0で変更しないので、scrollイベントが発生しない</li>
+</ul>
+<a href="link.html">link.html</a><br>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<a href="link.html">link.html</a><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<!--[if lte IE 8 ]>
+<script src="static/json2.js"></script>
+<![endif]-->
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+<script>
+
+YUI().use('console','test',function(Y){
+    new Y.Console().render();
+
+//document.addEventListener("touchstart",      function(ev){Y.log("touchstart event launched" ,'info');},false);
+document.addEventListener("touchmove",       function(ev){ Y.log("touchmove event launched" ,'info'); }, false);
+//document.addEventListener("touchend",        function(ev){ Y.log("touchend event launched" ,'info'); }, false);
+//document.addEventListener("scroll",          function(ev){ Y.log("scroll event launched" ,'info'); }, false);
+//document.addEventListener("gesturestart",    function(ev){ Y.log("gesturestart event launched" ,'info'); }, false);
+//document.addEventListener("gesturemove",     function(ev){ Y.log("gesturemove event launched" ,'info'); }, false);
+//document.addEventListener("gestureend",      function(ev){ Y.log("gestureend event launched" ,'info'); }, false);
+//window.addEventListener("resize",            function(ev){ Y.log("resize1 event launched" ,'info'); }, false);
+//window.addEventListener("orientationchange", function(ev){ Y.log("orientchange event launched" ,'info'); }, false);
+//document.addEventListener("focus",           function(ev){ Y.log("focus event launched", 'info'); }, false);
+//document.addEventListener("blur",            function(ev){ Y.log("blur event launched", 'info'); }, false);
+
+});
+</script>
+<a href="link.html">link.html</a><br>
+<hr>
+<footer>&copy; tanarky</footer>
+</body>
+</html>
