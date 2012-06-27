@@ -1,3 +1,5 @@
+# this change is written by me for the purpose of git test
+
 # users generic .zshrc file for zsh(1)
 
 ## Environment variable configuration
