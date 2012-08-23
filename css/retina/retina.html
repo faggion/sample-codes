@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<body>
+
+<!--
+<h3>original size</h3>
+<p><img src="logo-160.png"></p>
+
+<h3>double size</h3>
+<p><img src="logo-160@2x.png"></p>
+
+<h3>original size with html width/height limit</h3>
+<p><img src="logo-160.png" width="160px" height="240px"></p>
+
+<h3>double size with html width/height limit</h3>
+<p><img src="logo-160@2x.png" width="160px" height="240px"></p>
+-->
+
+<style>
+/* 
+ * 上書きしているが、@2x画像にしかアクセスされない @ iPad retina
+ * アクセスされないということは、@2x画像がない場合は、画像非表示となる
+ * inline cssで実現するのは無理
+ */
+#retina1 {
+  width:160px;
+  height:240px;
+  background: #000 url(logo-160.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2){
+  #retina1 {
+    background: #000 url(logo-160@2x.png) no-repeat;
+    -webkit-background-size: 160px 240px;
+  }
+}
+</style>
+<h3>switch image url at CSS</h3>
+<p id="retina1"></p>
+
+</body>
+</html>

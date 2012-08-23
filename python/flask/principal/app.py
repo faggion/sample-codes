@@ -1,9 +1,9 @@
 # coding: utf-8
 import logging
 from flask import Flask, Response, request, flash, render_template, redirect, url_for
-from flaskext.principal import Principal, Permission, RoleNeed
-from flaskext.principal import Identity, identity_changed
-from flaskext.principal import identity_loaded, RoleNeed, UserNeed
+from flask.ext.principal import Principal, Permission, RoleNeed
+from flask.ext.principal import Identity, identity_changed
+from flask.ext.principal import identity_loaded, RoleNeed, UserNeed
 
 app = Flask(__name__)
 app.secret_key = 'tanarky'
