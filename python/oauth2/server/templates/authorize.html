@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}oauth 2.0 authorize page{% endblock %}
+{% block content %}
+<h1>This is oauth 2.0 authorize page.</h1>
+
+<br>
+
+{% include "messages.html" %}
+
+<form method="POST">
+  <p><button name="approval" type="submit" value="deny">Deny</button></p>
+  <p><button name="approval" type="submit" value="allow">Allow</button></p>
+</form>
+
+<p><a href="{{ url_for('index') }}">index</a></p>
+
+{% endblock %}
