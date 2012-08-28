@@ -1,5 +1,5 @@
 # coding: utf-8
-import logging, ConfigParser, os, urllib, string, random
+import logging, ConfigParser, os, urllib, string, random, json
 from flask import Flask, Response, request, flash, render_template, redirect, url_for, make_response, session
 from functools import wraps
 
@@ -29,7 +29,7 @@ def index():
 def authorize():
     if request.method == 'POST':
         url = request.args.get('redirect_uri', url_for('index'))
-        logging.error(url)
+        logging.debug(url)
         if request.form.get('approval', 'deny') == 'allow':
             # FIXME: client key/secret 
             params = { 'code': ''.join(random.choice(strrange) for i in xrange(32)),
@@ -41,18 +41,14 @@ def authorize():
 
     return render_template('authorize.html')
 
-# ERROR:root:[('redirect_uri', u'http://localhost:8081/login'), ('client_secret', u'cdf6072ba2d623e0b23b287eae815ce1d4171e44'), ('code', u'w2yugpbbY89etsE5cDHTX3AUCmSrlbMe'), ('client_id', u'1bf5f15595a9c9df5b1a'), ('grant_type', u'authorization_code')]
-# ERROR:root:[('redirect_uri', u'http://localhost:8081/login'), ('client_secret', u'user1secret'), ('code', u'aKaTyTlTKNxNOIonYXrFluxmeup8vEkU'), ('client_id', u'key1'), ('grant_type', u'authorization_code')]
 @app.route('/access_token', methods=['POST'])
 def access_token():
-    logging.error(request.headers)
-    logging.error(request.form.lists())
-
-    # ERROR:root:[('access_token', '15bbc1a01dd3f57f593e93832512e5e6d9da26ad'), ('token_type', 'bearer')]
     token = ''.join(random.choice(strrange) for i in xrange(32))
-    body  = urllib.urlencode({"access_token":token,
-                              "token_type": "bearer"})
+    body = json.dumps({"access_token":token,
+                       "token_type": "bearer"})
+    logging.debug(body)
     response = make_response(body)
+    response.headers['Content-type'] = 'application/json; charset=utf-8'
     return response
 
 @app.route('/login', methods=['GET', 'POST'])

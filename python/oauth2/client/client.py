@@ -31,12 +31,14 @@ def login():
 
     if code != '' and state == '':
         # request to access_token
-        access_token = client.auth_code.get_token(code, redirect_uri=CALLBACK, parse='query')
-        logging.error(access_token.token)
-        logging.error(access_token.client)
-        logging.error(access_token.opts)
-        logging.error(access_token.headers)
-        return 'OK'
+        #access_token = client.auth_code.get_token(code, redirect_uri=CALLBACK, parse='query')
+        #access_token = client.auth_code.get_token(code, redirect_uri=CALLBACK, parse="json")
+        access_token = client.auth_code.get_token(code, redirect_uri=CALLBACK)
+        logging.debug(access_token.token)
+        logging.debug(access_token.client)
+        logging.debug(access_token.opts)
+        logging.debug(access_token.headers)
+        return 'OK: %s' % access_token.token
     else:
         authorize_url = client.auth_code.authorize_url(redirect_uri=CALLBACK, scope='user,public_repo')
         return redirect(authorize_url)
