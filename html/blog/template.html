@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <link title="RSS" href="{$rss_url}" type="application/rss+xml" rel="alternate">
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.arekao.jp/rsd.xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/2.1.0/journal/bootstrap.min.css" type="text/css">
+  <title>{$blogtitle}</title>
+</head>
+
+<body>
+<div class="container">
+<div class="row">
+  <div class="span2">
+    <div class="side-module">
+      いいいいいいいいいいいいいいいいいいいいい<br>
+    </div>
+  </div>
+  <div class="span8">
+    <div id="blog-center-section">
+      {$profile}{section name=entry loop=$eid}
+      <!--entry-->
+      <div class="entry">
+        <div class="entry-section">
+          <!--entry_title-->
+          <div class="entry_title"><h3>{$ename[entry]}</h3></div>
+          <!--day&time-->
+          <div class="time">{$entrytime[entry]}{$entrytime_post[entry]}[ {$category_link[entry]} ]</div>
+              
+          <!--article-->
+          <div class="article">{$etext[entry]}</div>
+              
+          <!--posted-->
+          <div class="posted">
+            {include file="`$smarty.const.MASTER_TPL_DIR`entry_footer.tpl"}
+          </div>
+        </div>
+      </div>
+      <!--/entry-->
+      {/section}
+      {$trackback_module}
+      {$comment_module}
+    </div>
+  </div>
+  <div class="span2">
+    <div class="side-module">
+      いいいいいいいいいいいいいいいいいいいいい<br>
+      {include file="`$smarty.const.MASTER_TPL_DIR`searchbox.tpl"}
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+<!--wrapper
+<div id="wrapper">
+
+    <div class="head">
+      <div class="head-section">
+        <h1><a href="{$btblog}">{$blogtitle}</a></h1>
+        <h2>{$bdescirption}</h2>
+        </div>
+      </div>
+
+
+    <div id="container">
+
+      <div class="side-left">
+        <div class="side-left-section">
+
+          </div>
+        </div>
+
+
+
+      <div id="blog-center">
+        <div id="blog-center-section">
+          {$profile}{section name=entry loop=$eid}
+
+          <div class="entry">
+            <div class="entry-section">
+
+              <div class="entry_title"><h3>{$ename[entry]}</h3></div>
+              
+
+              <div class="time">{$entrytime[entry]}{$entrytime_post[entry]}[ {$category_link[entry]} ]</div>
+              
+
+              <div class="article">{$etext[entry]}</div>
+              
+
+              <div class="posted">
+                {include file="`$smarty.const.MASTER_TPL_DIR`entry_footer.tpl"}
+                </div>
+              </div>
+            </div>
+
+          {/section}
+          {$trackback_module}
+          {$comment_module}
+          </div>
+        </div>
+
+
+
+      <div class="side-right">
+        <div class="side-right-section">
+          <div class="side-module">
+            {$modules_r}
+            {include file="`$smarty.const.MASTER_TPL_DIR`searchbox.tpl"}
+            {include file="`$smarty.const.MASTER_TPL_DIR`context.tpl"}
+            {include file="`$smarty.const.MASTER_TPL_DIR`banner.tpl"}
+            </div>
+          </div>
+        </div>
+
+      <div class="pagenav">
+        {$pre_page} | <a href="{$btblog}">Main</a> | {$next_page} <br>{include file="`$smarty.const.MASTER_TPL_DIR`register.tpl"}<br>{include file="`$smarty.const.MASTER_TPL_DIR`footer.template1.tpl"}
+        </div>
+      </div>
+</div>
+-->
