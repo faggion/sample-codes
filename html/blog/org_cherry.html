@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>{$blogtitle}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link title="RSS" href="{$rss_url}" type="application/rss+xml" rel="alternate">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.arekao.jp/rsd.xml"/>
+<link rel="stylesheet" href="{$css}" type="text/css" />
+{$cjava}
+
+{capture name=templatepath}/template/2096{/capture}
+
+</head>
+
+<body text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<a name="top"></a>
+{include file="`$smarty.const.MASTER_TPL_DIR`header.template2.tpl"}
+<a id="top"></a>
+<!--/header-->
+
+<!--container-->
+<table width="900" class="container" align="center" border="0" cellspacing="0" cellpadding="0" >
+<tr>
+<td>
+
+<!--range-->
+<table width="900" class="range" align="center" border="0" cellspacing="0" cellpadding="0" >
+<tr>
+
+<!--header-->
+ <table width="900" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td width="900" valign="top" class="head"><a href="{$btblog}"> 
+    <h1>{$blogtitle}</h1></a>
+      <h2>{$bdescirption}</h2></td>
+   </tr>
+<tr><td><img src="/template/2096/img/spacer.gif" width="10" height=a"20"></td></tr>
+    </table>
+<!--/header-->
+</tr>
+
+<tr>
+<td>
+
+<!--side_left-->
+<table width="900" border="0" cellpadding="0" cellspacing="0" >
+
+<tr>
+<td width="180" valign="top" class="side_left">
+<div class="side_text2">{$modules_l}</div></td>
+<!--/side_left-->
+
+
+<td width="10"><img src="/template/2096/img/spacer.gif" width="10" height="1"></td>
+
+<!--entry-->
+<td width="520" align="center" valign="top">
+{$profile}{section name=entry loop=$eid}
+
+<table width="520" border="0" cellpadding="0" cellspacing="0" class="entry">
+
+<!--entry_title-->
+<tr>
+<td class="entry_title">{$ename[entry]}</td>
+</tr>
+<!--/entry_title-->
+
+<!--day&time-->
+<tr><td class="time">{$entrytime[entry]}{$entrytime_post[entry]}[ {$category_link[entry]} ]</td></tr>
+<!--/day&time-->
+
+
+<!--article-->
+<tr>
+<td><div class="article">{$etext[entry]}</div></td>
+</tr>
+<!--/article-->
+
+<!--Posted-->
+<tr>
+<td class="posted" align="right">
+{include file="`$smarty.const.MASTER_TPL_DIR`entry_footer.tpl"}
+</td>
+</tr>
+<!--/Posted-->
+
+</table>
+
+{/section}<br>
+{$trackback_module}<br>
+{$comment_module}
+</td>
+<!--/entry-->
+
+<td width><img src="/template/2096/img/spacer.gif" width="10" height="1"></td>
+
+<!--side_right-->
+<td width="180" valign="top" class="side_right">
+<div class="side_text2">{$modules_r}
+{include file="`$smarty.const.MASTER_TPL_DIR`searchbox.tpl"}{include file="`$smarty.const.MASTER_TPL_DIR`context.tpl"}{include file="`$smarty.const.MASTER_TPL_DIR`banner.tpl"}</div></td>
+<!--/side_right-->
+</tr>
+</table>
+</td>
+</tr>
+<!--footer-->
+<tr>
+<td colspan="5" height="30" align="center" class="pagenav">{$pre_page} | <a href="{$btblog}">Main</a> | {$next_page} <br>{include file="`$smarty.const.MASTER_TPL_DIR`register.tpl"}<br>{include file="`$smarty.const.MASTER_TPL_DIR`footer.template2.tpl"}</td>
+</tr>
+<!--/footer-->
+</table>
+<!--/range-->
+</td>
+</tr>
+</table>
+<!--/container-->
+
+</body>
+</html>
