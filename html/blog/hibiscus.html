@@ -1,8 +1,58 @@
+{php}
+if($_SERVER["SCRIPT_URI"] === 'http://mikan76.arekao.jp/' && $_SERVER["REQUEST_URI"] === '/?rss=true'){
+  $ids      = $this->get_template_vars('eid');
+  $titles   = $this->get_template_vars('ename');
+  $articles = $this->get_template_vars('etext');
+  $date     = $this->get_template_vars('entrytime');
+  $time     = $this->get_template_vars('entrytime_post');
+
+  echo '<?xml version="1.0" encoding="utf-8" ?> 
+<rdf:RDF   
+   xmlns="http://purl.org/rss/1.0/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xml:lang="ja">
+  <channel rdf:about="http://mikan76.arekao.jp/">
+  <title>'. $this->get_template_vars('blogtitle'). '</title>
+  <link>http://mikan76.arekao.jp/</link>
+  <description>'.$this->get_template_vars('bdescirption').'</description>
+  <dc:language>ja-jp</dc:language>
+  <items><rdf:Seq>';
+  foreach($ids as $i){
+    echo '<rdf:li rdf:resource="http://mikan76.arekao.jp/entry-'. $i. '.html"/>';
+  }
+  echo '</rdf:Seq></items></channel>';
+
+  //foreach($ids as $i){
+  for($i=0;$i<count($ids);$i++){
+    $matches = array();
+    preg_match('/^([\d]*)年([\d]*)月([\d]*)日/u', $date[$i], $matches);
+    $year  = isset($matches[1]) ? $matches[1] : "";
+    $month = isset($matches[2]) ? $matches[2] : "";
+    $day   = isset($matches[3]) ? $matches[3] : "";
+    $ttt   = explode(":", $time[$i]);
+    $hour  = isset($ttt[0]) ? $ttt[0] : "";
+    $min   = isset($ttt[1]) ? $ttt[1] : "";
+    echo '<item rdf:about="http://mikan76.arekao.jp/entry-'.$ids[$i].'.html">';
+    echo '<title>'. $titles[$i]. '</title>';
+    echo '<link>http://mikan76.arekao.jp/entry-'.$ids[$i].'.html</link>';
+    echo '<description><![CDATA['. $articles[$i]. ']]></description>';
+    echo '<dc:creator>243860</dc:creator>';
+    echo '<dc:date>'. sprintf('%04d-%02d-%02dT%02d:%02d:00+09:00', $year, $month, $day, $hour, $min). '</dc:date>';
+    //echo '<dc:date>'. $date[$i]. '</dc:date>';
+    echo '</item>';
+  }
+
+  echo '</rdf:RDF>';
+}
+else {
+{/php}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <title>{$blogtitle}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="google-site-verification" content="Mggd5Ix_hV-pFjaGoRCLtJvRSHYWhVRahyy3-2iXOpM">
 <link title="RSS" href="{$rss_url}" type="application/rss+xml" rel="alternate">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.arekao.jp/rsd.xml"/>
 <link rel="stylesheet" href="{$css}" type="text/css" />
@@ -30,11 +80,11 @@
  <table width="900" border="0" cellspacing="0" cellpadding="0">
    <tr>
     <td width="900" valign="top" class="head"><a href="{$btblog}"> 
-    <h1>{$blogtitle}</h1></a>
-    <h2>{$bdescirption}</h2></td>
+    <h2 class="title">{$blogtitle}</h2></a>
+    <h2 class="sub">{$bdescirption}</h2></td>
    </tr>
 
-    </table>
+ </table>
 <!--/header-->
 </tr>
 
@@ -54,13 +104,33 @@
 
 <!--entry-->
 <td width="520" align="center" valign="top">
+
+{php}
+$banners = array(
+  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Flunch.asp',
+        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/lunch_468x60.gif'),
+  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Fpfdinner.asp',
+        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/prixfixe_468x60.gif'),
+  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Fdinner.asp',
+        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/dinner_468x60.gif'),
+);
+$ii = rand(0,2);
+print '<a href="'. $banners[$ii]['link']. '" target="_blank">';
+print '<img src="'. $banners[$ii]['img']. '"></a>';
+{/php}
+
 {$profile}{section name=entry loop=$eid}
 
 <table width="520" border="0" cellpadding="0" cellspacing="0" class="entry">
-
+<!-- google_ad_section_start -->
 <!--entry_title-->
 <tr>
-<td class="entry_title">{$ename[entry]}</td>
+{if $smarty.section.entry.index == 0}
+<td class="entry_title"><h1>{$ename[entry]}</h1></td>
+{else}
+<td class="entry_title"><h3>{$ename[entry]}</h3></td>
+{/if}
+
 </tr>
 <!--/entry_title-->
 
@@ -94,7 +164,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </td>
 </tr>
 <!--/Posted-->
-
+<!-- google_ad_section_end -->
 </table>
 
 {/section}
@@ -139,3 +209,6 @@ echo $var;
 
 </body>
 </html>
+{php}
+}
+{/php}
