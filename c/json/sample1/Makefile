@@ -5,8 +5,8 @@ EXETARGET = sample1
 CSRC = sample1.c
 CXXSRC = 
 
-WARN +=
-OPPFLAGS +=
+WARN += -std=gnu99
+OPPFLAGS += 
 LDFLAGS =
 LDLIBS = -ljson
 

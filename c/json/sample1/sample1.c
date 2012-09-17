@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "json/json.h"
+#include "json/json_object.h"
 
 #define MAX_FILE_PATH 1024
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[]){
     extern char *optarg;
     extern int  optind, opterr;
     char configfile[MAX_FILE_PATH+1] = {0};
+    struct json_object *hash, *obj, *arr, *arr_ele;
 
     while ((ch = getopt(argc, argv, "f:")) != -1){
         switch (ch){
@@ -36,7 +38,7 @@ int main(int argc, char *argv[]){
         return usage(argc, argv);
     }
 
-    struct json_object *obj = json_object_from_file(configfile);
+    obj = json_object_from_file(configfile);
 
     // 入力ファイルエラー
     if(is_error(obj)){
@@ -49,8 +51,25 @@ int main(int argc, char *argv[]){
     printf("get 'nokey' key value: %s\n", json_object_get_string(json_object_object_get(obj, "hoge")));
     printf("get 'nokey' key value: %s\n", json_object_get_string(json_object_object_get(obj, "nokey")));
 
+    hash = json_object_object_get(obj, "hash");
+    // -std=gnu99オプションが必要
+    json_object_object_foreach(hash, key, val){
+        fprintf(stderr, "%s = %s\n", key, json_object_get_string(val));
+    }
+    //json_object_put(hash); --> jsonの一部分なのでfreeいらない
+
+    arr = json_object_object_get(obj, "array");
+    int len = json_object_array_length(arr);
+    printf("array length: %d\n", len);
+    for(int i=0;i<len;i++){
+        arr_ele = json_object_array_get_idx(arr, i);
+        fprintf(stderr, "element %d = %s\n", i, json_object_get_string(arr_ele));
+        //json_object_put(arr_ele); --> jsonの一部分なのでfreeいらない
+    }
+    //json_object_put(arr); --> jsonの一部分なのでfreeいらない
+
     // 開放
-    json_object_put(obj);
+    json_object_put(obj); // --> json全体のfree
 
     return 0;
 }
