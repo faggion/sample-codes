@@ -45,6 +45,11 @@ int main(int argc, char *argv[]){
     }
 
     printf("parse and stringfy: %s\n", json_object_to_json_string(obj));
+
+    printf("get 'nokey' key value: %s\n", json_object_get_string(json_object_object_get(obj, "hoge")));
+    printf("get 'nokey' key value: %s\n", json_object_get_string(json_object_object_get(obj, "nokey")));
+
+    // 開放
     json_object_put(obj);
 
     return 0;

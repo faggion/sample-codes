@@ -13,7 +13,7 @@ LDLIBS = -ljson
 include $(MK_CFG_DIR)/make.rules
 
 test:
-	valgrind --error-limit=no --leak-check=yes ./sample1 -f abc
+	valgrind --error-limit=no --leak-check=yes ./sample1 -f config.json
 
 testv:
-	valgrind -v --error-limit=no --leak-check=yes ./sample1 -f abc
+	valgrind -v --error-limit=no --leak-check=yes ./sample1 -f config.json
