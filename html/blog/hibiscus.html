@@ -50,10 +50,18 @@ else {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<title>{$blogtitle}</title>
+<title>{php}
+if(count($this->get_template_vars('eid')) === 1){
+  $enames = $this->get_template_vars('ename');
+  $eids   = $this->get_template_vars('eid');
+  echo $enames[0] . ' | ';
+}
+echo $this->get_template_vars('blogtitle');
+{/php}</title>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="google-site-verification" content="Mggd5Ix_hV-pFjaGoRCLtJvRSHYWhVRahyy3-2iXOpM">
-<link title="RSS" href="{$rss_url}" type="application/rss+xml" rel="alternate">
+<link title="RSS" href="http://mikan76.arekao.jp/?rss=true" type="application/rss+xml" rel="alternate">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.arekao.jp/rsd.xml"/>
 <link rel="stylesheet" href="{$css}" type="text/css" />
 {$cjava}
@@ -147,7 +155,8 @@ print '<img src="'. $banners[$ii]['img']. '"></a>';
 
 <!--Posted-->
 <tr>
-<td class="posted" align="center">
+<td class="posted">
+<p style="text-align:left;margin-left:10px;">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-1219756446801912";
 /* arekao.jp */
@@ -159,7 +168,9 @@ google_ad_height = 280;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
-<br><br>
+</p>
+<div class="linkwithin_div" style="font-size:larger;padding:10px;"></div>
+<br>
 {include file="`$smarty.const.MASTER_TPL_DIR`entry_footer.tpl"}
 </td>
 </tr>
@@ -207,8 +218,18 @@ echo $var;
 </table>
 <!--/container-->
 
+
+<script>
+var linkwithin_site_id = 1117123;
+var linkwithin_text='他にもこんな記事があります♪';
+</script>
+<script src="http://www.linkwithin.com/widget.js"></script>
+<a href="http://www.linkwithin.com/" rel="nofollow"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
+
 </body>
 </html>
 {php}
 }
 {/php}
+
+
