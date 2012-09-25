@@ -1,6 +1,5 @@
 #coding:utf-8
-import MeCab,sys,bitarray
-import repr as reprlib
+import MeCab,sys
 
 # ///////////////////////////
 # ----- set sentence -----
