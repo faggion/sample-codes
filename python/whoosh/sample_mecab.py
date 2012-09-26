@@ -1,93 +1,70 @@
 # coding: utf8
-import MeCab
-from whoosh.analysis import Token,Tokenizer
-from whoosh.compat import (callable, iteritems, string_type, text_type,
-                           integer_types, u, xrange, next)
-from whoosh.lang.dmetaphone import double_metaphone
-from whoosh.lang.porter import stem
-from whoosh.util import lru_cache, unbound_cache, rcompile
+import MeCab,re
+from whoosh.analysis import Token,Tokenizer,RegexTokenizer
 
-STOP_WORDS = frozenset(('a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'can',
-                        'for', 'from', 'have', 'if', 'in', 'is', 'it', 'may',
-                        'not', 'of', 'on', 'or', 'tbd', 'that', 'the', 'this',
-                        'to', 'us', 'we', 'when', 'will', 'with', 'yet',
-                        'you', 'your'))
+class MeCabTokenizer(Tokenizer):
+    __inittypes__ = dict(expression=unicode, gaps=bool)
 
-# こっちを修正する必要あり
-class MecabTokenizer(Tokenizer):
-    """
-    Uses a regular expression to extract tokens from text.
-    
-    >>> rex = RegexTokenizer()
-    >>> [token.text for token in rex(u("hi there 3.141 big-time under_score"))]
-    ["hi", "there", "3.141", "big", "time", "under_score"]
-    """
-    def __init__(self):
-        #self.tagger = MeCab.Tagger('mecabrc')
-        self.tagger = MeCab.Tagger('-Owakati')
+    def __call__(self, value, mode='', positions=False, **kwargs):
+        assert isinstance(value, unicode), "%r is not unicode" % value
+        token = Token(**kwargs)
+        tagger = MeCab.Tagger('mecabrc')
+        result = tagger.parse(value.encode("utf8")).decode('utf8')
 
-    def __call__(self, value, positions=False, chars=False,
-                 keeporiginal=False, removestops=True,
-                 start_pos=0, start_char=0, mode='', **kwargs):
-        assert isinstance(value, text_type), "%r is not unicode" % value
-        return self.tagger.parse(value.encode("utf8")).decode('utf8').split(' ')
+        cur = 0
+        for match in re.compile("(\S+)\s+(\S+)\n").finditer(result):
+            category = match.group(2).split(",")
+            if 0 < len(category) and \
+                    (category[0] == u'名詞' or category[0] == u'動詞' \
+                         or category[0] == u'形容詞' or category[0] == u'副詞'):
+                token.text = match.group(1)
+                token.pos  = cur
+                yield token
+            cur += len(match.group(1))
 
-
-def MecabAnalyzer(expression=None,
-                  stoplist=STOP_WORDS,
-                  minsize=2,
-                  maxsize=None,
-                  gaps=False):
-    """Composes a RegexTokenizer with a LowercaseFilter and optional
-    StopFilter.
-    
-    >>> ana = StandardAnalyzer()
-    >>> [token.text for token in ana("Testing is testing and testing")]
-    ["testing", "testing", "testing"]
-
-    :param expression: The regular expression pattern to use to extract tokens.
-    :param stoplist: A list of stop words. Set this to None to disable
-        the stop word filter.
-    :param minsize: Words smaller than this are removed from the stream.
-    :param maxsize: Words longer that this are removed from the stream.
-    :param gaps: If True, the tokenizer *splits* on the expression, rather
-        than matching on the expression.
-    """
-
-    return MecabTokenizer()
-
-MecabAnalyzer.__inittypes__ = dict(expression=text_type, gaps=bool,
-                                   stoplist=list, minsize=int, maxsize=int)
-
-
-mec = MecabAnalyzer()
-print [token.text for token in mec(u"今日は天気です")]
-print mec(u"今日は天気です")
-
-
+def MeCabAnalyzer(expression=r"(\S+)\s+(\S+)\n", stoplist=None, minsize=2, maxsize=None, gaps=False):
+    return MeCabTokenizer()
+MeCabAnalyzer.__inittypes__ = dict(expression=unicode, gaps=bool, stoplist=list, minsize=int, maxsize=int)
 
 if __name__ == '__main__':
     from whoosh.index import create_in
     from whoosh.fields import *
+    from whoosh.query  import *
 
-    schema = Schema(title=TEXT(stored=True),
+    # MeCabAnalyzerテスト
+    mec = MeCabAnalyzer()
+    for i in [token.text for token in mec(u"今日は天気です")]:
+        print i
+
+    print "--------"
+
+    # MeCabAnalyzerを使ってIndexing
+    schema = Schema(title=TEXT(stored=True, analyzer=MeCabAnalyzer()),
                     path=ID(stored=True),
-                    content=TEXT(stored=True))
+                    content=TEXT(stored=True, analyzer=MeCabAnalyzer()))
 
-    ix     = create_in("/tmp/", schema)
+    # 先にディレクトリを作っとかないと怒られる
+    ix     = create_in("/tmp/mecab", schema)
     writer = ix.writer()
 
-    writer.add_document(title=u"First document",
-                        path=u"/a",
-                        content=u"This is the first document we've added!")
-
-    writer.add_document(title=u"Second document",
+    writer.add_document(title=u"this is first document.",
                         path=u"/b",
-                        content=u"The second one is even more interesting!")
+                        content=u"i am a programmer. he is dentist.")
+    writer.add_document(title=u"これが2個目のドキュメントかな",
+                        path=u"/b",
+                        content=u"北海道札幌市千歳区")
     writer.commit()
 
     from whoosh.qparser import QueryParser
 
-    query   = QueryParser("content", ix.schema).parse(u"Even")
-    results = ix.searcher().search(query)
-    print results[0]
+    searcher = ix.searcher()
+    try:
+        #query   = QueryParser("content", ix.schema).parse(u"北海道")
+        #query   = QueryParser("title", ix.schema).parse(u"ドキュメント")
+        #query   = And([Term("title", u"ドキュメント"), Term('content', u"千歳")])
+        query   = Or([Term("title", u"ドキュメント"), Term('content', u"programmer")])
+        results = searcher.search(query)
+        for r in results:
+            print r['title']
+    finally:
+        searcher.close()
