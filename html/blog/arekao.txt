@@ -45,7 +45,7 @@ if($_SERVER["SCRIPT_URI"] === 'http://mikan76.arekao.jp/' && $_SERVER["REQUEST_U
 
   echo '</rdf:RDF>';
 }
-else if(strstr($_SERVER["REQUEST_URI"], '?dev=m') !== FALSE){
+else if(strstr($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== FALSE || strstr($_SERVER['HTTP_USER_AGENT'], 'Android') !== FALSE) {
 {/php}
 <!DOCTYPE html>
 <html lang="ja">
@@ -54,41 +54,52 @@ else if(strstr($_SERVER["REQUEST_URI"], '?dev=m') !== FALSE){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://tanarky-test.appspot.com/s/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://tanarky-test.appspot.com/s/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <title>{php} echo $titles[i];{/php}</title>
+    <title>{php} echo $titles[0];{/php}</title>
+    <style>{php} echo 'h1,h2,h3,h4,h5,h6 {font-size: 22px; line-height:26px;} h1>a, h2>a {color:#F0107F;} body { font-size: 16px; padding:0 10px 0 10px; } hr { margin:10px 0; }'; {/php}</style>
   </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="span12">
-
-{$profile}
+        <h3 style="color:#C46891;font-size:20px;font-style:Italic"><a href="/">{php}echo $this->get_template_vars('blogtitle');{/php}</a></h3><hr>
 
 <!-- google_ad_section_start -->
-{section name=entry loop=$eid}
-<!--entry_title-->
-{if $smarty.section.entry.index == 0}
-<h1>{$ename[entry]}</h1>
-{else}
-<h3>{$ename[entry]}</h3>
-{/if}
+{php}
+for($i=0;$i<count($ids);$i++){
+  if($i === 0){
+    echo '<h1><a href="/entry-'. $ids[$i]. '.html">'. $titles[$i]. '</a></h1>';
+  }
+  else{
+    echo '<h2><a href="/entry-'. $ids[$i]. '.html">'. $titles[$i]. '</a></h2>';
+  }
+  echo '<p style="color:#666;font-style:Italic;">'. $date[$i]. '</p>';
+  echo '<p>'. $articles[$i]. '</p><hr>';
 
-<p>{$entrytime[entry]}{$entrytime_post[entry]}[ {$category_link[entry]} ]</p>
-<p>{$etext[entry]}</p>
-
-<hr>
-{/section}
-</tr>
-
-
+  if($i < 3){
+{/php}
+<p style="text-align:left;">
+<script type="text/javascript"><!--
+     google_ad_client = "ca-pub-1219756446801912";
+/* arekao2 */
+google_ad_slot = "7172681389";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+{php}
+  }
+}
+{/php}
       </div>
     </div>
   </div>
 <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 <script>
-//$(document).ready(function(){
-  $("img").removeAttr("width");
-  $("img").removeAttr("height");
-//});
+  $("img").removeAttr("width").removeAttr("height").addClass('img-rounded');
 </script>
 </body>
 </html>
