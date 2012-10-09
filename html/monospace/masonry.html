@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link href="./css/bootstrap.org.min.css" rel="stylesheet">
+  <link href="./css/bootstrap-responsive.min.css" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  /* ページ全体を中央寄せに */
+  margin-left: auto;
+  margin-right: auto;
+}
+.item {
+  /* 幅初期値 */
+  width: 100%;
+  /* 
+  width: 383px;
+  width: 320px;
+   */
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0 10px 0;
+  background-color: #eee;
+}
+.cnt { text-align: center; }
+.mod {
+  padding:10px;
+  border: 3px solid #888;
+}
+</style>
+
+</head>
+<body>
+  <div class="container">
+    <div id="container">
+      <div id="content">
+        <div class="item">
+          <div class="mod cnt"><img src="http://placekitten.com/300/200"></div>
+        </div>
+
+        <div class="item">
+          <div class="mod">
+            <ul class="breadcrumb">
+              <li><a href="#">Home</a> <span class="divider">/</span></li>
+              <li><a href="#">Library</a> <span class="divider">/</span></li>
+              <li class="active">Data</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="mod cnt"><img src="http://placekitten.com/300/500"></div>
+        </div>
+
+        <div class="item">
+          <div class="mod cnt"><img src="http://placekitten.com/200/500"></div>
+        </div>
+
+        <div class="item">
+          <div class="mod">
+            <img style="float:left;margin:0 1em 1em 0;" src="http://placekitten.com/100/100" class="img-polaroid">
+            <p style="padding-left:10px;">ああああああああああああああああああああ
+              <br><br><br><br><br>
+              いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい
+              <br><br><br><br><br>
+              おおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
+              <br><br><br><br><br>
+              おおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
+              <br><br><br><br><br>
+              おおおおおおおおおおおおおおおおおおおおおおおおおお
+              <br><br><br><br><br>
+            </p>
+            <br style="clear:both">
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="mod">
+            <ul class="breadcrumb">
+              <li><a href="#">Home</a> <span class="divider">/</span></li>
+              <li><a href="#">Library</a> <span class="divider">/</span></li>
+              <li class="active">Data</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.masonry.min.js"></script>
+    <script>
+/*
+ * http://www.maurizioconventi.com/2012/06/19/responsive-example-integrating-twitter-bootstrap-and-jquery-masonry/
+ * のサンプルにあったjsを修正した
+ */
+$(function(){
+    var $container = $('#content');
+    var gutter     = 10;
+    var min_width  = 320;
+    //$container.imagesLoaded( function(){
+        $container.masonry({
+            itemSelector : '.item',
+            gutterWidth: gutter,
+            isAnimated: true,
+
+            columnWidth : function( containerWidth ) {
+                var num_of_boxes   = (containerWidth < min_width) ? 1 : parseInt( (containerWidth + gutter)/(gutter + min_width) );
+                var num_of_gutters = num_of_boxes - 1;
+                var box_width      = parseInt((containerWidth - (num_of_gutters * gutter)) / num_of_boxes);
+                console.debug("box_width=" + box_width + ", containerWidth=" + containerWidth + ", num_of_boxes=" + num_of_boxes);
+                $('.item').width(box_width);
+                return box_width;
+            }
+        });
+    //});
+});
+    </script>
+  </div>
+</body>
+</html>

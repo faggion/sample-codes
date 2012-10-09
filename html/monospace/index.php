@@ -2,10 +2,11 @@
 <html>
 <head>
   <meta charset="utf8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href="./css/bootstrap.1.css" rel="stylesheet">
   <link href="./css/bootstrap-responsive.min.css" rel="stylesheet">
 <style>
+body { padding: 0 10px 0 10px }
 .show-grid [class*="span"] {
     background-color: #EEEEEE;
     border-radius: 3px 3px 3px 3px;
@@ -48,7 +49,7 @@
         </div>
       </div>
 
-      <div class="span4">
+      <div class="span8">
         <ul class="nav nav-tabs nav-stacked module">
           <li class="active">
             <a href="#">Home</a>
@@ -56,22 +57,6 @@
           <li><a href="#">Profile</a></li>
           <li><a href="#">Message</a></li>
         </ul>
-      </div>
-
-      <div class="span4">
-        <div class="modal2 module">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Modal header</h3>
-          </div>
-          <div class="modal-body">
-            <p>One fine body…</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -127,10 +112,7 @@
           <li><a href="#">Message</a></li>
         </ul>
       </div>
-
     </div>
-
-
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="./js/bootstrap.min.js"></script>
   </div>
