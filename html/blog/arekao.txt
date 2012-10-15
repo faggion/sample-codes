@@ -1,11 +1,11 @@
 {php}
-if($_SERVER["SCRIPT_URI"] === 'http://mikan76.arekao.jp/' && $_SERVER["REQUEST_URI"] === '/?rss=true'){
-  $ids      = $this->get_template_vars('eid');
-  $titles   = $this->get_template_vars('ename');
-  $articles = $this->get_template_vars('etext');
-  $date     = $this->get_template_vars('entrytime');
-  $time     = $this->get_template_vars('entrytime_post');
+$ids      = $this->get_template_vars('eid');
+$titles   = $this->get_template_vars('ename');
+$articles = $this->get_template_vars('etext');
+$date     = $this->get_template_vars('entrytime');
+$time     = $this->get_template_vars('entrytime_post');
 
+if($_SERVER["SCRIPT_URI"] === 'http://mikan76.arekao.jp/' && $_SERVER["REQUEST_URI"] === '/?rss=true'){
   echo '<?xml version="1.0" encoding="utf-8" ?> 
 <rdf:RDF   
    xmlns="http://purl.org/rss/1.0/"
@@ -45,6 +45,66 @@ if($_SERVER["SCRIPT_URI"] === 'http://mikan76.arekao.jp/' && $_SERVER["REQUEST_U
 
   echo '</rdf:RDF>';
 }
+else if(strstr($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== FALSE || strstr($_SERVER['HTTP_USER_AGENT'], 'Android') !== FALSE) {
+{/php}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta chaset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://tanarky-test.appspot.com/s/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://tanarky-test.appspot.com/s/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <title>{php} echo $titles[0];{/php}</title>
+    <style>{php} echo 'h1,h2,h3,h4,h5,h6 {font-size: 22px; line-height:26px;} h1>a, h2>a {color:#F0107F;} body { font-size: 16px; padding:0 10px 0 10px; } hr { margin:10px 0; }'; {/php}</style>
+  </head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <h3 style="color:#C46891;font-size:20px;font-style:Italic"><a href="/">{php}echo $this->get_template_vars('blogtitle');{/php}</a></h3><hr>
+
+<!-- google_ad_section_start -->
+{php}
+for($i=0;$i<count($ids);$i++){
+  if($i === 0){
+    echo '<h1><a href="/entry-'. $ids[$i]. '.html">'. $titles[$i]. '</a></h1>';
+  }
+  else{
+    echo '<h2><a href="/entry-'. $ids[$i]. '.html">'. $titles[$i]. '</a></h2>';
+  }
+  echo '<p style="color:#666;font-style:Italic;">'. $date[$i]. '</p>';
+  echo '<p>'. $articles[$i]. '</p><hr>';
+
+  if($i < 3){
+{/php}
+<p style="text-align:left;">
+<script type="text/javascript"><!--
+     google_ad_client = "ca-pub-1219756446801912";
+/* arekao2 */
+google_ad_slot = "7172681389";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+{php}
+  }
+}
+{/php}
+      </div>
+    </div>
+  </div>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script>
+  $("img").removeAttr("width").removeAttr("height").addClass('img-rounded');
+</script>
+</body>
+</html>
+{php}
+}
 else {
 {/php}
 <!DOCTYPE html>
@@ -63,16 +123,58 @@ echo $this->get_template_vars('blogtitle');
 <meta name="google-site-verification" content="Mggd5Ix_hV-pFjaGoRCLtJvRSHYWhVRahyy3-2iXOpM">
 <link title="RSS" href="http://mikan76.arekao.jp/?rss=true" type="application/rss+xml" rel="alternate">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.arekao.jp/rsd.xml"/>
-<link rel="stylesheet" href="{$css}" type="text/css" />
-{$cjava}
-
-{capture name=templatepath}/template/2096{/capture}
+<link rel="stylesheet" href="http://arekao.jp/user_templates/static/72/mikan76.css" type="text/css">
 
 </head>
 
 <body text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-{include file="`$smarty.const.MASTER_TPL_DIR`header.template2.tpl"}
-<a id="top"></a>
+<style>
+{php}
+echo '
+#mast_head{
+margin:0;padding:0;
+width:100%;
+height:30px;
+font-size:12px;
+background:url(/images/header_bg.gif) repeat-x 0 0;}
+#mast_head img{
+padding:0 12px 0 8px;
+float:left;}
+#mast_head a:link , #mast_head a:visited{
+color:#AE3449;}
+#mast_head a:hover {
+color:#D1576C;
+text-decoration:underline;}
+#mast_head a:active {
+color:#FFB400;
+text-decoration:underline;}
+#mast_head_navi{
+float:left;
+font-size:12px;
+text-align:left;
+line-height:30px;}
+#mast_head_ad{
+padding:8px 0 2px 0;
+font-size:12px;
+font-weight:bold;
+width:220px;
+height:20px;
+float:right;
+overflow:hidden;}
+</style>';
+{/php}
+</style>
+<div id="mast_head">
+  <a rel="nofollow" href="http://arekao.jp/"><img width="53" height="30" border="0" alt="arekaoブログをはじめよう" src="/images/arekao2007/parts/lo_bloghead.gif"></a>
+  <div id="mast_head_navi">
+    <a rel="nofollow" target="_blank" href="http://arekao.jp/">ホーム</a> / <a rel="nofollow" target="_blank" href="http://arekao.jp/?module=Profile&amp;action=ShowMypage">マイページ</a> /
+    <a rel="nofollow" target="_blank" href="http://arekao.jp/?module=Portal&amp;action=ShowStyleNavi">スタイルナビゲーター</a> /
+    <a rel="nofollow" target="_blank" href="http://arekao.jp/?module=Portal&amp;action=ShowSpecialist&amp;brt=006">スペシャリストブログ</a> /
+    <a target="_blank" href="http://kamimado.viceviza.com/?drvt=arekao">美容室予約</a> /
+    <a target="_blank" href="http://kamimado.viceviza.com/contents_feature/list/?drvt=arekao">美容室特集</a> /
+    <a target="_blank" href="http://kamimado.viceviza.com/sfeature/KM000082.html?drvt=arekao">今から行ける美容室</a>
+  </div>
+</div>
 <!--/header-->
 
 <!--container-->
@@ -91,7 +193,6 @@ echo $this->get_template_vars('blogtitle');
     <h2 class="title">{$blogtitle}</h2></a>
     <h2 class="sub">{$bdescirption}</h2></td>
    </tr>
-
  </table>
 <!--/header-->
 </tr>
@@ -115,16 +216,10 @@ echo $this->get_template_vars('blogtitle');
 
 {php}
 $banners = array(
-  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Flunch.asp',
-        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/lunch_468x60.gif'),
-  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Fpfdinner.asp',
-        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/prixfixe_468x60.gif'),
-  array('link' => 'http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881341166&vc_url=http%3A%2F%2Fwww.ozmall.co.jp%2Faf%2Fsp%2Fdinner.asp',
-        'img'  => 'http://www.ozmall.co.jp/affiliate/banner/images/special/dinner_468x60.gif'),
+  '<iframe width="468" scrolling="no" height="60" frameborder="0" marginwidth="0" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2195279&amp;pid=881406994" marginheight="0" allowtransparency="true">{literal}&lt;script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2195279&amp;pid=881406994"&gt;&lt;/script&gt;{/literal}&lt;noscript&gt;&lt;a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&amp;pid=881406994" target="_blank"  rel="nofollow"&gt;&lt;img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2195279&amp;pid=881406994" height="60" width="468" border="0"&gt;&lt;/a&gt;&lt;/noscript&gt;</iframe>',
+  '<iframe frameborder="0" allowtransparency="true" height="60" width="468" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2195279&pid=881407004" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2195279&pid=881407004"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2195279&pid=881407004" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2195279&pid=881407004" height="60" width="468" border="0"></a></noscript></iframe>',
 );
-$ii = rand(0,2);
-print '<a href="'. $banners[$ii]['link']. '" target="_blank">';
-print '<img src="'. $banners[$ii]['img']. '"></a>';
+print $banners[rand(0,1)];
 {/php}
 
 {$profile}{section name=entry loop=$eid}
@@ -156,6 +251,8 @@ print '<img src="'. $banners[$ii]['img']. '"></a>';
 <!--Posted-->
 <tr>
 <td class="posted">
+
+{if $smarty.section.entry.index < 2}
 <p style="text-align:left;margin-left:10px;">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-1219756446801912";
@@ -169,6 +266,8 @@ google_ad_height = 280;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </p>
+{/if}
+
 <div class="linkwithin_div" style="font-size:larger;padding:10px;"></div>
 <br>
 {include file="`$smarty.const.MASTER_TPL_DIR`entry_footer.tpl"}
