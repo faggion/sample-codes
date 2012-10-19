@@ -3,8 +3,9 @@
 import ConfigParser, os, logging, jinja2, webapp2
 from functools import wraps
 
-# モジュールロード時に実行される部分などはgettext_lazyを使う
-from webapp2_extras.i18n import lazy_gettext as _
+## モジュールロード時に実行される部分などはgettext_lazyを使う
+#from webapp2_extras.i18n import lazy_gettext as _
+from webapp2_extras.i18n import gettext as _
 
 # appengine modules
 from google.appengine.ext import db, blobstore
@@ -39,6 +40,7 @@ class Top(AdminBase):
 
 class Custom(AdminBase):
     @helpers.admin_required
+    @helpers.set_locale
     def get(self, code):
         t = env.get_template('admin_custom.html')
         tv = self.template_vars({"title": code,
