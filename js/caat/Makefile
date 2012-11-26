@@ -1,12 +1,11 @@
-.PHONY: install
+.PHONY: install clean
 
 HEADER = HEADER.html
 FOOTER = FOOTER.html
 INDEX  = build/index.html
 CAAT   = /home/satoshi-tanaka/git/CAAT/build
 
-install:
-	rm -rf build
+install: clean
 	mkdir ./build
 	cp -r img build/
 	echo '<!DOCTYPE html>' > $(INDEX)
@@ -18,3 +17,6 @@ install:
 	echo '</ul></body></html>' >> $(INDEX)
 	ln -s $(CAAT) build/lib
 	rsync -av -e ssh --delete build/ /var/www/caat/
+
+clean:
+	rm -rf build
