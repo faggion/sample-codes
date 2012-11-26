@@ -5,19 +5,28 @@ function (){
         {id:'factory', url:'./img/factory.png'}
     ];
     var callback_imgloaded = function( counter, images ) {
+        // ブラウザURLバー消す
+        window.scrollTo(0,1);
+
         // create a director object
         var director = new CAAT.Director().initialize(
-            800,
-            600,
+            320,
+            //568, // 88px分スペースがある、広告を出すとか
+            480,
             document.getElementById('_c1')
         );
         director.setImagesCache(images);
 
         var scene = director.createScene();
 
-        var bg = new CAAT.ActorContainer().
+        //var bg = new CAAT.ActorContainer().
+        var bg = new CAAT.ShapeActor().
+            setShape(1).
             setBounds(0,0,director.width,director.height).
-            setFillStyle('#eee');// ここで背景色設定
+            setStrokeStyle('#0000ff').
+            setLineWidth(10).
+            setFillStyle('#fff');
+
         scene.addChild(bg);
 
         var cafe = new CAAT.Actor().
@@ -47,5 +56,5 @@ function (){
     var img = new CAAT.ImagePreloader().loadImages(imgfiles,callback_imgloaded);
 
     // start the animation loop
-    CAAT.loop(1);
+    CAAT.loop(20);
 }

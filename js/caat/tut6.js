@@ -4,14 +4,14 @@ function (){
     ];
     var callback_imgloaded = function( counter, images ) {
         var map = [
-            [  16, 16, 16, 16, 16, 16],
-            [  23, 23, 23, 23, 23, 23],
-            [  19, 23,  8, 23, 23, 23],
-            [  19, 23, 23, 23, 23, 23],
-            [  19, 23, 23, 23,  6,  7],
-            [   7,  3,  2,  1,  0,  0],
+            [  16, 16, 16, 16, 16],
+            [  23, 23, 23, 23, 23],
+            [  19, 23,  8, 23, 23],
+            [  19, 23, 23, 23, 23],
+            [  19, 23, 23, 23,  6],
+            [   7,  3,  2,  1,  0],
         ];
-        var len = 6;
+        var len = 5;
 
         // create a director object
         var director = new CAAT.Director().initialize(
@@ -25,7 +25,7 @@ function (){
 
         var bg = new CAAT.ActorContainer().
             setBounds(0,0,director.width,director.height).
-            setFillStyle('#aaa');// ここで背景色設定
+            setFillStyle('#fff');// ここで背景色設定
         scene.addChild(bg);
 
         var sprite = new CAAT.SpriteImage().
