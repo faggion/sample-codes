@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf8">
-  </head>
-  <body>
-    <canvas id="_c1"></canvas>
-  </body>
-</html>
-<script type="text/javascript" src="./lib/caat.js"></script>
-<script>
-// create a director object
-window.addEventListener('load', function (){
+function (){
     function __scene(director) {
         var scene = director.createScene();
         var bg    = new CAAT.ActorContainer().
@@ -87,6 +75,6 @@ window.addEventListener('load', function (){
         CAAT.loop(60);
     }
  
-    __init();}, false);
-</script>
+    __init();
+}
   

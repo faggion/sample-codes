@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf8">
-  </head>
-  <body style="margin:0;padding:0">
-    <canvas id="_c1"></canvas>
-  </body>
-</html>
-<script type="text/javascript" src="./lib/caat.js"></script>
-<script>
-// create a director object
-window.addEventListener('load', function (){
+function (){
     var imgfiles = [
         {id:'cafe',    url:'./img/cafe.png'},
         {id:'office',  url:'./img/office.png'},
@@ -60,6 +48,4 @@ window.addEventListener('load', function (){
 
     // start the animation loop
     CAAT.loop(1);
-},false);
-</script>
-  
+}

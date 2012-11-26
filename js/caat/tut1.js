@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf8">
-  </head>
-  <body>
-    <canvas id="_c1"></canvas>
-  </body>
-</html>
-<script type="text/javascript" src="./lib/caat.js"></script>
-<script>
-// create a director object
-window.addEventListener('load', function (){
+function (){
     // create a director object
     var director = new CAAT.Director().initialize(
         100,    // 100 pixels wide
@@ -19,10 +7,10 @@ window.addEventListener('load', function (){
     );
  
     // add a scene object to the director.
-    var scene=     director.createScene();
+    var scene = director.createScene();
  
     // create a CAAT actor
-    var circle=    new CAAT.ShapeActor().
+    var circle = new CAAT.ShapeActor().
         setLocation(20,20).
         setSize(60,60).
         setFillStyle('#ff0000').
@@ -33,5 +21,5 @@ window.addEventListener('load', function (){
  
     // start the animation loop
     CAAT.loop(1);
-}, false);
-</script>
+}
+

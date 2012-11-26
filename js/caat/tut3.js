@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf8">
-  </head>
-  <body style="margin:0;padding:0">
-    <canvas id="_c1"></canvas>
-  </body>
-</html>
-<script type="text/javascript" src="./lib/caat.js"></script>
-<script>
-// create a director object
-window.addEventListener('load', function (){
+function (){
     var imgfiles = [
         {id:'cafe',    url:'./img/cafe.png'},
         {id:'office',  url:'./img/office.png'},
@@ -33,20 +21,15 @@ window.addEventListener('load', function (){
         scene.addChild(bg);
 
         var cafe = new CAAT.Actor().
-            setBounds(0, 0, 128, 128).
             setBackgroundImage(director.getImage('cafe'), true ).
-            enableDrag().
-            //mouseClick(function(){ alert('clicked'); }).
             setLocation(0, 0);
         scene.addChild(cafe);
 
-        var office = new CAAT.ActorContainer().
-            setBounds(128, 128, 128, 128).
-            //setRotation( Math.PI*2*Math.random() ).
+        var office = new CAAT.Actor().
             setBackgroundImage(director.getImage('office'), false ).
-            setFillStyle('#ff3fff').
-            enableDrag();
-        office.name = "actor_office";
+            setAlpha(0.5).
+            setRotation(Math.PI * 2).
+            setLocation(128, 128);
         scene.addChild(office);
 
         var factory = new CAAT.Actor().
@@ -60,6 +43,5 @@ window.addEventListener('load', function (){
 
     // start the animation loop
     CAAT.loop(1);
-},false);
-</script>
+}
   
