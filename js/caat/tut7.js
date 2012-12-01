@@ -21,16 +21,60 @@ function (){
         var sprite= new CAAT.SpriteImage().
             initialize(director.getImage('sprite'), 8, 12);
 
+        var locX  = 32;
+        var locY  = 48;
+        var dir   = 2;
         var tiles = new CAAT.Actor().
             setBackgroundImage(sprite.getRef(), true ).
             setAnimationImageIndex( [2,1,0,1] ).
             setChangeFPS( 200 ).
-            setLocation(30, 30);
+            setLocation(locX, locY);
         scene.addChild(tiles);
+
+        CAAT.registerKeyListener( function(key) {
+            console.debug(key);
+            if(key.action !== 'down') return;
+            // up
+            if ( key.keyCode==40) {
+                if(dir !== 1){
+                    dir = 1;
+                    tiles.setAnimationImageIndex( [2,1,0,1] );
+                }
+                locY += 48/2;
+                tiles.setLocation(locX, locY);
+            }
+            // down
+            else if ( key.keyCode==38) {
+                if(dir !== 2){
+                    dir = 2;
+                    tiles.setAnimationImageIndex([38,37,36,37]);
+                }
+                locY -= 48/2;
+                tiles.setLocation(locX, locY);
+            }
+            // right
+            else if ( key.keyCode==39 ) {
+                if(dir !== 3){
+                    dir = 3;
+                    tiles.setAnimationImageIndex([26,25,24,25]);
+                }
+                locX += 32/2;
+                tiles.setLocation(locX, locY);
+            }
+            // left
+            else if ( key.keyCode==37 ) {
+                if(dir !== 4){
+                    dir = 4;
+                    tiles.setAnimationImageIndex([14,13,12,13]);
+                }
+                locX -= 32/2;
+                tiles.setLocation(locX, locY);
+            }
+        });
     };
 
     var img = new CAAT.ImagePreloader().loadImages(imgfiles,callback_imgloaded);
 
     // start the animation loop
-    CAAT.loop(20);
+    CAAT.loop(32);
 }

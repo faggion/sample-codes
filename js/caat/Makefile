@@ -3,7 +3,7 @@
 HEADER = HEADER.html
 FOOTER = FOOTER.html
 INDEX  = build/index.html
-CAAT   = /home/satoshi-tanaka/git/CAAT/build
+CAAT   = $(HOME)/git/CAAT/build
 
 install: clean
 	mkdir ./build
