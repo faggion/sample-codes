@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+div.vertical-writing
+{
+    font-family: "HiraMinProN-W3", "@ＭＳ 明朝", serif, sans-serif;
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -epub-writing-mode: vertical-rl;
+    line-height: 1.75;
+    text-align: justify;
+}
+
+/*
+strong.sesame_dot
+{
+    font-weight: normal;
+    text-emphasis-style: sesame;
+    -webkit-text-emphasis-style: sesame;
+    -epub-text-emphasis-style: sesame;
+}
+span.tcy
+{
+    text-combine: horizontal;
+    -webkit-text-combine: horizontal;
+    -epub-text-combine: horizontal;
+}
+*/
