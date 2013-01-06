@@ -10,14 +10,16 @@ app.secret_key = 'tanarky'
 class User:
     KEY = 'U'
 
-    @classmethod
+    def __init__(self):
+        session.permanent = True
+        app.permanent_session_lifetime = datetime.timedelta(minutes=5)
+
     def get_name(self):
         if self.KEY in session and 'name' in session[self.KEY]:
             return session[self.KEY]['name']
         else:
             return None
 
-    @classmethod
     def is_login(self):
         if not self.KEY in session:
             logging.debug('no KEY in session')
@@ -36,7 +38,6 @@ class User:
 
         return True
 
-    @classmethod
     def do_login(self, name, password):
         if name == 'admin' and password == 'secret':
             now = int(time.mktime(datetime.datetime.now().timetuple()))
@@ -48,7 +49,6 @@ class User:
                 session.pop(self.KEY)
             return False
 
-    @classmethod
     def do_logout(self):
         if self.KEY in session:
             session.pop(self.KEY)
@@ -56,7 +56,7 @@ class User:
 
 @app.route('/')
 def index():
-    username = User.get_name()
+    username = User().get_name()
     if not username:
         username = 'guest'
     return render_template('index.html', username=username)
@@ -64,7 +64,7 @@ def index():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if User.is_login():
+        if User().is_login():
             return f(*args, **kwargs)
         return redirect(url_for('login', next=request.url))
     return decorated_function
@@ -72,15 +72,15 @@ def login_required(f):
 @app.route('/secret')
 @login_required
 def secret():
-    username = User.get_name()
+    username = User().get_name()
     return '<h1>you are ok: %s</h1>' % username
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        if User.do_login(request.form['username'],
-                         request.form['password']):
+        if User().do_login(request.form['username'],
+                           request.form['password']):
             flash('You were successfully logged in')
             next = request.args.get('next',
                                     url_for('index'))
@@ -93,7 +93,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    User.do_logout()
+    User().do_logout()
     flash('You were successfully logged OUT')
     return redirect(url_for('index'))
 
