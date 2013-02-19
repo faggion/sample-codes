@@ -54,6 +54,16 @@ class User:
             session.pop(self.KEY)
         return True
 
+def url_for2(name, **values):
+    logging.debug(name)
+    logging.debug(values)
+    return url_for(name, **values)
+
+@app.route('/test')
+def test():
+    logging.debug(url_for2('login', next=request.url))
+    return "test page"
+
 @app.route('/')
 def index():
     username = User().get_name()
