@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     logging.error(os.environ.get('MYENV1'))
-    return u"server1"
+    return u"server2"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
