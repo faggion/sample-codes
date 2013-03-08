@@ -1,44 +1,60 @@
-from boto.ec2.connection import EC2Connection
-from boto.ec2.blockdevicemapping import BlockDeviceType
-from boto.ec2.blockdevicemapping import BlockDeviceMapping
-import time
- 
-def launchBaseInstance(ami='your-default-ami'):
-    '''Launch a single instance of the provided ami'''
-    conn = EC2Connection()
-    # Declare the block device mapping for ephemeral disks
-    mapping = BlockDeviceMapping()
-    eph0 = BlockDeviceType()
-    eph1 = BlockDeviceType()
-    eph0.ephemeral_name = 'ephemeral0'
-    eph1.ephemeral_name = 'ephemeral1'
-    mapping['/dev/sdb'] = eph0
-    mapping['/dev/sdc'] = eph1
-    # Now, ask for a reservation
-    reservation = conn.run_instances(image_id='',
-                                     #instance_type='m1.medium',
-                                     #key_name='ec2-keypair',
-                                     placement='us-west-1b',
-                                     block_device_map = mapping)
-    # And assume that the instance we're talking about is the first in the list
-    # This is not always a good assumption, and will likely depend on the specifics
-    # of your launching situation. For launching an isolated instance while no
-    # other actions are taking place, this is sufficient.
-    instance = reservation.instances[0]
+# coding: utf-8
+from fabric.api import local, abort
+import logging, time, boto, boto.ec2
+import boto.ec2.blockdevicemapping
+
+def get_regions():
+    for r in boto.ec2.regions():
+        print r.name
+
+def get_instances(region="ap-southeast-1"):
+    print "region = %s" % (region)
+    conn = boto.ec2.connect_to_region(region)
+    print "-----"
+    for reservation in conn.get_all_instances():
+        for i in reservation.instances:
+            print "%s: id=%s, type=%s, name=%s" % (i.state, i.id, i.instance_type, i.tags.get('Name'))
+    print "-----"
+
+def create_instance_debian6(region="us-west-1", type="m1.medium"):
+    print "region = %s" % (region)
+    conn = boto.ec2.connect_to_region(region)
+    if not conn:
+        abort('failed to connect to %s' % region)
+
+    # http://wiki.debian.org/Cloud/AmazonEC2Image
+    # official debian6 image(instance disk)
+    image_id = 'ami-47693a02'
+    reservations = conn.run_instances(image_id=image_id,
+                                      instance_type='m1.medium',
+                                      key_name='debian6')
+
+    ## official debian6 image(instance-store disk)
+    #image_id = 'ami-71287b34'
+    #reservations = conn.run_instances(image_id=image_id,
+    #                                  instance_type='m1.medium',
+    #                                  key_name='debian6')
+
+    ## official debian6 image(instance-store disk)
+    #image_id = 'ami-71287b34'
+    #reservations = conn.run_instances(image_id=image_id,
+    #                                  instance_type='m1.medium',
+    #                                  key_name='debian6')
+
+    if not reservations or len(reservations.instances) != 1:
+        abort('failed to run_instances')
+
+    instance = reservations.instances[0]
+    conn.create_tags([instance.id], {'Name': 'testfab1'})
+
     print('Waiting for instance to start...')
-    # Check up on its status every so often
-    status = instance.update()
-    while status == 'pending':
+
+    for i in range(0,10):
         time.sleep(10)
         status = instance.update()
         if status == 'running':
             print('New instance "' + instance.id + '" accessible at ' + instance.public_dns_name)
+            break
         else:
             print('Instance status: ' + status)
-            return
-        # If we got through the launching successfully, go ahead and create and attach a volume
-        attachEBS(instance)
-        # Now, bootstrap the deployment of this instance!
-        with(settings(host_string=instance.public_dns_name)):
-            # This is the fabric task for bootstrapping a running instance
-            bootstrap()
+

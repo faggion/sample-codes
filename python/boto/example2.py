@@ -6,8 +6,8 @@ def get_all_ins(c):
     for r in reservations:
         for i in r.instances:
             print i.image_id
-            print i.ramdisk
-            #print i.tags.get('Name')
+            #print i.ramdisk
+            print i.tags.get('Name')
             #print i.kernel
             #print i.image_id
             #print i.platform
@@ -16,13 +16,14 @@ def get_all_ins(c):
             print '-----'
 
 if __name__ == '__main__':
-    region_name = 'ap-northeast-1'
+    region_name = 'us-west-1'
     regions = boto.ec2.regions()
-    #print regions
+    print regions
     for r in regions:
         if r.name == region_name:
             break
     conn = boto.connect_ec2(region=r)
-    print conn.get_all_instances()
-    print conn.get_all_security_groups()
+    get_all_ins(conn)
+    #print conn.get_all_instances()
+    #print conn.get_all_security_groups()
 
