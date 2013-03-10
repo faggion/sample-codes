@@ -7,7 +7,7 @@ def get_regions():
     for r in boto.ec2.regions():
         print r.name
 
-def get_instances(region="ap-southeast-1"):
+def get_instances(region="us-west-1"):
     print "region = %s" % (region)
     conn = boto.ec2.connect_to_region(region)
     print "-----"
@@ -27,7 +27,7 @@ def create_instance_debian6(region="us-west-1", type="m1.medium"):
     image_id = 'ami-47693a02'
     reservations = conn.run_instances(image_id=image_id,
                                       instance_type='m1.medium',
-                                      key_name='debian6')
+                                      key_name='satoshi-tanaka')
 
     ## official debian6 image(instance-store disk)
     #image_id = 'ami-71287b34'

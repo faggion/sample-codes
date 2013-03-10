@@ -9,19 +9,3 @@ div.vertical-writing
     line-height: 1.75;
     text-align: justify;
 }
-
-/*
-strong.sesame_dot
-{
-    font-weight: normal;
-    text-emphasis-style: sesame;
-    -webkit-text-emphasis-style: sesame;
-    -epub-text-emphasis-style: sesame;
-}
-span.tcy
-{
-    text-combine: horizontal;
-    -webkit-text-combine: horizontal;
-    -epub-text-combine: horizontal;
-}
-*/
