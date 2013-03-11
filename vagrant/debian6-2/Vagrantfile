@@ -3,13 +3,20 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  config.vm.box = "debian6"
-  config.vm.network :hostonly, "192.168.10.12"
-  config.vm.host_name = "debian6-2"
 
+  config.vm.box = "debian6"
   config.vm.customize do |vm|
     vm.memory_size = 1024
-    vm.name = "debian6-2"
+  end
+
+  config.vm.define :web do |web_config|
+    web_config.vm.host_name = "web"
+    web_config.vm.network :hostonly, "192.168.99.11"
+  end
+
+  config.vm.define :db do |db_config|
+    db_config.vm.host_name = "db"
+    db_config.vm.network :hostonly, "192.168.99.21"
   end
 
   config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
