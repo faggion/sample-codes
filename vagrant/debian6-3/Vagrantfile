@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  config.vm.box = "debian6"
+  config.vm.network :hostonly, "192.168.99.11"
+  config.vm.host_name = "debian6-3"
+
+  config.vm.customize do |vm|
+    vm.memory_size = 1024
+    vm.name = "debian6-3"
+  end
+
+  # force overwrite /root/.profile ( for tty warning )
+  config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
+  # install chef-solo
+  config.vm.provision :shell, :inline => "curl -s -L https://www.opscode.com/chef/install.sh | bash"
+  # finish message
+  config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
+end
