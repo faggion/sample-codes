@@ -13,7 +13,7 @@ Vagrant::Config.run do |config|
   # force overwrite /root/.profile ( for tty warning )
   config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
   # set own authorized_keys to root user
-  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '"+open('./authorized_keys').read+"' >> /root/.ssh/authorized_keys"
+  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '"+open(ENV['HOME']+'/.ssh/authorized_keys').read+"' >> /root/.ssh/authorized_keys"
   # finish message
   config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
 end
