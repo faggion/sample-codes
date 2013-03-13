@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant::Config.run do |config|
+  config.vm.box = "debian6"
+  config.vm.network :hostonly, "192.168.99.15"
+  config.vm.host_name = "debian6-5"
+
+  config.vm.customize do |vm|
+    vm.memory_size = 1024
+    vm.name = "debian6-5"
+  end
+
+  # force overwrite /root/.profile ( for tty warning )
+  config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
+  # set own authorized_keys to root user
+  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '"+open('./authorized_keys').read+"' >> /root/.ssh/authorized_keys"
+  # finish message
+  config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
+end
