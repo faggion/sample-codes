@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "dummy"
+
+  config.vm.provider :aws do |aws|
+    aws.access_key_id = "YOUR_KEY"
+    aws.secret_access_key = "YOUR_SECRET"
+    aws.keypair_name = "debian6"
+    aws.ssh_private_key_path = "path_to_private_key"
+
+    aws.region = "us-west-1"
+    aws.ami = "ami-d22c0197"
+    aws.ssh_username = "root"
+  end
+end
