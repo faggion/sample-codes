@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  config.vm.box = "debian6"
+  config.vm.network :hostonly, "192.168.10.11"
+  config.vm.host_name = "debian6-1"
+
+  config.vm.customize do |vm|
+    vm.memory_size = 4096
+    vm.name = "debian6-1"
+  end
+
+  config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
+  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
+  config.vm.provision :shell, :inline => "echo 'deb http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4 contrib
+deb-src http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4 contrib' > /etc/apt/sources.list.d/cloudera.list"
+  config.vm.provision :shell, :inline => "curl -s http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh/archive.key | apt-key add -"
+  config.vm.provision :shell, :inline => "echo 'deb http://http.us.debian.org/debian squeeze main contrib non-free
+deb-src http://http.us.debian.org/debian squeeze main contrib non-free
+deb http://security.debian.org/ squeeze/updates main contrib non-free
+deb-src http://security.debian.org/ squeeze/updates main contrib non-free
+deb http://http.us.debian.org/debian squeeze-updates main contrib non-free
+deb-src http://http.us.debian.org/debian squeeze-updates main contrib non-free' > /etc/apt/sources.list"
+  config.vm.provision :shell, :inline => 'aptitude update'
+  config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
+end
