@@ -40,11 +40,11 @@ int main (void)
         case LUA_TBOOLEAN:
             rc = lua_toboolean(L,-1);
             break;
-            case LUA_TNUMBER:
-                rc = lua_tointeger(L,-1);
-                break;
-            default:
-                break;
+        case LUA_TNUMBER:
+            rc = lua_tointeger(L,-1);
+            break;
+        default:
+            break;
         }
 
         lua_pop(L,nret);
