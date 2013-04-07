@@ -1,3 +1,4 @@
+local http = require("socket.http")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local webView = nil
@@ -10,26 +11,30 @@ function scene:createScene( event )
    --group:insert(webView)
    print("hello scene1")
 
-   local function listener( event )
-      local shouldLoad = true
-      local url = event.url
-      if 1 == string.find( url, "corona:close" ) then
-         shouldLoad = false
-      end
-      if event.errorCode then
-         print( "Error: " .. tostring( event.errorMessage ) )
-         shouldLoad = false
-      end
-      return shouldLoad
-   end
-   local options = {
-      hasBackground=true,
-      baseUrl=system.ResourceDirectory,
-      urlRequest=listener
-   }
-   native.showWebPopup(0, 0, 320, 436, "local.html", options)
-   --native.showWebPopup(0, 0, 320, 436, "http://www.yahoo.co.jp/")
-   
+   -- FIXME: should use network.request()
+   local r = http.request("http://localhost:9999/")
+   print(r)
+
+   --local function listener( event )
+   --   local shouldLoad = true
+   --   local url = event.url
+   --   if 1 == string.find( url, "corona:close" ) then
+   --      shouldLoad = false
+   --   end
+   --   if event.errorCode then
+   --      print( "Error: " .. tostring( event.errorMessage ) )
+   --      shouldLoad = false
+   --   end
+   --   return shouldLoad
+   --end
+   --local options = {
+   --   hasBackground=true,
+   --   baseUrl=system.ResourceDirectory,
+   --   urlRequest=listener
+   --}
+   --native.showWebPopup(0, 0, 320, 436, "http://localhost:9999/")
+   ----native.showWebPopup(0, 0, 320, 436, "local.html", options)
+   ----native.showWebPopup(0, 0, 320, 436, "http://www.yahoo.co.jp/")
 end
 
 function scene:enterScene( event )
