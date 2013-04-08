@@ -1,5 +1,5 @@
 # coding: utf-8
-import logging
+import logging,urllib
 from flask import Flask, Response, request, flash, render_template, redirect, url_for, make_response
 
 app = Flask(__name__)
@@ -30,9 +30,17 @@ def login():
             resp.set_cookie('testcookie',
                             value='subsubdomaincookie',
                             domain='sub.test.tanarky.com')
-
             return resp
-    return render_template('form.html', error=error)
+
+    resp = make_response(render_template('form.html', error=error))
+    # 
+    resp.set_cookie('unsafe_cookie_val',
+                    value='aaa=bbb&ccc=ddd')
+    # 
+    resp.set_cookie('safe_cookie_val',
+                    value=urllib.quote_plus('aaa=bbb&ccc=ddd'))
+
+    return resp
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
