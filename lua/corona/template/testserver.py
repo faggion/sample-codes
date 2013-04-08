@@ -1,11 +1,14 @@
 # coding: utf-8
-from flask import Flask
+import logging
+from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=["POST","GET"])
 def index():
+    logging.debug(request.headers)
     return u"hello world"
 
 if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.DEBUG)
     app.run(debug=True, port=9999)

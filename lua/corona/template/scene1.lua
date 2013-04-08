@@ -11,9 +11,17 @@ function scene:createScene( event )
    --group:insert(webView)
    print("hello scene1")
 
-   -- FIXME: should use network.request()
-   local r = http.request("http://localhost:9999/")
-   print(r)
+   ---- FIXME: should use network.request()
+   --local r = http.request("http://localhost:9999/")
+   --print(r)
+
+   local headers = {}
+   headers["Content-Type"] = "application/json"
+   headers["X-API-Key"] = "13b6ac91a2"
+   headers["User-Agent"] = "MyAgent"
+   local params = {}
+   params.headers = headers
+   network.request( "http://localhost:9999/", "GET", function() print("done!") end, params)
 
    --local function listener( event )
    --   local shouldLoad = true
