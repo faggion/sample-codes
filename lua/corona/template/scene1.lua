@@ -21,7 +21,7 @@ function scene:createScene( event )
    headers["User-Agent"] = "MyAgent"
    local params = {}
    params.headers = headers
-   network.request( "http://localhost:9999/", "GET", function() print("done!") end, params)
+   network.request( "http://localhost:9999/", "GET", function(e) print(e.response) end, params)
 
    --local function listener( event )
    --   local shouldLoad = true

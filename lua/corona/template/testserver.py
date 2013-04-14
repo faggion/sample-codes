@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/', methods=["POST","GET"])
 def index():
     logging.debug(request.headers)
-    return u"hello world"
+    return u"こんにちは、世界"
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
