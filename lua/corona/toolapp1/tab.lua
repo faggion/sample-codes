@@ -1,7 +1,6 @@
 --do
 
 local storyboard = require( "storyboard" )
-
 local Tab = {
    left    = 0,
    top     = display.contentHeight - 50,
@@ -20,17 +19,6 @@ local Tab = {
         onPress=function() storyboard.gotoScene( "scene3" ); end },
    }
 }
-
-function Tab:setSelectedButton(tabnum)
-   for i=1, #self.buttons do
-      if i == tabnum then
-         self.buttons[i].selected = true
-      else
-         self.buttons[i].selected = false
-      end
-   end
-end
-
 return Tab
 
 --end

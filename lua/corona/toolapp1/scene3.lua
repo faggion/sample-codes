@@ -11,8 +11,8 @@ end
 function scene:enterScene( event )
    local group = self.view
 
-   tab:setSelectedButton(3)
    local tabBar = widget.newTabBar(tab)
+   tabBar:setSelected(3)
    group:insert(tabBar)
 end
 
