@@ -2,6 +2,24 @@ local usernameField, passwordField, submitButton
 
 local widget = require( "widget" )
 
+local function doSomething()
+   native.setActivityIndicator( false )
+end
+
+local function onSubmit()
+   if usernameField.text == "" then
+      print("empty username")
+      native.setKeyboardFocus( usernameField )
+   elseif passwordField.text == "" then
+      print("empty password")
+      native.setKeyboardFocus( passwordField )
+   else
+      print("[OK] username: " .. usernameField.text .. " , password: " .. passwordField.text)
+      native.setActivityIndicator( true )
+      timer.performWithDelay( 2000, doSomething, 1 )
+   end
+end
+
 local function onUsername( self, event )
    print(event.phase)
    if ( "began" == event.phase ) then
@@ -18,6 +36,7 @@ local function onPassword( self, event )
     -- Hide keyboard when the user clicks "Return" in this field
    if ( "submitted" == event.phase ) then
       native.setKeyboardFocus( nil )
+      onSubmit()
    end
 end
 
@@ -36,17 +55,6 @@ passwordField.isSecure = true
 passwordField:addEventListener("userInput")
 passwordField:setTextColor( 51, 51, 122, 255 )
 
-local onSubmit = function()
-   if usernameField.text == "" then
-      print("empty username")
-      native.setKeyboardFocus( usernameField )
-   elseif passwordField.text == "" then
-      print("empty password")
-      native.setKeyboardFocus( passwordField )
-   else
-      print("[OK] username: " .. usernameField.text .. " , password: " .. passwordField.text)
-   end
-end
 local myButton = widget.newButton
 {
     left = 50,
