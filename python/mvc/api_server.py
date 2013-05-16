@@ -18,9 +18,6 @@ def get_locale():
     logging.debug("locale: %s" % locale)
     return locale
 
-"""
-API entry points
-"""
 @app.route("/")
 def index():
     return "top page"
@@ -34,15 +31,3 @@ app.register_blueprint(user, url_prefix='/user')
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
     app.run(debug=True)
-
-"""
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(80) NOT NULL,
-  `email` varchar(120) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
-
-"""
