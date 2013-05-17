@@ -52,5 +52,7 @@ if __name__ == '__main__':
 
 - alter tableはどうする？ -> sqlalchemy-migrate パッケージを使うべし
 - unique key, indexをつけるには？ -> Column(*, index=True, unique=True)
+- select for udpate -> s = table.select(table.c.user=="test",for_update=True)
+                       http://stackoverflow.com/questions/10081121/sqlalchemy-select-for-update-example
 
 """
