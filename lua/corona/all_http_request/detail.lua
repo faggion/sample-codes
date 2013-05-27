@@ -34,7 +34,7 @@ function scene:enterScene( event )
    group:insert(home_button)
 
    local bg_rect = display.newRect(0, 50, display.contentWidth, 50)
-   bg_rect:setFillColor(50, 50, 50)
+   bg_rect:setFillColor(64, 64, 64)
    group:insert(bg_rect)
    -- delete button
    local delete_button = widget.newButton
