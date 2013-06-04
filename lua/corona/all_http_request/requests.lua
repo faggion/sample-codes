@@ -9,13 +9,15 @@ function scene:createScene( event )
 end
 
 local function onRowTouch(event)
-   if event.phase == "began" then
+   print(event.phase)
+   if event.phase == "hoge" then
       storyboard.gotoScene("detail")
    end
 end
 
 local function Plus(event)
-   if event.phase == "began" then
+   print(event.phase)
+   if event.phase == "hoge" then
       storyboard.gotoScene("edit_basic")
    end
 end
@@ -37,6 +39,7 @@ function onRowRender(event)
    icon_exec.x = 25
    icon_exec.y = event.row.contentHeight / 2 - 8
    function icon_exec:touch(event)
+      print(event.phase)
       if event.phase == "began" then
          print('touch began')
       end
@@ -47,7 +50,23 @@ end
 function scene:enterScene( event )
    local group = self.view
 
+   -- middle contents
+   tableView = widget.newTableView
+   {
+      top    = 50,
+      width  = 320, 
+      height = display.contentHeight - 50,
+      onRowRender = onRowRender,
+      --onRowTouch = onRowTouch,
+   }
+   group:insert( tableView )
+   tableView:insertRow({id="request to my server 1", height=50})
+   tableView:insertRow({id="request to my server 2", height=50})
+
    -- top title bar
+   local title_bg = display.newRect(0,0,display.contentWidth, 50)
+   title_bg:setFillColor(32, 32, 32)
+   group:insert(title_bg)
    local TITLE_HEIGHT = 50
    local TITLE_ICON_SIDE = 30
    local title = display.newText("Requests", 0, 0, nil, 20 )
@@ -77,18 +96,6 @@ function scene:enterScene( event )
    }
    group:insert(plus_button)
 
-   -- middle contents
-   tableView = widget.newTableView
-   {
-      top    = 50,
-      width  = 320, 
-      height = display.contentHeight - 50,
-      onRowRender = onRowRender,
-      --onRowTouch = onRowTouch,
-   }
-   group:insert( tableView )
-   tableView:insertRow({id="request to my server 1", height=50})
-   tableView:insertRow({id="request to my server 2", height=50})
 
 end
 
