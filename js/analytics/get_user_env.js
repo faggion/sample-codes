@@ -12,7 +12,7 @@
         "productSub"     : "16",
         "cookieEnabled"  : "17",
         "doNotTrack"     : "18",
-        //"userAgent"      : "19", // 通常のaccess_logフォーマットなら必要ないかも
+        //"userAgent"      : "19", // 通常のaccess_logフォーマットなら必要ない+AppNameで十分
 
         // ブラウザ独自実装系
         "browserLanguage": "21", // IE, Opera
@@ -26,13 +26,11 @@
     };
     // END: 端末情報
     // START: 画面系情報
-    if(typeof document != "undefined" && typeof document.documentElement != "undefined"){
-        if(typeof document.documentElement.clientWidth != "undefined"){
-            query.push("31=" + document.documentElement.clientWidth);
-        }
-        if(typeof document.documentElement.clientHeight != "undefined"){
-            query.push("32=" + document.documentElement.clientHeight);
-        }
+    if(typeof window.innerWidth != "undefined"){
+        query.push("31=" + window.innerWidth);
+    }
+    if(typeof window.innerHeight != "undefined"){
+        query.push("32=" + window.innerHeight);
     }
     if(typeof screen != "undefined"){
         if(typeof screen.width != "undefined"){
@@ -42,11 +40,27 @@
             query.push("34=" + screen.height);
         }
     }
+    if(typeof window.devicePixelRatio != "undefined"){
+        query.push("35=" + window.devicePixelRatio);
+    }
+    if(typeof window.innerHeight != "undefined" && 
+       typeof window.innerWidth  != "undefined" &&
+       parseInt(window.innerHeight) &&
+       parseInt(window.innerWidth)  &&
+       parseInt(window.innerHeight) < parseInt(window.innerWidth)){
+        query.push("36=1"); // landscape=1, portrait=NaN
+    }
     // END: 画面系情報
     // START: その他情報
     var d = new Date();
     query.push("40=" + d.getTime());
     query.push("41=" + d.getTimezoneOffset());
+    if(typeof window.localStorage !== 'undefined' && window.localStorage !== null){
+        window.localStorage.setItem('test','1');
+        if(window.localStorage.getItem('test') === '1'){
+            query.push("42=1");
+        }
+    }
     // END: その他情報
 
     for(var k in navigator_keys){
