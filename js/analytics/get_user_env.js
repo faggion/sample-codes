@@ -4,7 +4,7 @@
     var navigator_keys = {
         // ブラウザ共通実装系
         "platform"       : "10",
-        "appCodeName"    : "11",
+        //"appCodeName"    : "11", // always 'mozilla'
         "appName"        : "12",
         "appVersion"     : "13",
         "language"       : "14",
