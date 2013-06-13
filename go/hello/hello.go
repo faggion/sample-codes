@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+//	"github.com/tanarky/string"
+	"github.com/tanarky/rand"
+)
 
 func main() {
-	fmt.Printf("Hello, world\n")
+	//fmt.Println(string.Reverse(fmt.Sprintf("Hello, world; こんにちは、世界; %d", rand.Random())))
+
+	for i:=0; i<3; i++ {
+		rand.Seed(1)
+		fmt.Println(fmt.Sprintf("rand: %d", rand.Random()))
+	}
 }

@@ -34,11 +34,18 @@ endif
 all: $(SUBDIR) $(SOTARGET) $(EXETARGET) $(MODTARGET)
 
 ifeq "$(basename $(EXETARGET))" "$(EXETARGET)"
+## commented out because -z,relro is invalid on mac
+#$(EXETARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
+#	$(LDCMD) $(LDFLAGS) -Wl,-z,relro $^ -o $@ $(LDLIBS)
 $(EXETARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-	$(LDCMD) $(LDFLAGS) -Wl,-z,relro $^ -o $@ $(LDLIBS)
+	$(LDCMD) $(LDFLAGS) -Wl $^ -o $@ $(LDLIBS)
 endif
+
+## commented out because -z,relro is invalid on mac
+#$(SOTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
+#	$(LDCMD) -shared $(LDFLAGS) -Wl,-z,relro -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
 $(SOTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-	$(LDCMD) -shared $(LDFLAGS) -Wl,-z,relro -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
+	$(LDCMD) -shared $(LDFLAGS) -Wl -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
 $(MODTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
 	$(LDCMD) -shared -pthread $(LDFLAGS) -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
 
