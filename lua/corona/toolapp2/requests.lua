@@ -7,16 +7,27 @@ function scene:createScene( event )
    local group = self.view
 end
 
+
+local function onComplete( event )
+   if "clicked" == event.action then
+      local i = event.index
+      if 1 == i then
+         -- Do nothing; dialog will simply dismiss
+      end
+   end
+end
+
 local function treatResponse(e)
    native.setActivityIndicator(false)
 
+   local alert
    if e.isError then
-      print("ERROR!")
+      alert = native.showAlert( "Result", "Error",
+                                {"OK"}, onComplete)
    else
-      print(e.status)
-      for k,v in pairs(e.responseHeaders) do
-         print(k .. "\t" .. v)
-      end
+      alert = native.showAlert( "Result", "Status = " .. e.status .. ", Date = " ..
+                                e.responseHeaders.Date,
+                                {"OK"}, onComplete)
    end
 
 end
@@ -101,7 +112,7 @@ function scene:enterScene( event )
    -- middle contents
    tableView = widget.newTableView
    {
-      top    = 50,
+      top    = 70,
       width  = 320, 
       height = display.contentHeight - 50,
       onRowRender = onRowRender,
@@ -112,15 +123,22 @@ function scene:enterScene( event )
    --tableView:insertRow({id="request 2", height=50})
 
    -- top title bar
-   local title_bg = display.newRect(0,0,display.contentWidth, 50)
+   local title_bg = display.newRect(0, 20, display.contentWidth, 50)
    title_bg:setFillColor(32, 32, 32)
    group:insert(title_bg)
    local TITLE_HEIGHT = 50
    local TITLE_ICON_SIDE = 30
    local title = display.newText("Requests", 0, 0, nil, 20 )
    title.x = display.contentWidth / 2 
-   title.y = TITLE_HEIGHT / 2
+   title.y = TITLE_HEIGHT / 2 + 20
    group:insert(title)
+
+   if network.canDetectNetworkStatusChanges then
+      network.setStatusListener( "www.apple.com", networkListener )
+   else
+      print("network reachability not supported on this platform")
+   end
+
 end
 
 function scene:exitScene( event )

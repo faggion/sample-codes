@@ -21,7 +21,7 @@ function scene:enterScene( event )
       }
    }
 
-   local bg = display.newRect(0,0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
+   local bg = display.newRect(0, 20, DISPLAY_WIDTH, DISPLAY_HEIGHT)
    bg:setFillColor(COLOR_THEME_1.r,
                    COLOR_THEME_1.g,
                    COLOR_THEME_1.b,
@@ -35,7 +35,7 @@ function scene:enterScene( event )
    title.text = TITLE.text
    -- object中心の位置がx,y (左上ではない)
    title.x = DISPLAY_WIDTH/2
-   title.y = DISPLAY_HEIGHT/2
+   title.y = DISPLAY_HEIGHT/2 + 10
    --title.isVisible = true
    group:insert(title)
 
