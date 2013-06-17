@@ -132,13 +132,6 @@ function scene:enterScene( event )
    title.x = display.contentWidth / 2 
    title.y = TITLE_HEIGHT / 2 + 20
    group:insert(title)
-
-   if network.canDetectNetworkStatusChanges then
-      network.setStatusListener( "www.apple.com", networkListener )
-   else
-      print("network reachability not supported on this platform")
-   end
-
 end
 
 function scene:exitScene( event )
