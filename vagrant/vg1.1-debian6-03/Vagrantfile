@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  config.vm.box = "debian6"
+  config.vm.network :hostonly, "192.168.10.13"
+  config.vm.host_name = "debian6-03"
+
+  config.vm.customize do |vm|
+    vm.memory_size = 4096
+    vm.name = "debian6-03"
+  end
+
+  config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
+  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  config.vm.provision :shell, :inline => 'aptitude update; aptitude install debian-keyring debian-archive-keyring; aptitude update; aptitude install zsh tsocks nginx rsync tree emacs23-nox -y'
+  config.vm.provision :shell, :inline => 'mkdir -p /usr/local/go && \
+cd /usr/local/go && wget -q http://go.googlecode.com/files/go1.1.1.linux-amd64.tar.gz && \
+tar xvzf go1.1.1.linux-amd64.tar.gz && mv go go-1.1.1 && \
+ln -sf /usr/local/go/go-1.1.1 current && rm go1.1.1.linux-amd64.tar.gz'
+
+  #config.vm.provision :shell, :inline => 'sh /vagrant/make_user.sh ' + 'satoshi-tanaka'
+  config.vm.provision :shell, :inline => 'echo "%root ALL=NOPASSWD:ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
+
+  config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
+end
