@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var W = window;
+var A = {};
+A.httpget = (function(){
+    var xhr;
+    // for IE9, firefox, chrome, safari
+    if(W.XMLHttpRequest){
+        xhr = new XMLHttpRequest();
+        return function(url, callback){
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4)
+                    callback(xhr.responseText, xhr.getResponseHeader("Content-Type"));
+            };
+            xhr.open('GET', url, true);
+            //xhr.open('POST', url, true);
+            //xhr.open('POST', url);
+            //// 任意のRequest Headerをつけると、Modernブラウザは、一度OPTIONSメソッドでサーバに問い合わせ
+            //// OPTIONSのレスポンスheaderに、Access-Control-Allow-Headersで対象のheaderがあれば通信可能
+            //xhr.setRequestHeader('X-Foo', 'hoge');
+            xhr.send();
+        };
+    }
+    // for IE8 and lower
+    else if (W.XDomainRequest){
+        xhr = new XDomainRequest();
+        return function(url, callback){
+            xhr.onload = function(){ callback(xhr.responseText, xhr.contentType) };
+            xhr.open('GET', url);
+            xhr.send();
+        };
+    }
+    return function(url, callback){};
+})();
+A.httpget('http://localhost:5000/', function(text, type){ alert(text); } );
+</script>
+</body>
+</html>
