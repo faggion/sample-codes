@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Checking html5 api</title>
+</head>
+<body>
+<script>
+var dbo = null;
+if (window.indexedDB){
+    dbo = window.indexedDB;
+}
+else if(window.webkitIndexedDB){
+    dbo = window.webkitIndexedDB;
+}
+else if(window.mozIndexedDB) {
+    dbo = window.mozIndexedDB;
+}
+else if(window.openDatabase) {
+    document.write("openDatabase");
+} else {
+    document.write("NO INDEXED DB");
+}
+
+if(dbo){
+    var DB_TABLE = 'books';
+    var DB_NAME  = 'libraries';
+    var dbh = dbo.open(DB_NAME, 2);
+    var db  = null;
+
+    dbh.onsuccess = function(event){
+        db = this.result;
+        console.log(db);
+        console.log("open success");
+
+        var title = 'test book';
+        var year  = 1989;
+        var tx = db.transaction(DB_TABLE, 'readwrite').objectStore(DB_TABLE);
+        var req;
+        try {
+            req = tx.add({title:title, year:year});
+            req.onsuccess = function(){
+                console.log('insert success');
+            };
+            req.onerror = function(){
+                console.log('insert error:' + this.error);
+            };
+
+            req2 = tx.add({title:'hoge', year:2003});
+            req2.onsuccess = function(){
+                console.log('insert success2');
+            };
+            req2.onerror = function(){
+                console.log('insert error2:' + this.error);
+            };
+
+        }
+        catch (e) {
+        }
+
+        tx.openCursor().onsuccess = function(event){
+            var cursor = event.target.result;
+            if(cursor){
+                console.log('id='+cursor.key+', title='+cursor.value.title);
+                cursor.continue();
+            }
+            else {
+                console.log('no cursor');
+            }
+        };
+
+    };
+
+    dbh.onupgradeneeded = function(event){
+        console.log("upgrade needed");
+        var store = event.currentTarget.result.createObjectStore(DB_TABLE, { keyPath: "id", autoIncrement: true});
+        store.createIndex('title', 'title', { unique: true  });
+        store.createIndex('year',  'year',  { unique: false });
+    };
+
+}
+</script>
+</body>
+</html>
