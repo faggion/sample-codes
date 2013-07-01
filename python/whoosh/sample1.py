@@ -5,6 +5,8 @@ from whoosh.fields import *
 
 schema = Schema(title=TEXT(stored=True),
                 path=ID(stored=True),
+                price=NUMERIC(stored=True),
+                tag=TEXT(stored=True),
                 content=TEXT(stored=True))
 
 ix     = create_in("/tmp/", schema)
@@ -12,6 +14,8 @@ writer = ix.writer()
 
 writer.add_document(title=u"First document",
                     path=u"/a",
+                    price=int("3"),
+                    tag=u"Tokyo",
                     content=u"This is the first document we've added!")
 
 writer.add_document(title=u"Second document",
@@ -27,7 +31,8 @@ from whoosh.qparser import QueryParser
 #    print dict(results[0])
 
 
-query   = QueryParser("content", ix.schema).parse(u"Even")
+#query   = QueryParser("content", ix.schema).parse(u"Even")
+query   = QueryParser("title", ix.schema).parse(u"first")
 
 aaa = ix.searcher()
 results = aaa.search(query)
