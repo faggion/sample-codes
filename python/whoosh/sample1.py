@@ -21,6 +21,13 @@ writer.add_document(title=u"First document",
 writer.add_document(title=u"Second document",
                     path=u"/b",
                     content=u"The second one is even more interesting!")
+
+third = { "title":   u"Third document",
+          "path":    u"/c",
+          "price":   1200,
+          "content": u"This is third document, it's amazing!" }
+writer.add_document(**third)
+
 writer.commit()
 
 from whoosh.qparser import QueryParser
@@ -29,10 +36,9 @@ from whoosh.qparser import QueryParser
 #    query = QueryParser("content", ix.schema).parse(u"first")
 #    results = searcher.search(query)
 #    print dict(results[0])
-
-
 #query   = QueryParser("content", ix.schema).parse(u"Even")
-query   = QueryParser("title", ix.schema).parse(u"first")
+#query   = QueryParser("title", ix.schema).parse(u"first")
+query   = QueryParser("title", ix.schema).parse(u"third")
 
 aaa = ix.searcher()
 results = aaa.search(query)
