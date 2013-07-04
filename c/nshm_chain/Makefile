@@ -1,4 +1,4 @@
-MK_CFG_DIR = /usr/local/share/make_cfg
+MK_CFG_DIR = /home/z/share/make_cfg
 include $(MK_CFG_DIR)/make.defs
 
 #LIBNAME = nshm
@@ -7,9 +7,9 @@ CSRC = sample.c
 EXETARGET = sample
 
 WARN +=
-OPPFLAGS +=
+OPPFLAGS += -I/home/z/include/nshm
 DEPOBJS =
-LDFLAGS =
-LDLIBS = -lpthread -lnshm
+LDFLAGS = -L/home/z/lib 
+LDLIBS  = -lpthread -lnshm
 
 include $(MK_CFG_DIR)/make.rules
