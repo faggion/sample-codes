@@ -60,36 +60,62 @@ local function generate_click_cookie_id()
    return table.concat(id, "")
 end
 
+local function sendInRequest(event)
+   native.setActivityIndicator( true )
+
+   local agent =
+      "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; " ..
+      ".NET CLR 1.1." .. math.random(1000, 2000) .. ")"
+
+   local headers = {}
+   headers["User-Agent"] = agent
+   headers["Referer"]    = "http://gourmet.blogmura.com/tokyogourmet/"
+   headers["Cookie"]     = "click_cookie_id=" .. generate_click_cookie_id()
+
+   local query = {
+      agent  = agent,
+      ref    = "http://mikan767676.appspot.com/",
+      newinp = "1",
+      uri    = "http://gourmet.blogmura.com/tokyogourmet/"
+   }
+   query = encode(query)
+   url = 'http://link.blogmura.com/link/c/000000?' .. build_query(query)
+
+   local params = {}
+   params.headers = headers
+   network.request(url, "GET", treatResponse, params)
+end
+
+local function sendOutRequest(event)
+   native.setActivityIndicator( true )
+
+   local agent =
+      "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; " ..
+      ".NET CLR 1.1." .. math.random(1000, 2000) .. ")"
+
+   local headers = {}
+   headers["User-Agent"] = agent
+   headers["Referer"]    = "http://gourmet.blogmura.com/tokyogourmet/"
+   headers["Cookie"]     = "click_cookie_id=" .. generate_click_cookie_id()
+
+   local query = {
+      ch  = "01023626",
+      url = "http://mikan767676.appspot.com/",
+   }
+   url = 'http://link.blogmura.com/out/?' .. build_query(encode(query))
+
+   local params = {}
+   params.headers = headers
+   network.request(url, "GET", treatResponse, params)
+end
+
 local function onRowTouch(event)
    if event.phase == "release" then
-      native.setActivityIndicator( true )
-
-      local agent = 
-         "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; " ..
-         ".NET CLR 1.1." .. math.random(1000, 2000) .. ")"
-
-      local headers = {}
-      headers["User-Agent"] = agent
-      headers["Referer"]    = "http://gourmet.blogmura.com/tokyogourmet/"
-      headers["Cookie"]     = "click_cookie_id=" .. generate_click_cookie_id()
-
-      local query = {
-         agent  = agent,
-         ref    = "http://mikan767676.appspot.com/",
-         newinp = "1",
-         uri    = "http://gourmet.blogmura.com/tokyogourmet/"
-      }
-      query = encode(query)
-      url = 'http://link.blogmura.com/link/c/000000?' .. build_query(query)
-      --url = "http://localhost:9999/?" .. build_query(query)
-
-      local params = {}
-      params.headers = headers
-
-      network.request(url, "GET", treatResponse, params)
-      --timer.performWithDelay( 1000,
-      --                        function() network.request(url, "GET", treatResponse, params);end,
-      --                        1)
+      if event.row.id == 'in_request' then
+         sendInRequest(event)
+      else
+         sendOutRequest(event)
+      end
    end
 end
 
@@ -98,12 +124,6 @@ function onRowRender(event)
    label.x = event.row.x - ( event.row.contentWidth/2 ) + ( label.contentWidth/2 ) + 10
    label.y = event.row.contentHeight / 2 - 2
    label:setTextColor( 0, 0, 0 )
-   
-   --local exec_date = display.newText( event.row, "last executed: 2013/05/31 12:00:00", 0,0,nil,10)
-   --exec_date.x = event.row.x - ( event.row.contentWidth/2 ) + ( exec_date.contentWidth/2 ) + 50
-   --exec_date.y = event.row.contentHeight / 2 + 8
-   --exec_date:setTextColor( 0, 0, 0, 128 )
-   --exec_date:addEventListener('touch', onRowTouch)
 end
 
 function scene:enterScene( event )
@@ -119,8 +139,8 @@ function scene:enterScene( event )
       onRowTouch = onRowTouch,
    }
    group:insert( tableView )
-   tableView:insertRow({id="Do Request", height=50})
-   --tableView:insertRow({id="request 2", height=50})
+   tableView:insertRow({id="in_request",  height=50})
+   tableView:insertRow({id="out_request", height=50})
 
    -- top title bar
    local title_bg = display.newRect(0, 20, display.contentWidth, 50)
