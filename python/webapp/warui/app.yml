@@ -1,0 +1,30 @@
+application: warui-senpai
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+- url: /s
+  static_dir: s
+- url: /.*
+  script: handlers.app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: markupsafe                                                              
+  version: latest 
+- name: PIL
+  version: latest
+- name: pycrypto
+  version: latest
+- name: jinja2                                                                  
+  version: latest                                                               
+
+builtins: 
+- remote_api: on
+- appstats: on

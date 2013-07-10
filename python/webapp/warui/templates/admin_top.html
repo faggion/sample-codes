@@ -1,0 +1,72 @@
+{% extends "admin_base.html" %}
+{% block tool %}Admin{% endblock %}
+{% block title %}Top{% endblock %}
+{% block content %}
+
+{% if T.msg %}
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success:</strong> {{ T.msg }}
+</div>
+{% endif %}
+{% if T.err %}
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Failed:</strong> {{ T.err }}
+</div>
+{% endif %}
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>created at</th>
+      <th>last logged in at</th>
+      <th> change password</th>
+      <th> deactivate </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for r in T.rooms %}
+    <tr>
+      <td><a href="{{ T.self.url_for('front_room', name=r.name) }}">{{ r.name }}</a></td>
+      <td>{{ r.created_at }}</td>
+      <td>{{ r.logged_in_at }}</td>
+      <td>
+        <form method="POST" name="up" class="form-inline">
+          <input type="hidden"   name="name"     value="{{ r.name }}">
+          <input type="hidden"   name="action"   value="chpass">
+          <input type="password" name="password" class="input-small">
+          <button type="submit" class="btn">update</button>
+        </form>
+      </td>
+      <td>
+        <form method="POST" name="dlt" class="form-inline">
+          <input type="hidden" name="name"   value="{{ r.name }}">
+          <input type="hidden" name="action" value="switch_active_status">
+          {% if r.is_active %}
+          <button type="submit" class="btn">deactivate</button>
+          {% else %}
+          <button type="submit" class="btn">activate</button>
+          {% endif %}
+        </form>
+      </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+<form method="POST">
+  <fieldset>
+    <legend>Create Room</legend>
+    <label>Room Name</label>
+    <input name="name" type="text" placeholder="Please input room number">
+
+    <label>Password</label>
+    <input name="password" type="password" placeholder="Please input room password">
+
+    <br><button type="submit" class="btn">Submit</button>
+  </fieldset>
+</form>
+
+{% endblock %}
