@@ -26,7 +26,7 @@ class Room(webapp2.RequestHandler):
     def get(self, name):
         t  = env.get_template('room.html')
 
-        messages = db.GqlQuery("select * from Message")
+        messages = db.GqlQuery("select * from Message order by posted_at desc")
 
         tv = {"title": "Chat room [%s] " % name,
               "room_name": name,
