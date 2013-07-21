@@ -17,7 +17,7 @@ local function onComplete( event )
    end
 end
 
-local function treatResponse(e)
+local function treatInResponse(e)
    native.setActivityIndicator(false)
 
    local alert
@@ -25,11 +25,39 @@ local function treatResponse(e)
       alert = native.showAlert( "Result", "Error",
                                 {"OK"}, onComplete)
    else
-      alert = native.showAlert( "Result", "Status = " .. e.status .. ", Date = " ..
-                                e.responseHeaders.Date,
-                                {"OK"}, onComplete)
+      alert = native.showAlert( "Result",
+                                "IN request has been done successfully.",
+                                {"OK"},
+                                onComplete)
    end
+end
+local function treatOutResponse(e)
+   native.setActivityIndicator(false)
 
+   local alert
+   if e.isError then
+      alert = native.showAlert( "Result", "Error",
+                                {"OK"}, onComplete)
+   else
+      alert = native.showAlert( "Result",
+                                "OUT request has been done successfully.",
+                                {"OK"},
+                                onComplete)
+   end
+end
+local function treatCurrentPointResponse(e)
+   native.setActivityIndicator(false)
+
+   local alert
+   if e.isError then
+      alert = native.showAlert( "Result", "Error",
+                                {"OK"}, onComplete)
+   else
+      alert = native.showAlert( "Result",
+                                e.response,
+                                {"OK"},
+                                onComplete)
+   end
 end
 
 local function encode(t)
@@ -83,7 +111,7 @@ local function sendInRequest(event)
 
    local params = {}
    params.headers = headers
-   network.request(url, "GET", treatResponse, params)
+   network.request(url, "GET", treatInResponse, params)
 end
 
 local function sendOutRequest(event)
@@ -106,15 +134,34 @@ local function sendOutRequest(event)
 
    local params = {}
    params.headers = headers
-   network.request(url, "GET", treatResponse, params)
+   network.request(url, "GET", treatOutResponse, params)
 end
+
+local function sendCurrentPointRequest(event)
+   native.setActivityIndicator( true )
+
+   local agent =
+      "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; " ..
+      ".NET CLR 1.1." .. math.random(1000, 2000) .. ")"
+
+   local headers = {}
+   headers["User-Agent"] = agent
+   url = 'http://tanarky-test.appspot.com/point.html?output=rawtext'
+
+   local params = {}
+   params.headers = headers
+   network.request(url, "GET", treatCurrentPointResponse, params)
+end
+
 
 local function onRowTouch(event)
    if event.phase == "release" then
-      if event.row.id == 'in_request' then
+      if event.row.id == 'in request' then
          sendInRequest(event)
-      else
+      elseif event.row.id == 'out request' then
          sendOutRequest(event)
+      else
+         sendCurrentPointRequest(event)
       end
    end
 end
@@ -139,8 +186,9 @@ function scene:enterScene( event )
       onRowTouch = onRowTouch,
    }
    group:insert( tableView )
-   tableView:insertRow({id="in_request",  height=50})
-   tableView:insertRow({id="out_request", height=50})
+   tableView:insertRow({id="in request",  height=50})
+   tableView:insertRow({id="out request", height=50})
+   tableView:insertRow({id="current point", height=50})
 
    -- top title bar
    local title_bg = display.newRect(0, 20, display.contentWidth, 50)
