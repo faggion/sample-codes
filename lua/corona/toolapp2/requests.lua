@@ -9,12 +9,12 @@ end
 
 
 local function onComplete( event )
-   if "clicked" == event.action then
-      local i = event.index
-      if 1 == i then
-         -- Do nothing; dialog will simply dismiss
-      end
-   end
+--   if "clicked" == event.action then
+--      local i = event.index
+--      if 1 == i then
+--         -- Do nothing; dialog will simply dismiss
+--      end
+--   end
 end
 
 local function treatInResponse(e)
@@ -22,8 +22,10 @@ local function treatInResponse(e)
 
    local alert
    if e.isError then
-      alert = native.showAlert( "Result", "Error",
-                                {"OK"}, onComplete)
+      alert = native.showAlert( "Result",
+                                "Error",
+                                {"OK"},
+                                onComplete)
    else
       alert = native.showAlert( "Result",
                                 "IN request has been done successfully.",
@@ -93,7 +95,7 @@ local function sendInRequest(event)
 
    local agent =
       "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; " ..
-      ".NET CLR 1.1." .. math.random(1000, 2000) .. ")"
+      ".NET CLR 1.1." .. math.random(1000, 9999) .. ")"
 
    local headers = {}
    headers["User-Agent"] = agent
