@@ -144,8 +144,8 @@ class ols:
         print "Method: Least Squares"
         print "Date: ", time.strftime("%a, %d %b %Y",t)
         print "Time: ", time.strftime("%H:%M:%S",t)
-        print '# obs:               %5.0f' % self.nobs
-        print '# variables:     %5.0f' % self.ncoef 
+        print '# obs:       %5.0f' % self.nobs
+        print '# variables: %5.0f' % self.ncoef 
         print '=============================================================================='
         print 'variable     coefficient       std. Error      t-statistic             prob.'
         print '=============================================================================='
