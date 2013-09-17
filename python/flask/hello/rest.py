@@ -1,11 +1,12 @@
 from flask import Flask
-from flask import request
+from flask import request, redirect
 import logging
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def rest_get():
+    logging.debug(request.cookies.get('username'))
     return u"rest get"
 
 @app.route('/<model_name>/<model_id>.xml', methods=['GET'])
@@ -39,5 +40,10 @@ def rest_put(model_id):
 def rest_delete():
     return u'{"id":123,"name":"tanarky_delete"}'
 
+@app.route('/rd')
+def rd():
+    return redirect('/')
+
 if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.DEBUG)
     app.run(debug=True, port=10080)
