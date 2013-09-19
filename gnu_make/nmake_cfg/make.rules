@@ -2,6 +2,9 @@ ifdef CSRC
 OBJS += $(addsuffix .o,$(basename $(CSRC)))
 endif
 
+RANLIBCMD = ranlib
+LNCMD = ln
+
 LDCMD = $(CC)
 ifdef CXXSRC
 OBJS += $(addsuffix .o,$(basename $(CXXSRC)))
@@ -9,8 +12,9 @@ LDCMD = $(CXX)
 endif
 
 ifdef LIBNAME
-SOTARGETBASE = lib$(LIBNAME).so
-SOTARGET = $(SOTARGETBASE).$(LIBVERSION)
+SOTARGET = lib$(LIBNAME).so.$(LIBVERSION)
+ATARGET = lib$(LIBNAME).a
+LNTARGET = lib$(LIBNAME).so
 OPPFLAGS += -fPIC -DPIC
 endif
 
@@ -31,27 +35,25 @@ CXXFLAGS = $(OPPFLAGS) $(WARN)
 ifdef SUBDIR
 .PHONY: all $(SUBDIR)
 endif
-all: $(SUBDIR) $(SOTARGET) $(EXETARGET) $(MODTARGET)
+all: $(SUBDIR) $(SOTARGET) $(ATARGET) $(LNTARGET) $(EXETARGET) $(MODTARGET)
 
 ifeq "$(basename $(EXETARGET))" "$(EXETARGET)"
-## commented out because -z,relro is invalid on mac
-#$(EXETARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-#	$(LDCMD) $(LDFLAGS) -Wl,-z,relro $^ -o $@ $(LDLIBS)
 $(EXETARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-	$(LDCMD) $(LDFLAGS) -Wl $^ -o $@ $(LDLIBS)
+	$(LDCMD) $(LDFLAGS) -Wl,-z,relro $^ -o $@ $(LDLIBS)
 endif
-
-## commented out because -z,relro is invalid on mac
-#$(SOTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-#	$(LDCMD) -shared $(LDFLAGS) -Wl,-z,relro -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
 $(SOTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
-	$(LDCMD) -shared $(LDFLAGS) -Wl -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
+	$(LDCMD) -shared $(LDFLAGS) -Wl,-z,relro -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
+$(ATARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
+	$(AR) cru $@ $(OBJS) $(DEPOBJS)
+	$(RANLIBCMD) $@
+$(LNTARGET): $(SOTARGET)
+	$(LNCMD) -s $(SOTARGET) $@
 $(MODTARGET): $(OBJS) $(DEPOBJS) $(ARCHS)
 	$(LDCMD) -shared -pthread $(LDFLAGS) -Wl,-soname,$@ $^ -o $@ $(LDLIBS)
 
 .PHONY: clean
 clean: $(SUBDIR)
-	$(RM) -r $(DEPS_DIR) $(OBJS) $(EXETARGET) $(SOTARGET) $(MODTARGET)
+	$(RM) -r $(DEPS_DIR) $(OBJS) $(EXETARGET) $(SOTARGET) $(ATARGET) $(LNTARGET) $(MODTARGET)
 
 $(SUBDIR):
 	$(MAKE) $(MAKECMDGOALS) --directory=$@
