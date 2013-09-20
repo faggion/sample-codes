@@ -35,7 +35,6 @@ std::vector<std::string> split(const std::string &str, char delim){
 static bool get_sptree_map(std::map<int64_t, mapv_t> &sp_map){
     std::string line;
     std::vector<std::string> datas;
-    char *index[5];
     mapv_t val;
 
     while(std::getline(std::cin, line)){
@@ -52,6 +51,7 @@ static bool get_sptree_map(std::map<int64_t, mapv_t> &sp_map){
         val.node.id      = strtol(datas[0].c_str(), NULL, 10);
         val.parent_id    = strtol(datas[1].c_str(), NULL, 10);
         val.node.site_id = strtol(datas[2].c_str(), NULL, 10);
+        //std::cout << val.parent_id << std::endl;
 
         val.node.depth        = -1;
         val.node.parent_index = -1;
@@ -71,12 +71,14 @@ static void fix_sptree_map(std::map<int64_t,mapv_t> &sp_map){
     }
 
     for(it = sp_map.begin(); it != sp_map.end(); ++it){
+        //std::cerr << "parent id is " << it->second.parent_id << std::endl;
         parent_it = sp_map.find(it->second.parent_id);
 
         if(parent_it != sp_map.end()){
             it->second.node.parent_index = parent_it->second.index;
         }
         else{
+            //std::cerr << "not found" << std::endl;
             it->second.node.parent_index = -1;
         }
     }
@@ -94,30 +96,30 @@ static void fix_sptree_map(std::map<int64_t,mapv_t> &sp_map){
                 parent_id = -1;
             }
         }
-
         it->second.node.depth = ix;
     }
     return;
 }
 
-static bool write_sptree(int fd,const std::map<int64_t,mapv_t> &sp_map)
+static bool write_sptree(int fd, const std::map<int64_t, mapv_t> &sp_map)
 {
     sptree_header_t header;
     std::map<int64_t,mapv_t>::const_iterator it;
 
-    memset(&header,'\0',sizeof(header));
+    memset(&header,'\0', sizeof(header));
     strncpy(header.magic, SPTREE_MAGIC, sizeof(header.magic));
 
-    header.version = SPTREE_VERSION;
+    header.version  = SPTREE_VERSION;
     header.replaced = 0;
-    header.ctime = time(NULL);
+    header.ctime    = time(NULL);
 
-    if(write(fd,&header,sizeof(header)) < 0){
+    if(write(fd, &header, sizeof(header)) < 0){
         fprintf(stderr,"ERROR: write header: %s\n", strerror(errno));
         return(false);
     }
 
     for(it = sp_map.begin(); it != sp_map.end(); ++it){
+        //std::cerr << "write...  " << it->second.node.parent_index << ":" << it->second.parent_id << std::endl;
         if(write(fd, &(it->second.node), sizeof(it->second.node)) < 0){
             fprintf(stderr,"ERROR: write: %s\n",strerror(errno));
             return(false);

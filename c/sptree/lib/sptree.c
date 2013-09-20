@@ -18,8 +18,8 @@ static void _sptree_init(SpTree *sptree){
     sptree->_fd = -1;
     sptree->_size = 0;
     sptree->_base = MAP_FAILED;
-    sptree->_node_num = 0;
-    sptree->_node = NULL;
+    sptree->element_count = 0;
+    sptree->elements = NULL;
     return;
 }
 static int _cmp_spnode(const void *s1, const void *s2){
@@ -74,8 +74,8 @@ SpTree* sptree_attach(const char *path){
     }
 
     ptr = (char*)(sptree->_base);
-    sptree->_node_num = (int64_t)((sptree->_size - sizeof(sptree_header_t))/sizeof(node_sp_t));
-    sptree->_node = (node_sp_t*)(ptr + sizeof(sptree_header_t));
+    sptree->element_count = (int64_t)((sptree->_size - sizeof(sptree_header_t))/sizeof(node_sp_t));
+    sptree->elements = (node_sp_t*)(ptr + sizeof(sptree_header_t));
     return(sptree);
 
   error:
@@ -132,20 +132,20 @@ const node_sp_t* sptree_get_node(SpTree *sptree, int64_t id){
     if(NULL == sptree) return(NULL);
 
     dummy.id = id;
-    return ((const node_sp_t*)(bsearch(&dummy, sptree->_node, (size_t)sptree->_node_num, sizeof(node_sp_t), _cmp_spnode)));
+    return ((const node_sp_t*)(bsearch(&dummy, sptree->elements, (size_t)sptree->element_count, sizeof(node_sp_t), _cmp_spnode)));
 }
 
 const node_sp_t* sptree_get_parent(SpTree *sptree, node_sp_t *current_node){
-    if(NULL == sptree || NULL == current_node) return(NULL);
-    return(&sptree->_node[current_node->parent_index]);
+    if(NULL == sptree || NULL == current_node || current_node->parent_index < 0) return(NULL);
+    return(&sptree->elements[current_node->parent_index]);
 }
 
 void sptree_foreach(SpTree *sptree, sptree_for_func_t func, void *udf){
     int ix;
     if(NULL == sptree || NULL == func) return;
 
-    for(ix=0; ix < sptree->_node_num; ix++){
-        if(!func(sptree, &sptree->_node[ix], udf)){
+    for(ix=0; ix < sptree->element_count; ix++){
+        if(!func(sptree, &sptree->elements[ix], udf)){
             return;
         }
     }

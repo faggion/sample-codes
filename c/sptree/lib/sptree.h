@@ -18,8 +18,8 @@ typedef struct {
     int _fd;
     size_t _size;
     void *_base;
-    int64_t _node_num;
-    node_sp_t *_node;
+    int64_t element_count;
+    node_sp_t *elements;
 } SpTree;
 
 typedef struct {
