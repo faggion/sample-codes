@@ -7,6 +7,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def rest_get():
     logging.debug(request.cookies.get('username'))
+    logging.debug(request.headers)
     return u"rest get"
 
 @app.route('/<model_name>/<model_id>.xml', methods=['GET'])
