@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <time.h>
 
+#define SIZE 8
+
 typedef struct _foo
 {
     int id;
@@ -12,6 +14,17 @@ typedef struct _foo
 } FOO;
 
 int main(void){
+    FOO f;
+    char org[SIZE] = "1234567";
+
+    f.id = 10;
+    //f.name = (char *)malloc(SIZE);
+    memcpy(f.name, org, SIZE);
+    fprintf(stdout, "name is %s\n", f.name);
+    fprintf(stderr, "FOO: %d\n", sizeof(FOO));
+    fprintf(stderr, "f  : %d\n", sizeof(f));
+
+/*
     char buf[128];
     int ix=1;
     long long ll=1;
@@ -49,5 +62,6 @@ int main(void){
     fprintf(stderr, "align(33): %d\n", ((33 + 8 - 1) & -8));
     fprintf(stderr, "FOO: %d\n", sizeof(FOO));
     fprintf(stderr, "strlen buf: %d\n", strlen(buf));
-    return 0;
+*/
+    return EXIT_SUCCESS;
 }

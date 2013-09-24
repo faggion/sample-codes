@@ -1,4 +1,4 @@
-MK_CFG_DIR = /usr/local/share/make_cfg
+MK_CFG_DIR = ../../gnu_make/nmake_cfg
 include $(MK_CFG_DIR)/make.defs
 
 CSRC = sample.c
