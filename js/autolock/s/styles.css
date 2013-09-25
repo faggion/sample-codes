@@ -1,0 +1,17 @@
+
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.tweet-form {
+    height: 200px;
+    background-color: #eee;
+    margin-bottom: 10px;
+}
+
+.tweet-history {
+    height: 800px;
+    background-color: #efefef;
+}

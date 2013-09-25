@@ -1,110 +1,38 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    
     <meta charset="utf-8">
-    <title>Chat room [hoge]  - </title>
+    <title>Bootstrap 101 Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link href="./s/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./s/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="./s/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./s/js/autolock.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="s/styles.css">
   </head>
-
   <body>
+
     <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+        </ul>
+        <h2 class="text-muted">Board</h2>
+      </div>
+
+      <h1>Hello</h1>
+
       <div class="row">
-        <div class="span12">
-
-<hr>
-<div id="log"></div>
-
-<div id="unlockarea">
-  <form class="form-inline" id="unlockform">
-    <input type="text" placeholder="Unlock code">
-    <button type="submit" class="btn">Unlock</button>
-  </form>
-</div>
-
-<div id="lockarea" style="display:none">
-<hr>
-<button>check</button>
-<hr>
-<div class="media">
-  <div class="pull-left">
-    <div style="vertical-align:middle;display:table-cell;text-align:center;font-size:50px;width:64px;height:64px;border:1px solid #ddd;line-height:100%">&#9825</div>
-  </div>
-
-  <div class="media-body">
-    <h4 class="media-heading">2013-09-25 05:14:01.750932</h4>
-    <p>hoge</p>
-  </div>
-</div>
-<hr>
-
-<div class="media">
-  <div class="pull-left">
-    <div style="vertical-align:middle;display:table-cell;text-align:center;font-size:50px;width:64px;height:64px;border:1px solid #ddd;line-height:100%">&#9825</div>
-  </div>
-
-  <div class="media-body">
-    <h4 class="media-heading">2013-09-25 05:14:01.750932</h4>
-    <p>hoge</p>
-  </div>
-</div>
-<hr>
-
-<div class="media">
-  <div class="pull-left">
-    <div style="vertical-align:middle;display:table-cell;text-align:center;font-size:50px;width:64px;height:64px;border:1px solid #ddd;line-height:100%">&#9825</div>
-  </div>
-
-  <div class="media-body">
-    <h4 class="media-heading">2013-09-25 05:14:01.750932</h4>
-    <p>hoge</p>
-  </div>
-</div>
-<hr>
-</div>
-
-<hr>
-
-<form method="POST" style="background-color:#eee;padding:10px">
-  <fieldset>
-    <legend>Write message</legend>
-
-    <label>Icon</label>
-    <label class="radio inline" style="font-size:x-large;margin-right:15px;">
-    <input type="radio" name="icon" value="9731"> &#9731
-    </label>
-    <label class="radio inline" style="font-size:x-large;margin-right:15px;">
-    <input type="radio" name="icon" value="9825"> &#9825;
-    </label>
-
-    <br><br>
-
-    <label>Message</label>
-    <textarea class="input-xxlarge" name="body" rows="5"></textarea>
-
-    <br>
-    <input type="hidden" name="room_name" value="hoge">
-    <button type="submit" class="btn">write</button>
-  </fieldset>
-</form>
-
-
+        <div class="col-md-4">
+          <div class="tweet-form">サブカラム</div>
+        </div>
+        <div class="col-md-8">
+          <div class="tweet-history">メインコンテンツ</div>
         </div>
       </div>
+
     </div>
+
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </body>
 </html>
