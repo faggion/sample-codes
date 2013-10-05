@@ -21,8 +21,13 @@
 #include <map>
 
 #define ADSHM_SIZE 4096*1024
+#define UNUSED(x) ((void)(x))
+
+static int is_open = 0;
 
 static int _exec_lua(const char *file);
+static int _func_open(lua_State *L);
+static int _func_close(lua_State *L);
 static int _func_addition(lua_State *L);
 static int _func_subtraction(lua_State *L);
 
@@ -32,6 +37,8 @@ static struct {
 } _cmd_funcs[] = {
     {"func_addition",    _func_addition},
     {"func_subtraction", _func_subtraction},
+    {"func_open",        _func_open},
+    {"func_close",       _func_close},
     {NULL, NULL},
 };
 
@@ -47,6 +54,18 @@ int main(int argc, const char **argv){
   finally:
     std::cerr << "Error" << std::endl;
     return rc;
+}
+
+static int _func_open(lua_State *L){
+    fprintf(stderr, "openning...: is_open = %d\n", is_open);
+    lua_pushinteger(L, (is_open=1));
+    return 1;
+}
+
+static int _func_close(lua_State *L){
+    fprintf(stderr, "closing...: is_open = %d\n", is_open);
+    lua_pushinteger(L, (is_open=0));
+    return 1;
 }
 
 static int _func_addition(lua_State *L){
