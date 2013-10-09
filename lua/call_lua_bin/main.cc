@@ -16,26 +16,29 @@
 
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <map>
 
-int _exec_lua(){
+#define UNUSED(x) ((void)(x))
+
+static size_t size = 0;
+
+int _exec_lua(const char *file){
     lua_State *L = NULL;
     int top, ret, n, rc=0;
     std::string line;
-    std::string buf;
-    while(std::getline(std::cin, line)){
-        buf += line + "\n"; // FIXME
-    }
-    //std::cerr << buf << std::endl;
+    std::ifstream ifs(file);
+    std::string content((std::istreambuf_iterator<char>(ifs)),
+                        (std::istreambuf_iterator<char>()));
 
     L = luaL_newstate();
     luaL_openlibs(L);
     top = lua_gettop(L);
-    ret = luaL_loadbuffer(L, buf.c_str(), strlen(buf.c_str()), "sample_name");
+    ret = luaL_loadbuffer(L, content.c_str(), content.size(), "sample_name");
     if( ret != 0 ){
-        std::cerr << "error1" << std::endl;
+        std::cerr << "error1: " << ret << std::endl;
         lua_pop(L, 1);
         return(rc);
     }
@@ -69,10 +72,68 @@ int _exec_lua(){
     return 0;
 }
 
+// NOTICE: この関数は何度も呼ばれる
+static int _write(lua_State *L, const void* p, size_t sz, void* ud){
+    char *buf = NULL;
+    int i=0;
+
+    UNUSED(ud);
+    if(NULL == L) return 1;
+
+    //std::cerr << "size: " << sz << std::endl;
+    size += sz;
+
+    buf = (char *)malloc(sz);
+    if(NULL == buf) return 1;
+    memcpy(buf, p, sz);
+    //buf[sz] = '\0';
+
+    //std::cout << buf;
+    for(i=0;i<(int)sz;i++){
+        printf("%c", buf[i]);
+    }
+    
+    free(buf);
+    return(0);
+}
+
+int _compile(const char *file){
+    lua_State *L = NULL;
+    int top, ret, rc=0;
+    std::string line;
+    std::string buf;
+    std::ifstream ifs(file);
+    std::string content((std::istreambuf_iterator<char>(ifs)),
+                        (std::istreambuf_iterator<char>()));
+    //std::cerr << content << std::endl;
+    //std::cerr << content.size() << std::endl;
+
+    L = luaL_newstate();
+    luaL_openlibs(L);
+    top = lua_gettop(L);
+    ret = luaL_loadbuffer(L, content.c_str(), content.size(), "sample_name");
+    if( ret != 0 ){
+        std::cerr << "error1" << std::endl;
+        lua_pop(L, 1);
+        return(rc);
+    }
+
+    ret = lua_dump(L, _write, NULL);
+    if( ret != 0 ){
+        lua_pop(L, 1);
+    }
+
+    std::cerr << "inc size = " << size << std::endl;
+    return(0);
+}
+
 int main(int argc, const char **argv){
     int rc = EXIT_SUCCESS;
 
-    if(_exec_lua() == 0){
+    if(argc == 3 && !strcmp(argv[1], "rawexec") && _exec_lua(argv[2]) == 0){
+        return rc;
+    }
+    else if(argc == 3 && !strcmp(argv[1], "compile") && _compile(argv[2]) == 0){
         return rc;
     }
     rc = EXIT_FAILURE;
