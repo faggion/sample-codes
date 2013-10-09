@@ -94,6 +94,9 @@ static int _exec_lua(const char *file){
     int ix, rc = 0;
     lua_State *L = lua_open();
 
+    // luaL_register で登録することも可能、その場合libname(namespace)が付けられる
+    // void luaL_register (lua_State *L, const char *libname, const luaL_Reg *l);
+    // http://www.lua.org/manual/5.1/manual.html
     for(ix=0; _cmd_funcs[ix].name != NULL;ix++){
         lua_register(L, _cmd_funcs[ix].name, _cmd_funcs[ix].func);
     }
