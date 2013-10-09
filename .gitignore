@@ -47,6 +47,7 @@ downloads
 *.la
 *.a
 a.out
+.deps
 
 # -----------------
 # blogofile
