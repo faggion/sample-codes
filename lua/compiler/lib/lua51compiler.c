@@ -45,6 +45,7 @@ int lua51_compiler_compile(lua_State *L, const char *code, const char *name, lua
         if(DBG) fprintf(stderr, "dump error\n");
         goto error;
     }
+    lua_pop(L, top - lua_gettop(L));
     return 0;
 
   error:
