@@ -11,6 +11,7 @@ if __name__ == '__main__':
   # 別serverからの更新リクエストを受け付ける用のsocket
   #mst = ctx.socket(zmq.PULL)
   mst = ctx.socket(zmq.PAIR)
+  mst.setsockopt(zmq.RCVBUF, 100000)
   mst.bind('tcp://127.0.0.1:9988')
 
   # 別serverへの更新リクエストを投げる用のsocket

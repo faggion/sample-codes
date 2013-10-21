@@ -5,6 +5,14 @@ import zmq,sys
 ctx = zmq.Context()
 sock = ctx.socket(zmq.REQ)
 sock.connect('tcp://127.0.0.1:' + sys.argv[1])
-sock.send(sys.argv[2])
-print(sock.recv())
+
+msg = ""
+for i in range(1000):
+    m = "%d: %s" % (i, sys.argv[2])
+    sock.send(m)
+    print(sock.recv())
+    msg += m
+    print("%d => %d" % (i, len(msg)))
+
+sock.close()
 

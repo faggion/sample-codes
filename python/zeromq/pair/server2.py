@@ -16,11 +16,13 @@ if __name__ == '__main__':
     # 別serverへの更新リクエストを投げる用のsocket
     #slv = ctx.socket(zmq.PUSH)
     slv = ctx.socket(zmq.PAIR)
+    slv.setsockopt(zmq.SNDBUF, 100000)
     slv.connect('tcp://127.0.0.1:9988')
 
     poll = zmq.Poller()
     poll.register(cmd, zmq.POLLIN)
     poll.register(mst, zmq.POLLIN)
+    #poll.register(slv, zmq.POLLOUT)
     while True:
         sockets = dict(poll.poll(1000))
         print("poll end ...")
@@ -29,19 +31,18 @@ if __name__ == '__main__':
             if sockets[cmd] == zmq.POLLIN:
                 res = cmd.recv()
                 print("received message: %s" % res)
-                slv.send(res)
-                cmd.send("send ok")
 
-                #if res == "slave_conn":
-                #    slv.connect('tcp://127.0.0.1:9988')
-                #    cmd.send("slv connect ok")
-                #elif res == "slave_close":
-                #    slv.close()
-                #    cmd.send("slv close ok")
-                #else:
-                #    print("received message: %s" % res)
-                #    slv.send(res)
-                #    cmd.send("send ok")
+                poll.register(slv, zmq.POLLOUT)
+                sout = dict(poll.poll(100))
+                if slv in sout:
+                    if sout[slv] == zmq.POLLOUT:
+                        slv.send(res)
+                        cmd.send("send ok")
+                    else:
+                        cmd.send("send error")
+                else:
+                    cmd.send("send timeout")
+                poll.unregister(slv)
             else:
                 print("cmd not POLLIN")
 
@@ -51,4 +52,3 @@ if __name__ == '__main__':
                 print("received from pair socket: %s" % (res))
             else:
                 print("mst not POLLIN")
-
