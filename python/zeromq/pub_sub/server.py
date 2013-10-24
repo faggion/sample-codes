@@ -40,7 +40,7 @@ if __name__ == '__main__':
                 _id = router.recv()
                 res = router.recv()
                 print("received from router socket(%s): %s" % (_id, res))
-                router.send(_id, zmq.SNDMORE)
-                router.send("ok")
+                #router.send(_id, zmq.SNDMORE)
+                #router.send("ok")
             else:
                 print("router error")
