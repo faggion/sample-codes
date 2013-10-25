@@ -7,6 +7,6 @@ sock = ctx.socket(zmq.REQ)
 sock.connect('tcp://127.0.0.1:9999')
 
 sock.send(sys.argv[1])
-print(sock.recv())
+#print(sock.recv())
 
 sock.close()
