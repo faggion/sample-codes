@@ -13,7 +13,7 @@
 
 #include <zmq.h>
 
-void dump(void *sock, const char *name){
+void dump(void *cmd, void *out, const char *name){
     //const char ok[] = "OK";
     char *buf  = NULL;
     size_t size;
@@ -21,7 +21,7 @@ void dump(void *sock, const char *name){
     int rc = zmq_msg_init(&msg);
 
     /* メッセージ受信 */
-    rc = zmq_msg_recv(&msg, sock, 0);
+    rc = zmq_msg_recv(&msg, cmd, 0);
     size = zmq_msg_size(&msg) + (size_t)1;
     buf = (char *)malloc(size);
     memset(buf, 0, size);
@@ -30,21 +30,25 @@ void dump(void *sock, const char *name){
     free(buf); buf = NULL;
 
     /* メッセージ送信 */
-    //rc = zmq_send(sock, ok, strlen(ok), 0);
+    //rc = zmq_send(cmd, ok, strlen(ok), 0);
 
-    rc = zmq_msg_send(&msg, sock, 0);
+    rc = zmq_msg_send(&msg, out, 0);
     fprintf(stderr, "sent bytes %d\n", rc);
 
     zmq_msg_close(&msg);
 }
 
-int main (void)
-{
+int main(const int argc, const char **argv){
     int rc;
+
+    if(argc < 3){
+        fprintf(stderr, "Usage: ./dealer [NAME] [CMDPORT]\n");
+        return -1;
+    }
+
     void *ctx = zmq_ctx_new();
     void *sock1 = zmq_socket(ctx, ZMQ_REP);
-    void *sock2 = zmq_socket(ctx, ZMQ_REP);
-    void *sock3 = zmq_socket(ctx, ZMQ_REP);
+    void *sock2 = zmq_socket(ctx, ZMQ_DEALER);
 
     if(sock1 == NULL){
         fprintf(stderr, "sock1 null");
@@ -54,19 +58,13 @@ int main (void)
         fprintf(stderr, "sock2 null");
         return -1;
     }
-    if(sock3 == NULL){
-        fprintf(stderr, "sock3 null");
-        return -1;
-    }
 
-    zmq_bind(sock1, "tcp://*:9999");
-    zmq_bind(sock2, "tcp://*:9998");
-    zmq_bind(sock3, "tcp://*:9997");
+    zmq_bind(sock1, argv[2]);
+    zmq_setsockopt(sock2, ZMQ_IDENTITY, argv[1], strlen(argv[1]));
+    zmq_connect(sock2, "tcp://127.0.0.1:5555");
 
     zmq_pollitem_t items[] = {
         { sock1, 0, ZMQ_POLLIN, 0 },
-        { sock2, 0, ZMQ_POLLIN, 0 },
-        { sock3, 0, ZMQ_POLLIN, 0 },
     };
     long itemcount = sizeof(items)/sizeof(zmq_pollitem_t);
     fprintf(stderr, "zmq_pollitem_t size %ld\n", itemcount);
@@ -82,21 +80,12 @@ int main (void)
 
         if(items[0].revents & ZMQ_POLLIN){
             fprintf(stderr, "sock1\n");
-            dump(sock1, "sock1");
-        }
-        if(items[1].revents & ZMQ_POLLIN){
-            fprintf(stderr, "sock2\n");
-            dump(sock2, "sock2");
-        }
-        if(items[2].revents & ZMQ_POLLIN){
-            fprintf(stderr, "sock3\n");
-            dump(sock3, "sock3");
+            dump(sock1, sock2, argv[1]);
         }
     }
 
     zmq_close(sock1);
     zmq_close(sock2);
-    zmq_close(sock3);
     zmq_ctx_destroy(ctx);
     return 0;
 }
