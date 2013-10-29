@@ -26,6 +26,7 @@
 static int is_open = 0;
 
 static int _exec_lua(const char *file);
+static int _func_binary(lua_State *L);
 static int _func_open(lua_State *L);
 static int _func_close(lua_State *L);
 static int _func_addition(lua_State *L);
@@ -35,6 +36,7 @@ static struct {
     const char *name;
     lua_CFunction func;
 } _cmd_funcs[] = {
+    {"func_binary",      _func_binary},
     {"func_addition",    _func_addition},
     {"func_subtraction", _func_subtraction},
     {"func_open",        _func_open},
@@ -108,3 +110,9 @@ static int _exec_lua(const char *file){
     return rc;
 }
 
+static int _func_binary(lua_State *L){
+    size_t size;
+    const char *bin = lua_tolstring(L, 1, &size);
+    fprintf(stderr, "binary size is %d\n", size);
+    return 1;
+}
