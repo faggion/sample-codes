@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block tool %}Front{% endblock %}
+{% block title %}Room{% endblock %}
+{% block content %}
+
+{% if T.msg %}
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success:</strong> {{ T.msg }}
+</div>
+{% endif %}
+{% if T.err %}
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Failed:</strong> {{ T.err }}
+</div>
+{% endif %}
+<hr>
+
+{% for m in T.messages %}
+<div class="media">
+  <div class="pull-left">
+    <div style="vertical-align:middle;display:table-cell;text-align:center;font-size:50px;width:64px;height:64px;border:1px solid #ddd;line-height:100%">&#{{ m.icon }}</div>
+  </div>
+
+  <div class="media-body">
+    <h4 class="media-heading">{{ m.posted_at }}</h4>
+    <p>{{ m.body }}</p>
+  </div>
+</div>
+<hr>
+{% endfor %}
+
+<form method="POST" style="background-color:#eee;padding:10px">
+  <fieldset>
+    <legend>Write message</legend>
+
+    <label>Icon</label>
+    <label class="radio inline" style="font-size:x-large;margin-right:15px;">
+    <input type="radio" name="icon" value="9731"> &#9731
+    </label>
+    <label class="radio inline" style="font-size:x-large;margin-right:15px;">
+    <input type="radio" name="icon" value="9825"> &#9825;
+    </label>
+
+    <br><br>
+
+    <label>Message</label>
+    <textarea class="input-xxlarge" name="body" rows="5"></textarea>
+
+    <br>
+    <input type="hidden" name="room_name" value="{{ T.room_name }}">
+    <button type="submit" class="btn">write</button>
+  </fieldset>
+</form>
+
+{% endblock %}
