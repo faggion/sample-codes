@@ -1,0 +1,63 @@
+<li class="list-group-item">
+  <h4 onclick="$('#detail_{{ sentence.key().name() }}').toggle()">{{ sentence.body }}</h4>
+
+  <div id="detail_{{ sentence.key().name() }}" style="display:none">
+
+    <!-- nav pane -->
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#words_{{ sentence.key().name() }}" data-toggle="tab">words and phrases</a>
+      </li>
+      <li>
+        <a href="#translation_{{ sentence.key().name() }}" data-toggle="tab">translation</a>
+      </li>
+      <li>
+        <a href="#rating_{{ sentence.key().name() }}" data-toggle="tab">rating</a>
+      </li>
+    </ul>
+    <!-- /nav pane -->
+
+      <!-- nav pane -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="words_{{ sentence.key().name() }}">
+          <ul class="list-group">
+            {% for word in sentence.words.split("\n") %}
+            <li class="list-group-item">
+              <a href="#" style="float:right;color:red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </a>
+              <a target="_blank" href="http://ejje.weblio.jp/content/{{word}}">{{ word }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input type="text" class="form-control input-sm" style="width:280px;display:inline">
+              <button type="submit" class="btn btn-primary btn-sm">Add</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="tab-pane" id="translation_{{ sentence.key().name() }}">
+          <p style="padding:0 5px 0 5px;">{{ sentence.translation }}</p>
+        </div>
+
+        <div class="tab-pane" id="rating_{{ sentence.key().name() }}">
+          <form class="form-inline" role="form">
+            {% for i in range(6) %}
+            <label class="radio-inline">
+              <input type="radio"
+                     name="radio_rating"
+                     {% if i == sentence.rate %}checked="checked"{% endif %}
+                     value="{{ i }}"> {{ i }}
+            </label>
+            {% endfor %}
+            <br><br>
+            <button type="submit" class="btn btn-primary btn-sm">save</button>
+          </form>
+        </div>
+      </div>
+      <!-- /nav pane -->
+    </div>
+  </li>

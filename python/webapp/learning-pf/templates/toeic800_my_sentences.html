@@ -1,64 +1,21 @@
-{% extends "base_toeic800.html" %}
+{% extends "base.html" %}
 {% block title %}Menu{% endblock %}
 {% block content %}
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
 
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#">My sentences</a></li>
-  <li><a href="#">Master sentences</a></li>
-</ul>
-
-<br>
-
-<div class="list-group">
-  <a href="/toeic800/my/123" class="list-group-item">
-    <span class="badge">14</span>
-    Dapibus ac facilisis in
-  </a>
-  <a href="#" class="list-group-item">Morbi leo risus</a>
-  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-  <a href="#" class="list-group-item">Vestibulum at eros</a>
-</div>
-
-<br>
-
-<ul class="list-group">
-  <li class="list-group-item">
-    <h4>Investors buy assets in anticipation of future price increases.</h4>
-  </li>
-
-  <li class="list-group-item">
-    <span onclick="$('#translation').toggle(500)" style="color:#888">Translation</span><br>
-    <pre id="translation" style="display:none;margin-top:10px">投資家は将来の価格上昇を見越して資産を購入する</pre>
-  </li>
-
-  <li class="list-group-item">
-    <span onclick="$('#words_and_phrases').toggle(500)" style="color:#888">
-      Words and phrases</span><br>
-    <div id="words_and_phrases" style="display:none;margin-top:10px">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <a href="#" style="float:right;color:red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </a>
-          <a href="#weblio">investor</a>
-        </li>
-      </ul>
-      <form class="form-inline" role="form">
-        <div class="form-group">
-          <input type="text" class="form-control input-sm" style="width:280px;display:inline">
-          <button type="submit" class="btn btn-primary btn-sm">Add</button>
-        </div>
-      </form>
+    <div class="btn-group">
+      <a class="btn btn-default" href="new">New sentence</a>
     </div>
-  </li>
-</ul>
+    <br><br>
 
-
-
-</div>
+    <ul class="list-group">
+      {% for sentence in T.sentences %}
+      {% include "mod_toeic800_sentence.html" %}
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 
 
