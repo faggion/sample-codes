@@ -1,15 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_toeic800.html" %}
 {% block title %}Menu{% endblock %}
 {% block content %}
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-
-    <div class="btn-group">
-      <a class="btn btn-default" href="new">New sentence</a>
-    </div>
-    <br><br>
-
     <ul class="list-group">
       {% for sentence in T.sentences %}
       {% include "mod_toeic800_sentence.html" %}
@@ -17,6 +11,5 @@
     </ul>
   </div>
 </div>
-
 
 {% endblock %}

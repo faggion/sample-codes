@@ -6,7 +6,7 @@
     <!-- nav pane -->
     <ul class="nav nav-tabs">
       <li class="active">
-        <a href="#words_{{ sentence.key().name() }}" data-toggle="tab">words and phrases</a>
+        <a href="#words_{{ sentence.key().name() }}" data-toggle="tab">words</a>
       </li>
       <li>
         <a href="#translation_{{ sentence.key().name() }}" data-toggle="tab">translation</a>
@@ -23,20 +23,19 @@
           <ul class="list-group">
             {% for word in sentence.words.split("\n") %}
             <li class="list-group-item">
-              <a href="#" style="float:right;color:red">
-                <span class="glyphicon glyphicon-remove"></span>
-              </a>
               <a target="_blank" href="http://ejje.weblio.jp/content/{{word}}">{{ word }}</a>
             </li>
             {% endfor %}
           </ul>
 
+          <!--
           <form class="form-inline" role="form">
             <div class="form-group">
               <input type="text" class="form-control input-sm" style="width:280px;display:inline">
               <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </div>
           </form>
+          -->
         </div>
 
         <div class="tab-pane" id="translation_{{ sentence.key().name() }}">
@@ -54,9 +53,9 @@
             </label>
             {% endfor %}
             <br><br>
-            <button type="submit" class="btn btn-primary btn-sm">save</button>
           </form>
         </div>
+        <a class="btn btn-info" href="./{{ sentence.key().name() }}/edit">edit</a>
       </div>
       <!-- /nav pane -->
     </div>

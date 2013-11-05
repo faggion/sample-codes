@@ -14,6 +14,7 @@
         <div class="col-sm-9">
           <input name="sentence"
                  type="text"
+                 value="{{ T.sentence.body }}"
                  class="form-control"
                  id="input_sentence"
                  placeholder="sentence">
@@ -27,6 +28,7 @@
         <div class="col-sm-9">
           <input name="translation"
                  type="text"
+                 value="{{ T.sentence.translation }}"
                  class="form-control"
                  id="input_translation"
                  placeholder="translation">
@@ -39,7 +41,7 @@
         </label>
         <div class="col-sm-9">
           <textarea name="words"
-                    class="form-control" rows="3"></textarea>
+                    class="form-control" rows="3">{{ T.sentence.words }}</textarea>
         </div>
       </div>
 
@@ -52,7 +54,7 @@
           <label class="radio-inline">
             <input type="radio"
                    name="rate"
-                   {% if i == 1 %}checked="checked"{% endif %}
+                   {% if i == T.sentence.rate %}checked="checked"{% endif %}
                    value="{{ i }}"> {{ i }}
           </label>
           {% endfor %}
@@ -61,7 +63,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-          <a href="./" class="btn btn-default">Cancel</a>
+          <a href="/toeic800/" class="btn btn-default">Cancel</a>
           <button type="submit" class="btn btn-success">Add</button>
         </div>
       </div>
