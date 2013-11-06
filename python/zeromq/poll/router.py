@@ -1,11 +1,12 @@
 # coding: utf-8
 
-import zmq
+import zmq, sys
 
 if __name__ == '__main__':
     ctx = zmq.Context()
     io  = ctx.socket(zmq.ROUTER)
-    io.bind('tcp://*:5555')
+    #io.bind('tcp://*:5555')
+    io.bind(sys.argv[1])
 
     poll = zmq.Poller()
     poll.register(io, zmq.POLLIN)

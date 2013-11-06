@@ -27,25 +27,21 @@ class New(webapp2.RequestHandler):
     @helpers.login_required
     def get(self, user):
         logging.info(user)
-        t = env.get_template('toeic800_add_sentence.html')
+        t = env.get_template('toeic800_edit_sentence.html')
         tvars = {"user": user,
+                 "sentence": {"body":"", "translation":"", "words":""},
                  "name":'satoshi'}
         return self.response.out.write(t.render(T=tvars))
 
     @helpers.login_required
     def post(self, user):
-        logging.info(self.request.get('sentence'))
-        logging.info(self.request.get('translation'))
-        logging.info(self.request.get('words'))
-        logging.info(self.request.get('rate'))
-
         sentence = self.request.get('sentence')
         new_sentence = Sentence(
-            key_name    = md5.new(sentence).hexdigest(),
+            key_name    = md5.new(sentence.encode('utf-8')).hexdigest(),
             body        = sentence,
             translation = self.request.get('translation'),
             words       = self.request.get('words'),
-            rate        = int(self.request.get('rate')),
+            rate        = 3,
             )
         new_sentence.put()
 
@@ -68,7 +64,7 @@ class Edit(webapp2.RequestHandler):
     def post(self, user, code):
         sentence = self.request.get('sentence')
         new_sentence = Sentence(
-            key_name    = md5.new(sentence).hexdigest(),
+            key_name    = md5.new(sentence.encode('utf-8')).hexdigest(),
             body        = sentence,
             translation = self.request.get('translation'),
             words       = self.request.get('words'),
@@ -77,3 +73,16 @@ class Edit(webapp2.RequestHandler):
         new_sentence.put()
 
         return self.redirect(self.request.url)
+
+class Rate(webapp2.RequestHandler):
+    @helpers.login_required
+    def get(self, user, code, point):
+        sentence = Sentence.get_by_key_name(code)
+        if not sentence:
+            return self.response.out.write('NG')
+
+        sentence.rate = int(point)
+        sentence.put()
+        return self.response.out.write('OK')
+
+

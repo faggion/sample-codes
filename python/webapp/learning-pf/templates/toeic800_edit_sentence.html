@@ -50,14 +50,16 @@
           Rate
         </label>
         <div class="col-sm-9">
-          {% for i in range(6) %}
           <label class="radio-inline">
             <input type="radio"
                    name="rate"
-                   {% if i == T.sentence.rate %}checked="checked"{% endif %}
-                   value="{{ i }}"> {{ i }}
+                   checked="checked"
+            {% if T.sentence.rate %}
+                   value="{{ T.sentence.rate }}"> {{ T.sentence.rate }}
+            {% else %}
+                   value="3"> 3
+            {% endif %}
           </label>
-          {% endfor %}
         </div>
       </div>
 
@@ -70,4 +72,7 @@
     </form>
   </div>
 </div>
+<script>
+$('#input_sentence').focus();
+</script>
 {% endblock %}

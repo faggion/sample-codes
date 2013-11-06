@@ -5,21 +5,23 @@
 
     <!-- nav pane -->
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li>
         <a href="#words_{{ sentence.key().name() }}" data-toggle="tab">words</a>
       </li>
       <li>
         <a href="#translation_{{ sentence.key().name() }}" data-toggle="tab">translation</a>
       </li>
-      <li>
-        <a href="#rating_{{ sentence.key().name() }}" data-toggle="tab">rating</a>
+      
+      <li class="active">
+        <a href="#rating_{{ sentence.key().name() }}" data-toggle="tab">rate</a>
       </li>
+      
     </ul>
     <!-- /nav pane -->
 
       <!-- nav pane -->
       <div class="tab-content">
-        <div class="tab-pane active" id="words_{{ sentence.key().name() }}">
+        <div class="tab-pane" id="words_{{ sentence.key().name() }}">
           <ul class="list-group">
             {% for word in sentence.words.split("\n") %}
             <li class="list-group-item">
@@ -42,19 +44,21 @@
           <p style="padding:0 5px 0 5px;">{{ sentence.translation }}</p>
         </div>
 
-        <div class="tab-pane" id="rating_{{ sentence.key().name() }}">
-          <form class="form-inline" role="form">
-            {% for i in range(6) %}
-            <label class="radio-inline">
-              <input type="radio"
-                     name="radio_rating"
-                     {% if i == sentence.rate %}checked="checked"{% endif %}
-                     value="{{ i }}"> {{ i }}
-            </label>
-            {% endfor %}
-            <br><br>
-          </form>
+        
+        <div class="tab-pane active" id="rating_{{ sentence.key().name() }}">
+          <div class="btn-group">
+            <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', 1);">
+              <span class="glyphicon glyphicon-thumbs-up"></span>
+            </button>
+            <a id="rate_of_{{ sentence.key().name() }}" class="btn btn-default" href="javascript:void(0);">
+              {{ sentence.rate }}
+            </a>
+            <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', -1);">
+              <span class="glyphicon glyphicon-thumbs-down"></span>
+            </button>
+          </div>
         </div>
+        <br>
         <a class="btn btn-info" href="./{{ sentence.key().name() }}/edit">edit</a>
       </div>
       <!-- /nav pane -->

@@ -12,4 +12,18 @@
   </div>
 </div>
 
+<script>
+function sum_rate(keyname, point){
+    var r = parseInt($('#rate_of_'+keyname).text());
+    $.ajax({
+        type: "GET",
+        url: '/toeic800/'+keyname+'/rate/' + (r + point),
+        success: function(ret){
+            r += point;
+            $('#rate_of_'+keyname).text(r);
+        },
+    });
+}
+</script>
+
 {% endblock %}
