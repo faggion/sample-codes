@@ -5,62 +5,49 @@
 
     <!-- nav pane -->
     <ul class="nav nav-tabs">
-      <li>
+      <li class="active">
         <a href="#words_{{ sentence.key().name() }}" data-toggle="tab">words</a>
       </li>
       <li>
         <a href="#translation_{{ sentence.key().name() }}" data-toggle="tab">translation</a>
       </li>
-      
-      <li class="active">
-        <a href="#rating_{{ sentence.key().name() }}" data-toggle="tab">rate</a>
-      </li>
-      
     </ul>
     <!-- /nav pane -->
 
-      <!-- nav pane -->
-      <div class="tab-content">
-        <div class="tab-pane" id="words_{{ sentence.key().name() }}">
-          <ul class="list-group">
-            {% for word in sentence.words.split("\n") %}
-            <li class="list-group-item">
-              <a target="_blank" href="http://ejje.weblio.jp/content/{{word}}">{{ word }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-
-          <!--
-          <form class="form-inline" role="form">
-            <div class="form-group">
-              <input type="text" class="form-control input-sm" style="width:280px;display:inline">
-              <button type="submit" class="btn btn-primary btn-sm">Add</button>
-            </div>
-          </form>
-          -->
-        </div>
-
-        <div class="tab-pane" id="translation_{{ sentence.key().name() }}">
-          <p style="padding:0 5px 0 5px;">{{ sentence.translation }}</p>
-        </div>
-
-        
-        <div class="tab-pane active" id="rating_{{ sentence.key().name() }}">
-          <div class="btn-group">
-            <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', 1);">
-              <span class="glyphicon glyphicon-thumbs-up"></span>
-            </button>
-            <a id="rate_of_{{ sentence.key().name() }}" class="btn btn-default" href="javascript:void(0);">
-              {{ sentence.rate }}
-            </a>
-            <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', -1);">
-              <span class="glyphicon glyphicon-thumbs-down"></span>
-            </button>
-          </div>
-        </div>
-        <br>
-        <a class="btn btn-info" href="./{{ sentence.key().name() }}/edit">edit</a>
+    <!-- nav pane -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="words_{{ sentence.key().name() }}">
+        <ul class="list-group">
+          {% for word in sentence.words.split("\n") %}
+          <li class="list-group-item">
+            <a target="_blank" href="http://ejje.weblio.jp/content/{{word}}">{{ word }}</a>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
-      <!-- /nav pane -->
+
+      <div class="tab-pane" id="translation_{{ sentence.key().name() }}">
+        <p style="padding:0 5px 0 5px;">{{ sentence.translation }}</p>
+      </div>
     </div>
-  </li>
+
+    <div class="btn-group">
+      <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', 1);">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+      </button>
+      <a id="rate_of_{{ sentence.key().name() }}" class="btn btn-default" href="javascript:void(0);">
+        {{ sentence.rate }}
+      </a>
+      <button class="btn btn-default" onclick="sum_rate('{{ sentence.key().name() }}', -1);">
+        <span class="glyphicon glyphicon-thumbs-down"></span>
+      </button>
+    </div>
+
+    <div class="btn-group" style="float:right">
+      <a id="rate_of_{{ sentence.key().name() }}" class="btn btn-default" href="./{{ sentence.key().name() }}/edit">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </a>
+    </div>
+    <!-- /nav pane -->
+  </div>
+</li>

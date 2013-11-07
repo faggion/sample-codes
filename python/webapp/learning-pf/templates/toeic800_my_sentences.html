@@ -4,6 +4,16 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">Sentences</a>
+      </li>
+      <li>
+        <a href="words">words</a>
+      </li>
+    </ul>
+    <br>
+
     <ul class="list-group">
       {% for sentence in T.sentences %}
       {% include "mod_toeic800_sentence.html" %}

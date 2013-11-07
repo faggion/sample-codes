@@ -11,6 +11,17 @@ from controllers import env
 import helpers
 from models.toeic800 import Sentence
 
+class Words(webapp2.RequestHandler):
+    @helpers.login_required
+    def get(self, user):
+        data = db.GqlQuery("SELECT * FROM Sentence where rate > 0 ORDER BY rate DESC").fetch(limit=1000)
+        t = env.get_template('toeic800_words.html')
+        tvars = {"user": user,
+                 "sentences": data,
+                 "name":'satoshi'}
+        return self.response.out.write(t.render(T=tvars))
+
+
 class Top(webapp2.RequestHandler):
     @helpers.login_required
     def get(self, user):
