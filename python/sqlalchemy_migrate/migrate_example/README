@@ -1,0 +1,17 @@
+
+:: 
+  
+  pip install MySQL-python
+  migrate create migrate_example "example project"
+  cd migrate_example/
+  python manage.py version_control mysql://root@localhost/test .
+  migrate manage manage.py --repository=. --url=mysql://root@localhost/test
+  python manage.py db_version
+  python manage.py version
+  python manage.py script "add tables"
+  python manage.py test
+  python manage.py upgrade
+  python manage.py downgrade 0
+  
+  python manage.py script "add synced_at field to campaign, and add more tables"
+  mv versions/002_add_synced_at_field_to_campaign,_and_add_more_tables.py versions/002_add_synced_at_field_to_campaign.py
