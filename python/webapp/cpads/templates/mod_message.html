@@ -1,0 +1,37 @@
+{% if T.message.success %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-success">
+      <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+      {% for success in T.message.success %}
+      {{ success }}<br>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% if T.message.warning %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-warning">
+      <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+      {% for warning in T.message.warning %}
+      {{ warning }}<br> 
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if T.message.danger %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-danger">
+      <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+      {% for danger in T.message.danger %}
+      {{ danger }}<br> 
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
