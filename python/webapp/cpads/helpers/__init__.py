@@ -13,13 +13,12 @@ from controllers import env
 def admin_required(f):
     @functools.wraps(f)
     def decorated_function(self, *args, **kwargs):
-        user = users.get_current_user()
+        user = get_user(self)
         if not user:
             self.redirect(users.create_login_url(self.request.url))
         elif not users.is_current_user_admin():
             self.redirect(self.url_for('top'))
-            #self.abort(403)
-        return f(self, *args, **kwargs)
+        return f(self, user, *args, **kwargs)
     return decorated_function 
 
 def login_required(f):

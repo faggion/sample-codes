@@ -1,0 +1,92 @@
+{% extends "admin_base.html" %}
+{% block tool %}Admin{% endblock %}
+{% block title %}Top{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form class="form-horizontal" role="form" method="POST" action="">
+      <legend>Edit advertiser infomation</legend>
+
+      <div class="form-group">
+        <label for="input_name" class="col-sm-3 control-label">
+          name
+        </label>
+        <div class="col-sm-9">
+          <input name="name"
+                 type="text"
+                 value=""
+                 class="form-control"
+                 id="input_name"
+                 placeholder="advertiser name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_ratio" class="col-sm-3 control-label">
+          ratio
+        </label>
+        <div class="col-sm-9">
+          <input name="ratio"
+                 type="text"
+                 value="{{ ratio|default(1) }}"
+                 class="form-control"
+                 id="input_ratio"
+                 placeholder="ratio">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_expire" class="col-sm-3 control-label">
+          expire
+        </label>
+        <div class="col-sm-9">
+          <input name="expire"
+                 type="text"
+                 value="{{ expire|default(14) }}"
+                 class="form-control"
+                 id="input_expire"
+                 placeholder="expire">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_average" class="col-sm-3 control-label">
+          average
+        </label>
+        <div class="col-sm-9">
+          <input name="average"
+                 type="text"
+                 value="{{ average|default(7000) }}"
+                 class="form-control"
+                 id="input_average"
+                 placeholder="order average price">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_vc_pid" class="col-sm-3 control-label">
+          vc pid
+        </label>
+        <div class="col-sm-9">
+          <input name="vc_pid"
+                 type="text"
+                 value=""
+                 class="form-control"
+                 id="input_vc_pid"
+                 placeholder="value commerce pid">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <a href="/toeic800/" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

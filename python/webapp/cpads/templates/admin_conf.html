@@ -1,0 +1,92 @@
+{% extends "admin_base.html" %}
+{% block tool %}Admin{% endblock %}
+{% block title %}Top{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form class="form-horizontal" role="form" method="POST" action="">
+      <legend>Edit config</legend>
+
+      <div class="form-group">
+        <label for="input_vc_sid" class="col-sm-3 control-label">
+          vc sid
+        </label>
+        <div class="col-sm-9">
+          <input name="vc_sid"
+                 type="text"
+                 value="{{ vc_sid|default('2195279') }}"
+                 class="form-control"
+                 id="input_vc_sid"
+                 placeholder="value commerce sid ( number )">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_yahoo_sid" class="col-sm-3 control-label">
+          yahoo sid
+        </label>
+        <div class="col-sm-9">
+          <input name="yahoo_sid"
+                 type="text"
+                 value="{{ yahoo_sid|default('2219441') }}"
+                 class="form-control"
+                 id="input_yahoo_sid"
+                 placeholder="yahoo affiliate sid ( number )">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_rakuten_aid" class="col-sm-3 control-label">
+          rakuten aid
+        </label>
+        <div class="col-sm-9">
+          <input name="rakuten_aid"
+                 type="text"
+                 value="{{ rakuten_aid|default('07b97778.10aa818c.07b97779.a0e17e1c') }}"
+                 class="form-control"
+                 id="input_rakuten_aid"
+                 placeholder="rakuten affiliate id">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_amazon_aid" class="col-sm-3 control-label">
+          amazon aid
+        </label>
+        <div class="col-sm-9">
+          <input name="amazon_aid"
+                 type="text"
+                 value="{{ amazon_aid|default('tanarky-22') }}"
+                 class="form-control"
+                 id="input_amazon_aid"
+                 placeholder="amazon affiliate id">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input_kumapon_aid" class="col-sm-3 control-label">
+          kumapon aid
+        </label>
+        <div class="col-sm-9">
+          <input name="kumapon_aid"
+                 type="text"
+                 value="{{ kumapon_aid|default('792ef2758512bdb15de9feb0c8ebe249') }}"
+                 class="form-control"
+                 id="input_kumapon_aid"
+                 placeholder="kumapon user id">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <a href="/admin/" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

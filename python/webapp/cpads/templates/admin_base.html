@@ -3,7 +3,7 @@
   <head>
     {% block head %}
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %} - LearningPF</title>
+    <title>{% block title %}{% endblock %} - CPAds Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -37,7 +37,7 @@ body {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/toeic800/">CPAds Admin</a>
+      <a class="navbar-brand" href="/admin/">CPAds Admin</a>
     </div>
 
     <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
@@ -54,8 +54,13 @@ body {
           {% endif %}
         </li>
         <li>
-          <a href="new">
-            <span class="glyphicon glyphicon-plus"></span> New
+          <a href="/admin/adv/new">
+            <span class="glyphicon glyphicon-plus"></span> New Advertiser
+          </a>
+        </li>
+        <li>
+          <a href="/admin/conf">
+            <span class="glyphicon glyphicon-cog"></span> Config
           </a>
         </li>
       </ul>
