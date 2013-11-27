@@ -15,7 +15,7 @@
         <div class="col-sm-9">
           <input name="name"
                  type="text"
-                 value=""
+                 value="{{ name }}"
                  class="form-control"
                  id="input_name"
                  placeholder="advertiser name">
@@ -71,7 +71,7 @@
         <div class="col-sm-9">
           <input name="vc_pid"
                  type="text"
-                 value=""
+                 value="{{ vc_pid }}"
                  class="form-control"
                  id="input_vc_pid"
                  placeholder="value commerce pid">
@@ -80,7 +80,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-          <a href="/toeic800/" class="btn btn-default">Cancel</a>
+          <a href="{{ T.self.url_for('admin_top') }}" class="btn btn-default">Cancel</a>
           <button type="submit" class="btn btn-success">Add</button>
         </div>
       </div>

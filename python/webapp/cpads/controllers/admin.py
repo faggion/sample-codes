@@ -14,25 +14,40 @@ import models
 class Top(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
-        #advs = db.GqlQuery('select * from Advertiser where user_id = %s' % user['id']).fetch(100)
-        advs = db.GqlQuery('select * from Advertiser').fetch(100)
+        advs = db.Query(models.Advertiser).filter('user_id =', user['id'] ).fetch(100)
         logging.error(advs)
         t = env.get_template('admin_top.html')
-        tvars = {"user": user, "advs": advs}
+        tvars = {"user": user, "advs": advs, "self":self}
         return self.response.out.write(t.render(T=tvars))
 
 class Edit(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user, adv_id):
+        adv = models.Advertiser.get_by_id(int(adv_id))
         t = env.get_template('admin_adv_form.html')
-        tvars = {"user": user}
-        return self.response.out.write(t.render(T=tvars))
+        tvars = {"user": user, "self":self}
+        return self.response.out.write(t.render(T=tvars,
+                                                name=adv.name,
+                                                ratio=adv.ratio,
+                                                expire=adv.expire,
+                                                average=adv.average,
+                                                vc_pid=adv.vc_pid))
+    @helpers.admin_required
+    def post(self, user, adv_id):
+        adv = models.Advertiser.get_by_id(int(adv_id))
+        adv.name    = self.request.get('name')
+        adv.ratio   = int(self.request.get('ratio'))
+        adv.expire  = int(self.request.get('expire'))
+        adv.average = int(self.request.get('average'))
+        adv.vc_pid  = self.request.get('vc_pid', "")
+        adv.put()
+        return self.redirect(self.url_for('admin_adv_edit', adv_id=adv_id))
 
 class New(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
         t = env.get_template('admin_adv_form.html')
-        tvars = {"user": user}
+        tvars = {"user": user, "self":self}
         return self.response.out.write(t.render(T=tvars))
     @helpers.admin_required
     def post(self, user):
@@ -109,7 +124,7 @@ class CreativeEdit(webapp2.RequestHandler):
 class CreativeList(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user, adv_id):
-        adcs = db.GqlQuery('select * from Adcreative').fetch(100)
+        adcs = db.Query(models.Adcreative).filter('adv_id =', adv_id ).fetch(100)
         t = env.get_template('admin_creative_list.html')
         tvars = {"user": user, "adv_id": adv_id, "adcs":adcs, "self":self }
         return self.response.out.write(t.render(T=tvars))
