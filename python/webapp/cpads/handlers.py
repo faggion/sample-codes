@@ -4,6 +4,7 @@ import os, sys, logging, jinja2, webapp2
 sys.path.insert(0, 'babel.zip')
 
 from controllers.front import Top
+from controllers.ad    import Lookup as Ad_Lookup
 from controllers.admin import Top  as Admin_Top
 from controllers.admin import Conf as Admin_Conf
 from controllers.admin import CreativeList as Admin_Adv_CreativeList
@@ -19,6 +20,10 @@ class Error(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication(
     [
+        webapp2.Route(r'/l',
+                      handler=Ad_Lookup,
+                      name="ad_lookup"),
+
         webapp2.Route(r'/admin/conf',
                       handler=Admin_Conf,
                       name="admin_conf"),

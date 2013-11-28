@@ -15,7 +15,6 @@ class Top(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
         advs = db.Query(models.Advertiser).filter('user_id =', user['id'] ).fetch(100)
-        logging.error(advs)
         t = env.get_template('admin_top.html')
         tvars = {"user": user, "advs": advs, "self":self}
         return self.response.out.write(t.render(T=tvars))

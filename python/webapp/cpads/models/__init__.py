@@ -13,15 +13,15 @@ class Config(db.Expando):
 
 class Advertiser(db.Expando):
     name    = db.StringProperty(required=True)
-    user_id = db.StringProperty(required=True)
-    ratio   = db.IntegerProperty(required=True)
+    user_id = db.IntegerProperty(required=True)
+    ratio   = db.FloatProperty(required=True)
     expire  = db.IntegerProperty(required=True)
     average = db.IntegerProperty(required=True)
     vc_pid  = db.StringProperty(required=False)
 
 class Adcreative(db.Expando):
-    adv_id    = db.StringProperty(required=True)
-    user_id   = db.StringProperty(required=True)
+    adv_id    = db.IntegerProperty(required=True)
+    user_id   = db.IntegerProperty(required=True)
     lp        = db.StringProperty(required=True)
     tmpl_id   = db.IntegerProperty(required=True)
     img_url   = db.StringProperty(required=False)
