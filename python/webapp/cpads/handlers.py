@@ -5,6 +5,8 @@ sys.path.insert(0, 'babel.zip')
 
 from controllers.front import Top
 from controllers.ad    import Lookup as Ad_Lookup
+from controllers.api   import Advertiser as Api_Advertiser
+from controllers.api   import Creative   as Api_Creative
 from controllers.admin import Top  as Admin_Top
 from controllers.admin import Conf as Admin_Conf
 from controllers.admin import CreativeList as Admin_Adv_CreativeList
@@ -23,6 +25,14 @@ app = webapp2.WSGIApplication(
         webapp2.Route(r'/l',
                       handler=Ad_Lookup,
                       name="ad_lookup"),
+
+        webapp2.Route(r'/a/adv',
+                      handler=Api_Advertiser,
+                      name="api_advertiser"),
+
+        webapp2.Route(r'/a/adc',
+                      handler=Api_Creative,
+                      name="api_creative"),
 
         webapp2.Route(r'/admin/conf',
                       handler=Admin_Conf,

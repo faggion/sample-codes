@@ -14,9 +14,11 @@ import models
 class Top(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
-        advs = db.Query(models.Advertiser).filter('user_id =', user['id'] ).fetch(100)
+        #advs = db.Query(models.Advertiser).filter('user_id =', str(user['id'])).fetch(100)
+        advs = db.Query(models.Advertiser).fetch(100)
         t = env.get_template('admin_top.html')
         tvars = {"user": user, "advs": advs, "self":self}
+        logging.info(user)
         return self.response.out.write(t.render(T=tvars))
 
 class Edit(webapp2.RequestHandler):
@@ -32,7 +34,7 @@ class Edit(webapp2.RequestHandler):
                                                 average=adv.average,
                                                 vc_pid=adv.vc_pid))
     @helpers.admin_required
-    def post(self, user, adv_id):
+    def post(self, user, adv_name):
         adv = models.Advertiser.get_by_id(int(adv_id))
         adv.name    = self.request.get('name')
         adv.ratio   = int(self.request.get('ratio'))
@@ -77,7 +79,7 @@ class CreativeNew(webapp2.RequestHandler):
                                                 adv_id=adv_id))
     @helpers.admin_required
     def post(self, user, adv_id):
-        adc = models.Adcreative(
+        adc = models.Creative(
             adv_id    = adv_id,
             user_id   = user['id'],
             lp        = self.request.get('lp'),
@@ -93,7 +95,7 @@ class CreativeNew(webapp2.RequestHandler):
 class CreativeEdit(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user, adv_id, adc_id):
-        adc = models.Adcreative.get_by_id(int(adc_id))
+        adc = models.Creative.get_by_id(int(adc_id))
         logging.error(adc)
         t = env.get_template('admin_adc_form.html')
         tvars = {"user": user, "self":self }
@@ -107,7 +109,7 @@ class CreativeEdit(webapp2.RequestHandler):
                                                 adc_org_price=adc.org_price))
     @helpers.admin_required
     def post(self, user, adv_id, adc_id):
-        adc = models.Adcreative(
+        adc = models.Creative(
             adv_id    = adv_id,
             user_id   = user['id'],
             lp        = self.request.get('lp'),
@@ -123,7 +125,7 @@ class CreativeEdit(webapp2.RequestHandler):
 class CreativeList(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user, adv_id):
-        adcs = db.Query(models.Adcreative).filter('adv_id =', adv_id ).fetch(100)
+        adcs = db.Query(models.Creative).filter('adv_id =', adv_id ).fetch(100)
         t = env.get_template('admin_creative_list.html')
         tvars = {"user": user, "adv_id": adv_id, "adcs":adcs, "self":self }
         return self.response.out.write(t.render(T=tvars))

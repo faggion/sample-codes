@@ -13,21 +13,22 @@ class Config(db.Expando):
 
 class Advertiser(db.Expando):
     name    = db.StringProperty(required=True)
-    user_id = db.IntegerProperty(required=True)
-    ratio   = db.FloatProperty(required=True)
     expire  = db.IntegerProperty(required=True)
-    average = db.IntegerProperty(required=True)
-    vc_pid  = db.StringProperty(required=False)
+    active  = db.BooleanProperty(required=True)
+    score   = db.FloatProperty(required=True)
+    fee     = db.IntegerProperty(required=False)
+    ratio   = db.FloatProperty(required=False)
+    average = db.IntegerProperty(required=False)
+    def_vc_pid = db.StringProperty(required=False)
 
-class Adcreative(db.Expando):
+class Creative(db.Expando):
     adv_id    = db.IntegerProperty(required=True)
-    user_id   = db.IntegerProperty(required=True)
+    name      = db.StringProperty(required=True)
     lp        = db.StringProperty(required=True)
     tmpl_id   = db.IntegerProperty(required=True)
     img_url   = db.StringProperty(required=False)
-    #img_pos_x = db.IntegerProperty(required=False)
-    #img_pos_y = db.IntegerProperty(required=False)
     title     = db.StringProperty(required=False)
     price     = db.IntegerProperty(required=False)
     org_price = db.IntegerProperty(required=False)
+    expire_at = db.IntegerProperty(required=True)
 
