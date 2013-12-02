@@ -1,10 +1,9 @@
 # coding: utf-8
-
 import logging, requests, sys, os, traceback, json, datetime, time
 
 url_adc = 'http://localhost:8080/a/adc'
 
-def main(adv_name):
+def main_luxa(adv_name):
     creatives = [
         {"name": "%s-%d" % (adv_name, 31584),
          "tmpl_id": 1,
@@ -15,6 +14,22 @@ def main(adv_name):
          "price": 9800,
          "org_price": 16500}
         ]
+    put_creatives(creatives, adv_name)
+
+def main_kumapon(adv_name):
+    creatives = [
+        {"name": "%s-%s" % (adv_name, "20131110kpd019436"),
+         "tmpl_id": 1,
+         "expire_at": int(time.time()) + 60*60*10,
+         "lp": "http://kumapon.jp/25/20131110kpd019436",
+         "img_url": "http://i.kumapon.jp/uploads/image/185549/w300_01_07.jpg",
+         "title": "50%OFF【600円】≪渋谷駅徒歩5分☆洗練のデザイン美空間でママ友や同僚を誘って贅沢ランチ☆プチドルチェ2種盛付ランチセット(サラダ・メイン・ドルチェ2種・ドリンクバー)≫",
+         "price": 600,
+         "org_price": 1200}
+        ]
+    put_creatives(creatives, adv_name)
+
+def put_creatives(creatives, adv_name):
     for c in creatives:
         ret = requests.put(url_adc,
                            data=json.dumps({"advertiser": { "name": adv_name },
@@ -22,7 +37,9 @@ def main(adv_name):
                            headers={"content-type": "application/json"})
         logging.debug(ret.text)
 
-
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
-    main(sys.argv[1])
+    if sys.argv[1] == 'luxa':
+        main_luxa(sys.argv[1])
+    elif sys.argv[1] == 'kumapon':
+        main_kumapon(sys.argv[1])

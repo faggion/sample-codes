@@ -35,14 +35,13 @@ class Advertiser(APIBase):
 
     def put(self):
         req = json.loads(self.request.body)
-
         name = req['name'].encode('utf-8')
         adv = db.Query(models.Advertiser).filter('name =', name).get()
         logging.info(type(req['name']))
         if not adv:
             logging.info('insert')
             adv = models.Advertiser(
-                name     = req['name'],
+                name     = name,
                 score    = req['score'],
                 active   = req['active'],
                 ratio    = req['ratio'],
