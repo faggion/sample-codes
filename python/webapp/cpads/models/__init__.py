@@ -12,14 +12,16 @@ class Config(db.Expando):
     kumapon_aid = db.StringProperty(required=False)
 
 class Advertiser(db.Expando):
-    name    = db.StringProperty(required=True)
-    expire  = db.IntegerProperty(required=True)
-    active  = db.BooleanProperty(required=True)
-    score   = db.FloatProperty(required=True)
-    fee     = db.IntegerProperty(required=False)
-    ratio   = db.FloatProperty(required=False)
-    average = db.IntegerProperty(required=False)
-    def_vc_pid = db.StringProperty(required=False)
+    name       = db.StringProperty(required=True)
+    id         = db.IntegerProperty(required=True)
+    media_id   = db.IntegerProperty(required=True)
+    expire     = db.IntegerProperty(required=True)
+    active     = db.BooleanProperty(required=True)
+    score      = db.FloatProperty(required=True)
+    fee        = db.IntegerProperty(required=False)
+    ratio      = db.FloatProperty(required=False)
+    average    = db.IntegerProperty(required=False)
+    vc_pid     = db.StringProperty(required=False)
 
 class Creative(db.Expando):
     adv_id    = db.IntegerProperty(required=True)

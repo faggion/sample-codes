@@ -6,6 +6,7 @@ url_adc = 'http://localhost:8080/a/adc'
 def main_luxa(adv_name):
     creatives = [
         {"name": "%s-%d" % (adv_name, 31584),
+         "adv_id": 1,
          "tmpl_id": 1,
          "expire_at": int(time.time()) + 60*60*10,
          "lp": "https://luxa.jp/lx/deal/31584/",
@@ -19,6 +20,7 @@ def main_luxa(adv_name):
 def main_kumapon(adv_name):
     creatives = [
         {"name": "%s-%s" % (adv_name, "20131110kpd019436"),
+         "adv_id": 2,
          "tmpl_id": 1,
          "expire_at": int(time.time()) + 60*60*10,
          "lp": "http://kumapon.jp/25/20131110kpd019436",
@@ -32,8 +34,7 @@ def main_kumapon(adv_name):
 def put_creatives(creatives, adv_name):
     for c in creatives:
         ret = requests.put(url_adc,
-                           data=json.dumps({"advertiser": { "name": adv_name },
-                                            "creative": c}),
+                           data=json.dumps(c),
                            headers={"content-type": "application/json"})
         logging.debug(ret.text)
 

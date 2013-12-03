@@ -22,80 +22,76 @@ class Advertiser(APIBase):
     def get(self):
         name = self.request.get('name','').encode('utf-8')
         adv = db.Query(models.Advertiser).filter('name =', name).get()
-        body = {"status":"OK",
-                "advertiser": {"id": adv.key().id(),
-                               "name": adv.name,
-                               "expire": adv.expire,
-                               "active": adv.active,
-                               "average": adv.average,
-                               "ratio": adv.ratio,
-                               "score": adv.score,
-                               "def_vc_pid": adv.def_vc_pid }}
+        body = {"id": adv.id,
+                "media_id": adv.media_id,
+                "name": adv.name,
+                "expire": adv.expire,
+                "active": adv.active,
+                "average": adv.average,
+                "ratio": adv.ratio,
+                "score": adv.score,
+                "vc_pid": adv.vc_pid}
         return self.json_response(body)
 
     def put(self):
         req = json.loads(self.request.body)
-        name = req['name'].encode('utf-8')
-        adv = db.Query(models.Advertiser).filter('name =', name).get()
-        logging.info(type(req['name']))
+        adv = db.Query(models.Advertiser).filter('id =', req['id']).get()
         if not adv:
-            logging.info('insert')
             adv = models.Advertiser(
-                name     = name,
+                name     = req['name'].encode('utf-8'),
+                id       = req['id'],
+                media_id = req['media_id'],
                 score    = req['score'],
                 active   = req['active'],
                 ratio    = req['ratio'],
                 expire   = req['expire'],
                 average  = req['average'],
-                def_vc_pid = req['def_vc_pid'])
+                vc_pid   = req['vc_pid'])
         else:
-            logging.info('update')
+            adv.name    = req['name'].encode('utf-8')
+            adv.media_id= req['media_id'],
             adv.score   = req['score']
             adv.active  = req['active']
             adv.ratio   = req['ratio']
             adv.expire  = req['expire']
             adv.average = req['average']
-            adv.def_vc_pid = req['def_vc_pid']
+            adv.vc_pid  = req['vc_pid']
         
         adv.put()
-
-        body = {"status":"post OK"}
+        body = {}
         return self.json_response(body)
 
 class Creative(APIBase):
     def get(self):
-        name = self.request.get('name','').encode('utf-8')
-        cr = db.Query(models.Creative).filter('name =', name).get()
+        cr = db.Query(models.Creative).filter('id =', int(self.request.get('id', 0))).get()
         if not cr:
-            body = {"status":"NG"}
+            body = {"error":{"message":"not found"}}
             return self.json_response(body, 404)
 
-        body = {"status":"OK",
-                "creative": {"name": cr.name,
-                             "expire_at": cr.expire_at,
-                             "lp": cr.lp,
-                             "img_url": cr.img_url,
-                             "tmpl_id": cr.tmpl_id,
-                             "title": cr.title,
-                             "price": cr.price,
-                             "adv_id": cr.adv_id,
-                             "org_price": cr.org_price}}
+        body = {"name": cr.name,
+                "adv_id": cr.adv_id,
+                "expire_at": cr.expire_at,
+                "lp": cr.lp,
+                "img_url": cr.img_url,
+                "tmpl_id": cr.tmpl_id,
+                "title": cr.title,
+                "price": cr.price,
+                "adv_id": cr.adv_id,
+                "org_price": cr.org_price}
         return self.json_response(body)
 
     def put(self):
         req = json.loads(self.request.body)
-        adv_name = req['advertiser']['name'].encode('utf-8')
-        adv = db.Query(models.Advertiser).filter('name =', adv_name).get()
+        adv = db.Query(models.Advertiser).filter('id =', req['adv_id']).get()
         if not adv:
-            body = {"status":"NG"}
-            return self.json_response(body, 400)
+            body = {"error":{"message":"advertiser not found"}}
+            return self.json_response(body, 404)
 
-        req = req['creative']
         cr_name = req['name'].encode('utf-8')
         cr = db.Query(models.Creative).filter('name =', cr_name).get()
         if not cr:
             cr = models.Creative(
-                adv_id    = adv.key().id(),
+                adv_id    = adv.id,
                 name      = req['name'],
                 tmpl_id   = req['tmpl_id'],
                 expire_at = req['expire_at'],
@@ -115,5 +111,5 @@ class Creative(APIBase):
 
         cr.put()
 
-        body = {"status":"OK"}
+        body = {}
         return self.json_response(body)

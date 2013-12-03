@@ -20,18 +20,24 @@ class AdBase(webapp2.RequestHandler):
 
 class Lookup(AdBase):
     def get(self):
-        advs = db.Query(models.Advertiser).fetch(2)
-        adv_id = None
+        q = db.Query(models.Advertiser).filter('media_id =', int(self.request.get('m')))
+        advs = q.fetch(30)
+        win = None
         adv_est = 0
         for adv in advs:
             adv_est_tmp = adv.ratio * adv.average * 0.01
             if adv_est < adv_est_tmp:
-                adv_id = adv.key().id()
+                win = adv
 
-        crs = db.Query(models.Creative).filter('adv_id =', int(adv_id)).fetch(100)
+        logging.error(win.id)
+        crs = db.Query(models.Creative).filter('adv_id =', win.id).fetch(100)
+        creatives = []
         for cr in crs:
-            logging.error('"%s"' % cr.title)
-        body = {"status":"OK"}
+            creatives.append({'title': cr.title})
+        body = {'creatives':creatives,
+                'advertiser': {'id': win.id,
+                               'vc_pid': win.vc_pid,
+                               'name': win.name}}
         return self.json_response(body)
 
 
