@@ -22,11 +22,21 @@ class CpaOptimizerTestCase(unittest.TestCase):
             engine.execute(tbl.delete())
 
     def test_01_adsize(self):
-        data = {'foo':123}
-        rv = self.app.post('/cpaopt/adsize', headers=headers, data=json.dumps(data))
+        datas = [
+            {'id': 1, 'width': 300, 'height': 250},
+            {'id': 2, 'width': 320, 'height':  50},
+            ]
+        url = '/cpaopt/adsize'
+        for data in datas:
+            rv = self.app.post(url, headers=headers, data=json.dumps(data))
+            #logging.debug(rv.data)
+            rv = self.app.get('%s/%d' % (url, data['id']))
+
+        rv = self.app.get('%s/%d' % (url, 99))
 
     def test_02_media(self):
         pass
 
 if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.DEBUG)
     unittest.main()
