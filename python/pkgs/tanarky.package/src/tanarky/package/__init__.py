@@ -37,22 +37,31 @@ class Uploader(object):
 
         # all package index
         root_index_html = ['<!DOCTYPE html>',
-                           '<html><head><meta charget="utf-8"><title>Simple index</title></head><body>',
+                           '<html><head><meta charget="utf-8">',
+                           '<title>Simple index</title></head><body>',
                            '<ul>']
 
         for p in all_packages.keys():
-            root_index_html.append('<li><a href="%s%s%s/%s">%s</a></li>' % (ROOT_PATH, HTML_PATH, p, INDEX_FILE, p))
+            root_index_html.append('<li><a href="%s%s%s/%s">%s</a></li>' % (ROOT_PATH,
+                                                                            HTML_PATH,
+                                                                            p,
+                                                                            INDEX_FILE,
+                                                                            p))
 
             # package index
             package_index_html = ['<!DOCTYPE html>',
-                                  '<html><head><meta charget="utf-8"><title>%s</title></head><body>' % p,
+                                  '<html><head><meta charget="utf-8">'
+                                  '<title>%s</title></head><body>' % p,
                                   '<h1>%s</h1><ul>' % p]
             for v in all_packages[p]:
-                package_index_html.append('<li><a href="%s%s%s">%s</a></li>' % (ROOT_PATH, SOURCE_PATH, v, v))
+                package_index_html.append('<li><a href="%s%s%s">%s</a></li>' % (ROOT_PATH,
+                                                                                SOURCE_PATH,
+                                                                                v, v))
             package_index_html.append('</ul></body></html>')
             k = Key(bucket)
             k.key = ROOT_PATH + HTML_PATH + p + "/" + INDEX_FILE
             k.set_contents_from_string("\n".join(package_index_html),
+                                       reduced_redundancy=True,
                                        headers={'Content-type':'text/html; charset=utf-8'})
 
         root_index_html.append('</ul></body></html>')
@@ -60,6 +69,7 @@ class Uploader(object):
         k = Key(bucket)
         k.key = ROOT_PATH + HTML_PATH + INDEX_FILE
         k.set_contents_from_string("\n".join(root_index_html),
+                                   reduced_redundancy=True,
                                    headers={'Content-type':'text/html; charset=utf-8'})
 
     @classmethod
@@ -75,7 +85,7 @@ class Uploader(object):
 
         k = Key(bucket)
         k.key = SOURCE_PATH + filename
-        k.set_contents_from_filename(cls.args.file.name)
+        k.set_contents_from_filename(cls.args.file.name, reduced_redundancy=True)
 
     @classmethod
     def cli(cls):
