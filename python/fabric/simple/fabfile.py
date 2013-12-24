@@ -24,6 +24,11 @@ def staging():
 def do_release():
     run("touch /tmp/released_to_webservers")
 
+@parallel
+@roles('dbservers')
+def do_ls_var():
+    run("ls /var")
+
 @hosts('localhost')
 def do_something():
     run("touch /tmp/fabric")
