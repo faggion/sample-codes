@@ -1,0 +1,23 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+    <script src="/static/my_rest.js"></script>
+<style>
+.done-true {
+    text-decoration: line-through;
+    color: grey;
+}
+</style>
+  </head>
+  <body>
+    <h2>My Blog Sample</h2>
+    <div ng-controller="BlogCtrl">
+
+      <form ng-submit="addArticle()">
+        <input type="text" ng-model="articleTitle" size="30" placeholder="blog title">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+  </body>
+</html>
