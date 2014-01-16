@@ -14,16 +14,24 @@ def respond_json(obj, status=200):
 def tool_user():
     return render_template('user.html')
 
-#@app.route('/api/v1/user/<int:_id>', methods=['GET'])
-#def api_v1_user_get(_id):
-#    return respond_json({"method": "get", "id": _id})
-@app.route('/api/v1/user', methods=['GET'])
-def api_v1_user_get():
+@app.route('/api/v1/user/<int:_id>', methods=['GET'])
+def api_v1_user_detail_get(_id):
+    return respond_json({"method": "get", "id": _id})
+
+@app.route('/api/v1/user/<int:_id>', methods=['PUT'])
+def api_v1_user_detail_put(_id):
     logging.debug(request.data)
-    return respond_json({"method": "get"})
+    return respond_json({"method": "put", "id": _id})
+
+@app.route('/api/v1/user', methods=['GET'])
+def api_v1_user_list_get():
+    return respond_json([ {"id":1},
+                          {"id":2},
+                          {"id":3} ])
 
 @app.route('/api/v1/user', methods=['POST'])
 def api_v1_user_post():
+    logging.debug(request.data)
     return respond_json({"method": "post"})
 
 @app.route('/api/v1/user', methods=['DELETE'])
@@ -32,6 +40,7 @@ def api_v1_user_delete():
 
 @app.route('/api/v1/user', methods=['PUT'])
 def api_v1_user_put():
+    logging.debug(request.data)
     return respond_json({"method": "put"})
 
 if __name__ == '__main__':
