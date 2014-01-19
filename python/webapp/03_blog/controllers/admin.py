@@ -18,6 +18,13 @@ class Top(webapp2.RequestHandler):
         tvars = {"user": user}
         return self.response.out.write(t.render(T=tvars))
 
+class ArticleUpdate(webapp2.RequestHandler):
+    @helpers.admin_required
+    def get(self, user):
+        t = env.get_template('admin_update.html')
+        tvars = {"user": user}
+        return self.response.out.write(t.render(T=tvars))
+
 class ArticleEditor(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):

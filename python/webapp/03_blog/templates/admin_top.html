@@ -1,17 +1,16 @@
 {% extends "admin_base.html" %}
-{% block tool %}Admin{% endblock %}
 {% block title %}Top{% endblock %}
 {% block content %}
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h2>Advertisers</h2>
-
-    <div class="list-group">
-      {% for a in T.advs %}
-      <a href="/admin/adv/{{ a.key().id() }}" class="list-group-item">{{ a.name }}</a>
-      {% endfor %}
+    <h2>Articles</h2>
+    <div ng-controller="articlesCtrl">
+      <ul>
+        <li ng-repeat="article in articles">
+          <a href="#">||article.id||: ||article.name||</a>
+        </li>
+      </ul>
     </div>
-
   </div>
 </div>
 {% endblock %}

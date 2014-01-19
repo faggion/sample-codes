@@ -15,6 +15,6 @@ import helpers.message
 class Top(webapp2.RequestHandler):
     def get(self):
         t = env.get_template('front_top.html')
-        tv = {"user":{}}
+        tv = {"user": helpers.get_user(self)}
         return self.response.out.write(t.render(T=tv))
 

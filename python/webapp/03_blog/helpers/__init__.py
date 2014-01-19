@@ -17,7 +17,7 @@ def admin_required(f):
         if not user:
             self.redirect(users.create_login_url(self.request.url))
         elif not users.is_current_user_admin():
-            self.redirect(self.url_for('top'))
+            self.redirect(self.url_for('front_top'))
         return f(self, user, *args, **kwargs)
     return decorated_function 
 
@@ -28,7 +28,7 @@ def login_required(f):
         if not user.get('id'):
             self.redirect(users.create_login_url(self.request.url))
         return f(self, user, *args, **kwargs)
-    return decorated_function 
+    return decorated_function
 
 def set_locale(f):
     @functools.wraps(f)

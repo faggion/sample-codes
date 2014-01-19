@@ -18,9 +18,15 @@ class APIBase(webapp2.RequestHandler):
         self.response.headers['Content-type'] = 'application/json; charset=utf-8'
         return self.response.out.write(json.dumps(body))
 
+class ArticleDetail(APIBase):
+    def get(self, id):
+        return self.json_response({"method":"get", "id": id, "name": 'tanarky'})
+
 class Article(APIBase):
     def get(self):
-        return self.json_response({"method":"get"})
+        return self.json_response([{'id':1, 'name':'blog1'},
+                                   {'id':2, 'name':'blog2'},
+                                   {'id':3, 'name':'blog3'}])
     def put(self):
         return self.json_response({"method":"put"})
     def delete(self):
