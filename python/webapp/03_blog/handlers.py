@@ -6,8 +6,9 @@ sys.path.insert(0, 'lib.zip')
 
 from controllers.api   import Article as Api_Article
 from controllers.api   import ArticleDetail as Api_ArticleDetail
-from controllers.admin import Top     as Admin_Top
-from controllers.admin import ArticleEditor as Admin_ArticleEditor
+
+from controllers.admin import Tool    as Admin_Tool
+
 from controllers.front import Top     as Front_Top
 
 class Error(webapp2.RequestHandler):
@@ -21,22 +22,23 @@ app = webapp2.WSGIApplication(
                       handler=Front_Top,
                       name="front_top"),
 
+        # APIs
         webapp2.Route(r'/api/article/<id:\d+>',
                       handler=Api_ArticleDetail,
                       name="api_article"),
-
+        
         webapp2.Route(r'/api/article',
                       handler=Api_Article,
                       name="api_article"),
 
-
+        # admin tool
         webapp2.Route(r'/admin/',
-                      handler=Admin_Top,
-                      name="admin_top"),
+                      handler=Admin_Tool,
+                      name="admin_tool"),
 
-        webapp2.Route(r'/admin/edit/(\d+)',
-                      handler=Admin_ArticleEditor,
-                      name="admin_article_editor"),
+        #webapp2.Route(r'/admin/edit/(\d+)',
+        #              handler=Admin_ArticleEditor,
+        #              name="admin_article_editor"),
 
         webapp2.Route(r'(.*)', handler=Error),
     ],
