@@ -12,6 +12,10 @@ MyBlogApp.config(['$routeProvider',
                               templateUrl: '/static/templates/article_list.html',
                               controller: 'ArticleListCtrl'
                           }).
+                          when('/new_article', {
+                              templateUrl: '/static/templates/article_new.html',
+                              controller: 'ArticleNewCtrl'
+                          }).
                           when('/articles/:article_id', {
                               templateUrl: '/static/templates/article_detail.html',
                               controller: 'ArticleDetailCtrl'
