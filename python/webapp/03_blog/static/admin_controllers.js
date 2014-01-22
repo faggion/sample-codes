@@ -18,7 +18,23 @@ myBlogControllers.controller('ArticleSaveCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
                                   console.debug('saving article');
-                                  $scope.submit = function(){ console.debug('yes, saved!'); };
+                                  $scope.submit = function(){
+                                      console.debug($('#form_id').val());
+                                      console.debug($('#form_title').val());
+
+                                      var data = {title: $('#form_title').val(),
+                                                  id: $('#form_id').val()};
+                                      $http.post('/api/article/'+ data.id, data).success(
+                                          function(data){
+                                              console.debug(data);
+                                          }
+                                      ).error(
+                                          function(data){
+                                              console.debug('ERROR');
+                                              console.debug(data);
+                                          }
+                                      )
+                                  };
                               }]);
      
 myBlogControllers.controller('ArticleDetailCtrl',

@@ -20,7 +20,17 @@ class APIBase(webapp2.RequestHandler):
 
 class ArticleDetail(APIBase):
     def get(self, id):
+        logging.info(type(id))
+        if id == "3":
+            return self.json_response({"method":"get", "error": "id invalid"}, 400)
+
         return self.json_response({"method":"get", "id": id, "name": 'tanarky'})
+    def post(self, id):
+        logging.info(self.request.body)
+        if id == "3":
+            return self.json_response({"method":"get", "error": "id invalid"}, 400)
+
+        return self.json_response({"method":"get", "id": id, "status": "OK", "name": 'tanarky'})
 
 class Article(APIBase):
     def get(self):
