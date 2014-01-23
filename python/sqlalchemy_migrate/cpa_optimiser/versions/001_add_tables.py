@@ -1,6 +1,3 @@
-from sqlalchemy import *
-from migrate import *
-
 # coding: utf-8
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
