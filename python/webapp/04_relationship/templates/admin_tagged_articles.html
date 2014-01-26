@@ -1,0 +1,13 @@
+{% extends "admin_base.html" %}
+{% block title %}admin tagged articles{% endblock %}
+{% block content %}
+<h1>admin tagged articles</h1>
+
+<ul>
+{% for a in T.articles %}
+<li>{{ a.title }}</li>
+{% endfor %}
+</ul>
+
+<p><a href="/admin/tag">back to tag list</a></p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "admin_base.html" %}
+{% block title %}admin article{% endblock %}
+{% block content %}
+<h1>admin article detail: {{ T.article.key().id() }}</h1>
+
+<h3>title</h3>
+{{ T.article.title }}
+
+<h3>body</h3>
+{{ T.article.body }}
+
+<h3>tags</h3>
+{% for t in T.tags %}
+<a href="/admin/tag/article?tag_key_name={{ t.key().name() }}">{{ t.name}} : {{ t.value }}</a><br>
+{% endfor %}
+
+<p><a href="/admin/article">back to article list</a></p>
+{% endblock %}

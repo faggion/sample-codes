@@ -1,0 +1,25 @@
+<header role="banner" class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/admin/">MyBlog Admin</a>
+    </div>
+
+    <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          {% if T.user.id %}
+          <a href="{{ T.user.logout_url }}">Logout</a>
+          {% else %}
+          <a href="{{ T.user.login_url }}">Login</a>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

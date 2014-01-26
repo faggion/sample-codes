@@ -1,0 +1,9 @@
+<h3>new article</h3>
+<div ng-controller="ArticleNewCtrl">
+<form method="POST" name="newArticle"
+      ng-controller="ArticleSaveCtrl" ng-submit="submit()" novalidate>
+  id: <input type="text" name="id" id="form_id"><br>
+  title: <input type="text" name="title" id="form_title"><br>
+  <button>送信</button>
+</form>
+</div>
