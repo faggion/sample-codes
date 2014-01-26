@@ -1,6 +1,6 @@
 # coding: utf-8
 
-import logging, sys, os
+import logging, sys, os, argparse, csv
 import models
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -111,7 +111,7 @@ def relate_tags(session):
     at3.tag_set_id = 10
     session.merge(at3, load=True)
 
-def main():
+def main2():
     Session = sessionmaker(bind=models.engine)
     session = Session()
 
@@ -119,6 +119,33 @@ def main():
     insert_tag_sets(session)
     insert_articles(session)
     relate_tags(session)
+
+    session.commit()
+    session.close()
+
+def main():
+    parser = argparse.ArgumentParser(description='insert initial data')
+
+    parser.add_argument('--tag_keys', '-k', type=argparse.FileType('r'), help="tag_keys tsv files")
+    parser.add_argument('--tag_sets', '-s', type=argparse.FileType('r'), help="tag_sets tsv files")
+    parser.add_argument('--articles', '-a', type=argparse.FileType('r'), help="articles tsv files")
+    parser.add_argument('--tagging',  '-t', type=argparse.FileType('r'), help="article and tag_set pairs tsv files")
+    parser.add_argument('--version',  '-v', action="version", version="%(prog)s 1.0")
+
+    args = parser.parse_args()
+    logging.info(args)
+
+    if not args.tag_keys and not args.tag_sets and not args.articles and not args.tagging:
+        parser.print_usage()
+
+    session = sessionmaker(bind=models.engine)()
+
+    if args.tag_keys:
+        data = csv.reader(args.tag_keys, delimiter='\t')
+        header = next(data)
+        for row in data:
+            k = dict(zip(header, row))
+            logging.info(k)
 
     session.commit()
     session.close()
