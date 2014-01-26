@@ -19,6 +19,8 @@ rel_article_and_tag_set = Table('article_and_tag_set', Base.metadata, autoload=T
 
 class ArticleAndTagSet(Base):
     __table__ = rel_article_and_tag_set
+    article = relationship('Article')
+    tag_set = relationship('TagSet')
 
 class Article(Base):
     __table__ = Table('article', Base.metadata, autoload=True)

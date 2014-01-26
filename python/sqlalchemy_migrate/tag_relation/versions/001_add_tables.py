@@ -9,6 +9,7 @@ tag_key = Table(
     'tag_key', meta,
     Column('id', Integer, primary_key=True),
     Column('name', String(32), nullable=False),
+    Column('description', Text, nullable=True),
     mysql_engine='InnoDB',
     sqlite_autoincrement=True)
 
