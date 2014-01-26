@@ -6,7 +6,7 @@ setup(
                     'tanarky.package'],
     package_dir  = {'':'src'},
     name         = 'tanarky.package',
-    version      = '1.0.1',
+    version      = '1.1.0',
     package_data = {
         'tanarky': [],
         },
