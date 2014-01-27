@@ -30,9 +30,7 @@ class TagNew(webapp2.RequestHandler):
     def post(self, user):
         name = self.request.get('name')
         value = value=self.request.get('value')
-        # FIXME: have to change key_name string
-        tag = models.Tag(key_name = name + value,
-                         name=name,
+        tag = models.Tag(name=name,
                          value=value)
         tag.put()
         time.sleep(0.10)
@@ -41,7 +39,7 @@ class TagNew(webapp2.RequestHandler):
 class TaggedArticles(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
-        tag = models.Tag.get_by_key_name(self.request.get("tag_key_name"))
+        tag = models.Tag.get_by_id(int(self.request.get("tid")))
         a = models.Article.all().filter('tags =', tag).fetch(100)
         t = env.get_template('admin_tagged_articles.html')
         tvars = {"user": user, "articles": a, "tag": tag}

@@ -1,13 +1,8 @@
-最適化について
+Todo
 --------------------------------------------------
 
-- memcaheにCreative CTRをもつ
-- memcacheのCTRを定期的にStorageに書き込む
-- CTR順にCreativeをorderして取得する
-- 直近表示した30件のMediaIDをlocalstorageに持つ = media list
-- MediaIDが決定したら、media listに入っている数分offsetをとって、Creativeを決定する(FQの最大化)
-
-カテゴリマッチをどうするか？
+- API化とangularjsに載せ替え
+- カスタムフィールド
 
 
 Babelとpytzをinstall

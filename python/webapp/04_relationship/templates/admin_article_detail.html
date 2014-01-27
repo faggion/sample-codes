@@ -13,7 +13,9 @@
 <h3>tags</h3>
 <ul>
 {% for t in T.tags %}
-<li><a href="/admin/tag/article?tag_key_name={{ t.key().name() }}">{{ t.name}} : {{ t.value }}</a></li>
+{% if t and t.key and t.key().id() %}
+<li><a href="/admin/tag/article?tid={{ t.key().id() }}">{{ t.name}} : {{ t.value }}</a></li>
+{% endif %}
 {% endfor %}
 </ul>
 
