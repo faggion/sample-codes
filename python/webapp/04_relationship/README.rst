@@ -3,6 +3,7 @@ Todo
 
 - API化とangularjsに載せ替え
 - カスタムフィールド
+- タグを消した時の挙動(記事も更新するか)
 
 
 Babelとpytzをinstall
