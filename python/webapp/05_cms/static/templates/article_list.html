@@ -1,0 +1,9 @@
+<h3>Articles</h3>
+<div ng-controller="ArticleListCtrl">
+  <ul>
+    <li ng-repeat="article in articles">
+      <a href="#/articles/||article.id||">||article.id||: ||article.name||</a>
+    </li>
+  </ul>
+</div>
+<p><a class="btn" href="#/new_article">New Article</a>

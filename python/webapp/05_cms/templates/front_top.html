@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Top{% endblock %}
+{% block content %}
+
+<h1>Front Top</h1>
+
+<h2>Menu</h2>
+<ul>
+{% if T.user.id %}
+<li>{{ T.user.name }}: <a href="{{ T.user.logout_url }}">Logout</a></li>
+{% if T.user.is_admin %}
+<li><a href="/admin/tag">tags</a></li>
+<li><a href="/admin/article">articles</a></li>
+{% endif %}
+{% else %}
+<li>Guest user: <a href="{{ T.user.login_url }}">Login</a></li>
+{% endif %}
+</ul>
+
+{% endblock %}

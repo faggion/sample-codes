@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}admin tag new{% endblock %}
+{% block content %}
+<h1>admin tag new</h1>
+<form action="" method="POST">
+  <div class="form-group">
+    <label>tag name</label>
+    <input class="form-control" type="text" name="name">
+  </div>
+
+  <div class="form-group">
+    <label>tag value</label>
+    <input class="form-control" type="text" name="value">
+  </div>
+
+  <div class="form-group">
+    <input class="form-control btn btn-primary" type="submit">
+  </div>
+</form>
+{% endblock %}
