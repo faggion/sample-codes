@@ -14,7 +14,7 @@ import models
 class Tag(webapp2.RequestHandler):
     @helpers.admin_required
     def get(self, user):
-        tags = models.Tag.all().fetch(limit=1000)
+        tags = models.Tag.all().order('-updated_at').fetch(limit=1000)
         t = env.get_template('admin_tag.html')
         tvars = {"user":user, "tags":tags}
         return self.response.out.write(t.render(T=tvars))
@@ -44,7 +44,7 @@ class TaggedArticles(webapp2.RequestHandler):
         tag = models.Tag.get_by_key_name(self.request.get("tag_key_name"))
         a = models.Article.all().filter('tags =', tag).fetch(100)
         t = env.get_template('admin_tagged_articles.html')
-        tvars = {"user": user, "articles": a}
+        tvars = {"user": user, "articles": a, "tag": tag}
         return self.response.out.write(t.render(T=tvars))
 
 

@@ -1,12 +1,16 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 {% block title %}admin article{% endblock %}
 {% block content %}
 <h1>admin article</h1>
 <ul>
   {% for a in T.articles %}
-  <li><a href="/admin/article/detail?aid={{ a.key().id() }}">{{ a.title}} : {{ a.body }}</a></li>
+  <li><a href="/admin/article/detail?aid={{ a.key().id() }}">{{ a.title}}</a></li>
   {% endfor %}
 </ul>
-<p><a href="/admin/article/new">new article</a></p>
-<p><a href="/admin/tag">tag</a></p>
+
+<h2>Menu</h2>
+<ul>
+  <li><a href="/admin/article/new">new article</a></li>
+  <li><a href="/admin/tag">tag</a></li>
+</ul>
 {% endblock %}

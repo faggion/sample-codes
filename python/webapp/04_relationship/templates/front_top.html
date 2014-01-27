@@ -1,25 +1,20 @@
-{% extends "front_base.html" %}
-{% block title %}Menu{% endblock %}
+{% extends "base.html" %}
+{% block title %}Top{% endblock %}
 {% block content %}
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<h1>Front Top</h1>
 
-<div class="list-group">
-  <a href="#" class="list-group-item">
-    <h4 class="list-group-item-heading">Blog article 1</h4>
-    <p class="list-group-item-text">This is content 1</p>
-  </a>
-  <a href="#" class="list-group-item">
-    <h4 class="list-group-item-heading">Blog article 2</h4>
-    <p class="list-group-item-text">This is content 2</p>
-  </a>
-  <a href="#" class="list-group-item">
-    <h4 class="list-group-item-heading">Blog article 3</h4>
-    <p class="list-group-item-text">This is content 3</p>
-  </a>
-</div>
+<h2>Menu</h2>
+<ul>
+{% if T.user.id %}
+<li>{{ T.user.name }}: <a href="{{ T.user.logout_url }}">Logout</a></li>
+{% if T.user.is_admin %}
+<li><a href="/admin/tag">tags</a></li>
+<li><a href="/admin/article">articles</a></li>
+{% endif %}
+{% else %}
+<li>Guest user: <a href="{{ T.user.login_url }}">Login</a></li>
+{% endif %}
+</ul>
 
-  </div>
-</div>
 {% endblock %}

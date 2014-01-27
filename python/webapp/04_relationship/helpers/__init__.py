@@ -74,10 +74,9 @@ def get_user(app):
     if u:
         return {"id": u.user_id(),
                 "name": u.nickname(),
-                "admin": users.is_current_user_admin(),
-                "lock_url": "/a/lock/set",
+                "is_admin": users.is_current_user_admin(),
                 "logout_url": users.create_logout_url(app.request.uri)}
     else:
         return {"id": None,
-                "admin": False,
+                "is_admin": False,
                 "login_url": users.create_login_url(app.request.uri)}

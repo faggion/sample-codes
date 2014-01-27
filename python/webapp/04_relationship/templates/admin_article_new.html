@@ -1,15 +1,28 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 {% block title %}admin article new{% endblock %}
 {% block content %}
 <h1>admin article new</h1>
 <form action="" method="POST">
-  article title: <input type="text" name="title"><br>
-  article body:  <input type="text" name="body"><br>
+  <div class="form-group">
+    <label>article title</label>
+    <input class="form-control" type="text" name="title">
+  </div>
+  <div class="form-group">
+    <label>article body</label>
+    <textarea class="form-control" name="body" rows="3"></textarea>
+  </div>
 
+  <div class="checkbox">
   {% for t in T.tags %}
-  <input type="checkbox" name="tags" value="{{ t.key() }}">
-  {{ t.name }}: {{ t.value }}<br>
+  <label>
+    <input type="checkbox" name="tags" value="{{ t.key() }}">
+    {{ t.name }}: {{ t.value }}
+  </label><br>
   {% endfor %}
-  <input type="submit">
+  </div>
+
+  <div class="form-group">
+    <input class="form-control btn btn-primary" type="submit">
+  </div>
 </form>
 {% endblock %}

@@ -1,13 +1,18 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 {% block title %}admin tagged articles{% endblock %}
 {% block content %}
 <h1>admin tagged articles</h1>
 
+<p><b>{{T.tag.name}}: {{T.tag.value}}</b> tagged articles</p>
+
 <ul>
 {% for a in T.articles %}
-<li>{{ a.title }}</li>
+  <li><a href="/admin/article/detail?aid={{ a.key().id() }}">{{ a.title}}</a></li>
 {% endfor %}
 </ul>
 
-<p><a href="/admin/tag">back to tag list</a></p>
+<br>
+
+<a href="/admin/article">back to article list</a><br>
+<a href="/admin/tag">back to tag list</a>
 {% endblock %}
