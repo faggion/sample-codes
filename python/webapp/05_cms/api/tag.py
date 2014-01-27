@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import Blueprint
+from flask import Blueprint, request
 import logging, sys, os, traceback
 import common
 
@@ -8,6 +8,11 @@ app = Blueprint('api_v1_tag', __name__, url_prefix='/api/v1/tag')
 @app.route('', methods=['GET'])
 def tag_list():
     return common.json_response([])
+
+@app.route('', methods=['PUT'])
+def tag_create():
+    logging.info(request.data)
+    return common.json_response({})
 
 @app.route('/<int:tag_id>', methods=['GET'])
 def tag_detail(tag_id):

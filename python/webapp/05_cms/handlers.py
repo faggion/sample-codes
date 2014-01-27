@@ -10,9 +10,5 @@ app.secret_key = 'tanarky'
 app.register_blueprint(api_tag)
 app.register_blueprint(api_content)
 
-#app.register_blueprint(manager)
-#app.register_blueprint(shop_page)
-#app.register_blueprint(shop_cart, url_prefix='/cart')
-
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
