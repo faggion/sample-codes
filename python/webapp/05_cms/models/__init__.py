@@ -8,12 +8,19 @@ from google.appengine.ext.db import GqlQuery
 def get_keys(class_name):
     return GqlQuery('select __key__ from %s order by updated_at desc' % class_name)
 
-class Article(db.Expando):
+class Content(db.Expando):
     title = db.StringProperty(required=True)
     body  = db.TextProperty(required=False)
     tags  = db.ListProperty(db.Key)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
+
+    def format(self):
+        return {"id": self.key().id(),
+                "title": self.title,
+                "body": self.body,
+                "created_at": self.created_at.isoformat(),
+                "updated_at": self.updated_at.isoformat()}
 
 class Tag(db.Expando):
     name  = db.StringProperty(required=True)
