@@ -1,19 +1,44 @@
 # coding: utf-8
 from flask import Blueprint, request
 import logging, sys, os, traceback
-import common
+import common, models
+from google.appengine.ext.db import GqlQuery
 
 app = Blueprint('api_v1_tag', __name__, url_prefix='/api/v1/tag')
 
 @app.route('', methods=['GET'])
 def tag_list():
-    return common.json_response([])
+    #tags = models.Tag.all().order('-updated_at').fetch(limit=1000)
+    #tags = models.Tag.gql('order by updated_at desc')
+    tags = GqlQuery('select __key__ from Tag order by updated_at desc')
+    ret = []
+    for t in tags:
+        ret.append(t.id())
+        #ret.append(t.format())
+    return common.json_response(ret)
 
 @app.route('', methods=['PUT'])
-def tag_create():
-    logging.info(request.data)
-    return common.json_response({})
+@common.parse_request_body
+def tag_create(data):
+    name = data.get('name')
+    value = data.get('value')
+    tag = models.Tag(name=name,
+                     value=value)
+    tag.put()
+    return common.json_response(tag.format())
 
 @app.route('/<int:tag_id>', methods=['GET'])
 def tag_detail(tag_id):
-    return common.json_response({"id": tag_id})
+    tag = models.Tag.get_by_id(tag_id)
+    if not tag:
+        return common.error_response(None, 404)
+    return common.json_response(tag.format())
+
+@app.route('/<int:tag_id>', methods=['DELETE'])
+def tag_delete(tag_id):
+    tag = models.Tag.get_by_id(tag_id)
+    if not tag:
+        return common.error_response(None, 404)
+    tag.delete()
+    return common.json_response(body={})
+

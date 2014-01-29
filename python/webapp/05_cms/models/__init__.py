@@ -16,3 +16,10 @@ class Tag(db.Expando):
     value = db.StringProperty(required=True)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
+
+    def format(self):
+        return {"id": self.key().id(),
+                "name": self.name,
+                "value": self.value,
+                "created_at": self.created_at.isoformat(),
+                "updated_at": self.updated_at.isoformat()}
