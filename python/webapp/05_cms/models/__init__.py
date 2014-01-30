@@ -1,8 +1,12 @@
 # coding: utf-8
 
-import datetime
+import datetime, logging
 from google.appengine.ext import db
 from google.appengine.api import users
+from google.appengine.ext.db import GqlQuery
+
+def get_keys(class_name):
+    return GqlQuery('select __key__ from %s order by updated_at desc' % class_name)
 
 class Article(db.Expando):
     title = db.StringProperty(required=True)
@@ -16,6 +20,13 @@ class Tag(db.Expando):
     value = db.StringProperty(required=True)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
+
+    @classmethod
+    def get_key_by_name_and_value(cls, name, value):
+        if not name or not value:
+            return None
+        sql = 'select __key__ from %s where name = :1 and value = :2' % cls.__name__
+        return GqlQuery(sql, name, value).get()
 
     def format(self):
         return {"id": self.key().id(),

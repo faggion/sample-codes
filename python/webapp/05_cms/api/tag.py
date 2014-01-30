@@ -2,26 +2,26 @@
 from flask import Blueprint, request
 import logging, sys, os, traceback
 import common, models
-from google.appengine.ext.db import GqlQuery
 
 app = Blueprint('api_v1_tag', __name__, url_prefix='/api/v1/tag')
 
 @app.route('', methods=['GET'])
 def tag_list():
-    #tags = models.Tag.all().order('-updated_at').fetch(limit=1000)
-    #tags = models.Tag.gql('order by updated_at desc')
-    tags = GqlQuery('select __key__ from Tag order by updated_at desc')
+    tags = models.get_keys('Tag')
     ret = []
     for t in tags:
         ret.append(t.id())
-        #ret.append(t.format())
     return common.json_response(ret)
 
 @app.route('', methods=['PUT'])
 @common.parse_request_body
 def tag_create(data):
-    name = data.get('name')
+    name  = data.get('name')
     value = data.get('value')
+    tag = models.Tag.get_key_by_name_and_value(name, value)
+    if tag:
+        return common.error_response(None, 400)
+
     tag = models.Tag(name=name,
                      value=value)
     tag.put()
