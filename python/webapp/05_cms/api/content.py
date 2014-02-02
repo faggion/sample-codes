@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import Blueprint
+from flask import Blueprint, request
 import logging, sys, os, traceback
 import common, models
 from google.appengine.ext.db import GqlQuery
@@ -8,10 +8,16 @@ app = Blueprint('api_v1_content', __name__, url_prefix='/api/v1/content')
 
 @app.route('', methods=['GET'])
 def content_list():
-    records = GqlQuery('select __key__ from Content order by updated_at desc')
-    ret = []
-    for t in records:
-        ret.append(t.id())
+    if request.args.get('rg') == 'large':
+        records = GqlQuery('select * from Content order by updated_at desc')
+        ret = []
+        for t in records:
+            ret.append(t.format())
+    else:
+        records = GqlQuery('select __key__ from Content order by updated_at desc')
+        ret = []
+        for t in records:
+            ret.append(t.id())
     return common.json_response(ret)
 
 @app.route('/<int:content_id>', methods=['GET'])
@@ -26,7 +32,9 @@ def content_detail(content_id):
 def content_create(data):
     title  = data.get('title')
     body   = data.get('body')
-    record = models.Content(title=title, body=body)
+    tags   = [models.Tag.get_key_by_num(t) for t in data.get('tag_nums')]
+
+    record = models.Content(title=title, body=body, tags=tags)
     record.put()
     return common.json_response(record.format())
 

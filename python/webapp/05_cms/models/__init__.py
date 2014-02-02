@@ -19,14 +19,23 @@ class Content(db.Expando):
         return {"id": self.key().id(),
                 "title": self.title,
                 "body": self.body,
+                "tags": [int(t.id()) for t in self.tags],
                 "created_at": self.created_at.isoformat(),
                 "updated_at": self.updated_at.isoformat()}
 
 class Tag(db.Expando):
+    num   = db.IntegerProperty(required=False)
     name  = db.StringProperty(required=True)
     value = db.StringProperty(required=True)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
+
+    @classmethod
+    def get_key_by_num(cls, num):
+        if not num:
+            return None
+        sql = 'select __key__ from %s where num = :1' % cls.__name__
+        return GqlQuery(sql, num).get()
 
     @classmethod
     def get_key_by_name_and_value(cls, name, value):
@@ -37,6 +46,7 @@ class Tag(db.Expando):
 
     def format(self):
         return {"id": self.key().id(),
+                "num": self.num,
                 "name": self.name,
                 "value": self.value,
                 "created_at": self.created_at.isoformat(),

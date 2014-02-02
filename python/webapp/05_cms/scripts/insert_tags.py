@@ -1,8 +1,9 @@
 # coding: utf-8
+import sys
+sys.path.insert(0, '..')
+sys.path.insert(0, '../lib.zip')
 
-import appengine_config
-
-import logging, os, sys, traceback, json
+import logging, os, traceback, json
 import requests, argparse, csv
 
 def request_api(path, method, data=None, headers={}):
@@ -25,8 +26,10 @@ def insert_contents(fp):
     header = next(row)
     for r in row:
         data = dict(zip(header, r))
-        logging.debug(data)
-        r = request_api('/content', 'put', data)
+        c = {"title": data['title'],
+             "body": data['body'],
+             "tag_nums": [int(n) for n in data['tag_nums'].split(",")]}
+        r = request_api('/content', 'put', data=c)
         logging.debug(r.status_code)
 
 if __name__ == '__main__':
