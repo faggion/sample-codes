@@ -8,6 +8,18 @@ from google.appengine.ext.db import GqlQuery
 def get_keys(class_name):
     return GqlQuery('select __key__ from %s order by updated_at desc' % class_name)
 
+def get_all(class_name):
+    return GqlQuery('select * from %s order by updated_at desc' % class_name)
+
+def get_by_num(name, num, key_only=True):
+    if not num:
+        return None
+    if key_only:
+        sql = 'select __key__ from %s where num = :1' % name
+    else:
+        sql = 'select * from %s where num = :1' % name
+    return GqlQuery(sql, num).get()
+
 class Content(db.Expando):
     title = db.StringProperty(required=True)
     body  = db.TextProperty(required=False)
@@ -24,18 +36,22 @@ class Content(db.Expando):
                 "updated_at": self.updated_at.isoformat()}
 
 class Tag(db.Expando):
-    num   = db.IntegerProperty(required=False)
-    name  = db.StringProperty(required=True)
-    value = db.StringProperty(required=True)
+    num        = db.IntegerProperty(required=False)
+    name       = db.StringProperty(required=True)
+    value      = db.StringProperty(required=True)
+    is_end     = db.BooleanProperty(required=True)
     parent_tag = db.SelfReferenceProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
 
     @classmethod
-    def get_key_by_num(cls, num):
+    def get_by_num(cls, num, key_only=True):
         if not num:
             return None
-        sql = 'select __key__ from %s where num = :1' % cls.__name__
+        if key_only:
+            sql = 'select __key__ from %s where num = :1' % cls.__name__
+        else:
+            sql = 'select * from %s where num = :1' % cls.__name__
         return GqlQuery(sql, num).get()
 
     @classmethod

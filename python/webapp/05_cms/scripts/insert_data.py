@@ -20,7 +20,13 @@ def insert_tags(fp):
         if 0 < len(r) and r[0] and r[0].startswith('#'):
             continue
         data = dict(zip(header, r))
-        r = request_api('/tag', 'put', data)
+        t = {'num': int(data['num']),
+             'name': data['name'],
+             'value': data['value'],
+             'is_end': bool(data['is_end'])}
+        if data['parent']:
+            t['parent'] = int(data['parent'])
+        r = request_api('/tag', 'put', t)
         logging.debug(r.status_code)
         time.sleep(0.15)
 
