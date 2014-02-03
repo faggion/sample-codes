@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, '..')
 sys.path.insert(0, '../lib.zip')
 
-import logging, os, traceback, json
+import logging, os, traceback, json, time
 import requests, argparse, csv
 
 def request_api(path, method, data=None, headers={}):
@@ -17,9 +17,12 @@ def insert_tags(fp):
     row = csv.reader(fp, delimiter='\t')
     header = next(row)
     for r in row:
+        if 0 < len(r) and r[0] and r[0].startswith('#'):
+            continue
         data = dict(zip(header, r))
         r = request_api('/tag', 'put', data)
-        logging.debug(r.status_code)
+        #logging.debug(r.status_code)
+        time.sleep(0.1)
 
 def insert_contents(fp):
     row = csv.reader(fp, delimiter='\t')

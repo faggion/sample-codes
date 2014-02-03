@@ -27,6 +27,7 @@ class Tag(db.Expando):
     num   = db.IntegerProperty(required=False)
     name  = db.StringProperty(required=True)
     value = db.StringProperty(required=True)
+    parent_tag = db.SelfReferenceProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
 
