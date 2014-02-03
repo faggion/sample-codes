@@ -21,8 +21,8 @@ def insert_tags(fp):
             continue
         data = dict(zip(header, r))
         r = request_api('/tag', 'put', data)
-        #logging.debug(r.status_code)
-        time.sleep(0.1)
+        logging.debug(r.status_code)
+        time.sleep(0.15)
 
 def insert_contents(fp):
     row = csv.reader(fp, delimiter='\t')
