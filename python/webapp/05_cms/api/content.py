@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import Blueprint, request
-import logging, sys, os, traceback
+import logging, sys, os, traceback, datetime
 import common, models
 from google.appengine.ext.db import GqlQuery
 
@@ -32,9 +32,24 @@ def content_detail(content_id):
 def content_create(data):
     title  = data.get('title')
     body   = data.get('body')
-    tags   = [models.Tag.get_key_by_num(t) for t in data.get('tag_nums')]
+    posted_at = datetime.datetime.strptime(data.get('posted_at'),
+                                           '%Y-%m-%dT%H:%M:%S.%f')
+    tags   = []
+    for t in data.get('tag_nums'):
+        k = models.Tag.get_by_num(t)
+        if k:
+            tags.append(k)
 
-    record = models.Content(title=title, body=body, tags=tags)
+    record = models.Content(title=title,
+                            posted_at=posted_at,
+                            body=body,
+                            tags=tags)
+    if data.get('num'):
+        record.num = int(data.get('num'))
+    else:
+        record.put()
+        record.num = record.key().id()
+
     record.put()
     return common.json_response(record.format())
 

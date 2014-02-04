@@ -5,11 +5,11 @@ from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext.db import GqlQuery
 
-def get_keys(class_name):
-    return GqlQuery('select __key__ from %s order by updated_at desc' % class_name)
+def get_keys(class_name, order_by='updated_at'):
+    return GqlQuery('select __key__ from %s order by %s desc' % (class_name, order_by))
 
-def get_all(class_name):
-    return GqlQuery('select * from %s order by updated_at desc' % class_name)
+def get_all(class_name, order_by='updated_at'):
+    return GqlQuery('select * from %s order by %s desc' % (class_name, order_by))
 
 def get_by_num(name, num, key_only=True):
     if not num:
@@ -21,6 +21,7 @@ def get_by_num(name, num, key_only=True):
     return GqlQuery(sql, num).get()
 
 class Content(db.Expando):
+    num   = db.IntegerProperty(required=False)
     title = db.StringProperty(required=True)
     body  = db.TextProperty(required=False)
     tags  = db.ListProperty(db.Key)
@@ -32,6 +33,7 @@ class Content(db.Expando):
                 "title": self.title,
                 "body": self.body,
                 "tags": [int(t.id()) for t in self.tags],
+                "posted_at": self.posted_at.isoformat(),
                 "created_at": self.created_at.isoformat(),
                 "updated_at": self.updated_at.isoformat()}
 
@@ -41,6 +43,7 @@ class Tag(db.Expando):
     value      = db.StringProperty(required=True)
     is_end     = db.BooleanProperty(required=True)
     parent_tag = db.SelfReferenceProperty(required=False)
+    posted_at  = db.DateTimeProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
 

@@ -29,12 +29,14 @@ def tag_create(data):
     value = data.get('value')
     tag1  = models.Tag.get_key_by_name_and_value(name, value)
     if tag1:
+        logging.info('tag1 name and value exists')
         return common.error_response(None, 400)
 
     if num:
         num  = int(num)
         tag2 = models.get_by_num('Tag', num)
         if tag2:
+            logging.info('tag2 name and value exists')
             return common.error_response(None, 400)
         tag = models.Tag(num=num,
                          name=name,

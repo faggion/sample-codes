@@ -6,12 +6,14 @@ sys.path.insert(0, '../lib.zip')
 import logging, os, traceback, json, time
 import requests, argparse, csv
 
+BASEURL = 'http://localhost:8080/api/v1'
+
 def request_api(path, method, data=None, headers={}):
     headers['Content-type'] = 'application/json; charset=utf-8'
     d = None
     if data:
         d = json.dumps(data)
-    return getattr(requests, method)('http://localhost:8080/api/v1'+path,data=d,headers=headers)
+    return getattr(requests, method)(BASEURL+path,data=d,headers=headers)
 
 def insert_tags(fp):
     row = csv.reader(fp, delimiter='\t')
@@ -37,7 +39,12 @@ def insert_contents(fp):
         data = dict(zip(header, r))
         c = {"title": data['title'],
              "body": data['body'],
+             "posted_at": data['posted_at'],
              "tag_nums": [int(n) for n in data['tag_nums'].split(",")]}
+
+        if data['num']:
+            c['num'] = int(data['num'])
+
         r = request_api('/content', 'put', data=c)
         logging.debug(r.status_code)
 
