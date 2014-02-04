@@ -1,7 +1,19 @@
 <h3>Contents</h3>
-<ul>
-  <li ng-repeat="content in contents">
-    <a href="#">||content.id||: ||content.title||</a>
-  </li>
-</ul>
+
+<table class="table table-bordered">
+  <thead>
+    <tr class="active">
+      <th style="width:2%">posted at</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="content in contents">
+      <td>||content.posted_at | date: 'yyyy-MM-dd'||</td>
+      <td><a href="#">||content.title||</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
 <p><a class="btn" href="#/new_content">New Content</a>

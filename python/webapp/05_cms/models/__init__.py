@@ -30,6 +30,7 @@ class Content(db.Expando):
 
     def format(self):
         return {"id": self.key().id(),
+                "num": self.num,
                 "title": self.title,
                 "body": self.body,
                 "tags": [int(t.id()) for t in self.tags],
