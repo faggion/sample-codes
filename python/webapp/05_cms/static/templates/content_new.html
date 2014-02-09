@@ -1,8 +1,7 @@
 <div ng-include="'/static/templates/partials/editor_tab_content.html'"></div>
 
 <h3>New content</h3>
-<div ng-controller="ContentNewCtrl">
-
+<div>
 <form method="POST" name="newContent"
       ng-controller="ContentSaveCtrl"
       ng-submit="submit()"
@@ -15,6 +14,25 @@
 
   <div class="form-group">
     <label for="content_body" class="control-label">Body</label>
+
+  <div id="toolbar" style="display: none;">
+    <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |
+    <a data-wysihtml5-command="italic" title="CTRL+I">italic</a> | 
+    <a data-wysihtml5-command="createLink">insert link</a> |
+    <a data-wysihtml5-action="change_view">switch to html view</a>
+
+  <div data-wysihtml5-dialog="createLink" style="display: none;">
+    <label>
+      Link:
+      <input data-wysihtml5-dialog-field="href" value="http://" class="text">
+    </label>
+    <a data-wysihtml5-dialog-action="save">OK</a>
+    <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+  </div>
+
+  </div>
+
+
     <textarea id="content_body" class="form-control" rows="10" name="body"></textarea>
   </div>
 
@@ -25,3 +43,6 @@
 
 </form>
 </div>
+
+
+

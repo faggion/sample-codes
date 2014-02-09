@@ -29,6 +29,36 @@ myBlogControllers.config(['$routeProvider',
 myBlogControllers.controller('ContentNewCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
+
+    var wysihtml5ParserRules = {
+        tags: {
+            strong: {},
+            b:      {},
+            i:      {},
+            em:     {},
+            br:     {},
+            p:      {},
+            div:    {},
+            span:   {},
+            ul:     {},
+            ol:     {},
+            li:     {},
+            a:      {
+                set_attributes: {
+                    target: "_blank",
+                    rel:    "nofollow"
+                },
+                check_attributes: {
+                    href:   "url" // important to avoid XSS
+                }
+            }
+        }
+    };
+var editor = new wysihtml5.Editor("content_body", {
+    toolbar:      "toolbar",
+    parserRules:  wysihtml5ParserRules
+});
+
                                   console.debug('new content');
                               }]);
 
