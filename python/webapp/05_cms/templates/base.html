@@ -16,13 +16,25 @@ h1,h2,h3,h4,h5,h6,body {
   font-family: 'Balthazar', sans-serif;
 }
 .form-control {
-  font-size: 15px;
-  padding: 10px 15px;
-  height: 43px;
+  font-size: 14px;
+  padding: 5px 5px;
+  height: 35px;
+  box-shadow:none;
 }
 .form-control:focus {
   box-shadow: none;
   border-width: 2px;
+}
+#preview {
+  border:1px dashed #ddd;
+  padding:10px;
+  border-radius:4px;
+}
+.red {
+  color:red;
+}
+.xlarge {
+  font-size:x-large;
 }
 </style>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -35,15 +47,15 @@ h1,h2,h3,h4,h5,h6,body {
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-sanitize.js"></script>
 
-    <script src="/static/wysihtml5-0.3.0.js?"></script>
     <script src="/static/admin_controllers.js"></script>
 
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-12">
           <h1><span class="glyphicon glyphicon-pencil"></span> CMS Editor</h1>
           {% block content %}{% endblock %}
         </div>
