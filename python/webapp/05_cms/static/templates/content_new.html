@@ -1,6 +1,6 @@
 <div ng-include="'/static/templates/partials/editor_tab_content.html'"></div>
 
-<form method="POST" name="newContent"
+<form name="newContent"
       ng-controller="ContentSaveCtrl"
       ng-submit="submit()" novalidate>
 
@@ -10,24 +10,39 @@
   <div class="col-sm-6">
     <div class="form-group">
       <label for="content_title" class="control-label">Title</label>
-      <input type="text" value="" id="content_title" class="form-control" name="title">
+      <span ng-show="newContent.title.$error.required">required</span>
+      <span ng-show="newContent.title.$valid">OK</span>
+      <input type="text" value="" id="content_title" class="form-control"
+             name="title"
+             ng-model="data.title"
+             ng-maxlength="200" required>
+    </div>
+
+    <div class="form-group">
+      <label for="content_published_at" class="control-label">Publish Date</label>
+      <span ng-show="newContent.title.$error.required">required</span>
+      <span ng-show="newContent.title.$valid">OK</span>
+      <input type="text" value="" id="content_published_at" class="form-control"
+             ng-model="data.published_at"
+             ng-maxlength="200" required>
     </div>
 
     <div class="form-group">
       <label for="content_body" class="control-label">Body</label>
-      <textarea id="content_body" ng-model="content_body"
-                class="form-control" rows="10" name="body"></textarea>
+      <textarea id="content_body"
+                ng-model="data.content"
+                class="form-control" rows="10" required></textarea>
     </div>
 
     <div class="form-group">
       <a class="btn btn-default" href="#/contents">Cancel</a>
-      <button class="btn btn-primary">Submit</button>
+      <button ng-disabled="newContent.$invalid" class="btn btn-primary">Submit</button>
     </div>
   </div>
 
   <div class="col-sm-6">
     <label for="" class="control-label">Preview</label>
-    <div ng-bind-html="content_body" id="preview"></div>
+    <div ng-bind-html="data.content" id="preview"></div>
   </div>
 </div>
 

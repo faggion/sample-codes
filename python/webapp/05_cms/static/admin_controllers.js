@@ -43,13 +43,14 @@ myBlogControllers.controller('ContentListCtrl',
 myBlogControllers.controller('ContentSaveCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
+                                  $scope.data = {
+                                      published_at: "2014-02-14T10:00:00.000",
+                                  };
+                                 
                                   $scope.submit = function(){
-                                      console.debug($('#form_id').val());
-                                      console.debug($('#form_title').val());
-
-                                      var data = {title: $('#form_title').val(),
-                                                  id: $('#form_id').val()};
-                                      $http.post('/api/v1/content/'+ data.id, data).success(
+                                      $scope.data.content = $('#preview').html();
+                                      console.debug($scope.data);
+                                      $http.put('/api/v1/content', $scope.data).success(
                                           function(data){
                                               console.debug(data);
                                           }

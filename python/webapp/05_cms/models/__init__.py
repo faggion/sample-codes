@@ -25,6 +25,7 @@ class Content(db.Expando):
     title = db.StringProperty(required=True)
     body  = db.TextProperty(required=False)
     tags  = db.ListProperty(db.Key)
+    published_at = db.DateTimeProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
 
@@ -34,7 +35,7 @@ class Content(db.Expando):
                 "title": self.title,
                 "body": self.body,
                 "tags": [int(t.id()) for t in self.tags],
-                "posted_at": self.posted_at.isoformat(),
+                "published_at": self.published_at.isoformat(),
                 "created_at": self.created_at.isoformat(),
                 "updated_at": self.updated_at.isoformat()}
 
@@ -44,7 +45,6 @@ class Tag(db.Expando):
     value      = db.StringProperty(required=True)
     is_end     = db.BooleanProperty(required=True)
     parent_tag = db.SelfReferenceProperty(required=False)
-    posted_at  = db.DateTimeProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
 

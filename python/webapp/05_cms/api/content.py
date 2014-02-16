@@ -32,8 +32,8 @@ def content_detail(content_id):
 def content_create(data):
     title  = data.get('title')
     body   = data.get('body')
-    posted_at = datetime.datetime.strptime(data.get('posted_at'),
-                                           '%Y-%m-%dT%H:%M:%S.%f')
+    published_at = datetime.datetime.strptime(data.get('published_at'),
+                                              '%Y-%m-%dT%H:%M:%S.%f')
     tags   = []
     for t in data.get('tag_nums'):
         k = models.Tag.get_by_num(t)
@@ -41,7 +41,7 @@ def content_create(data):
             tags.append(k)
 
     record = models.Content(title=title,
-                            posted_at=posted_at,
+                            published_at=published_at,
                             body=body,
                             tags=tags)
     if data.get('num'):
