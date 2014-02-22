@@ -28,7 +28,7 @@ myBlogControllers.config(['$routeProvider',
      
 myBlogControllers.controller('ContentNewCtrl',
                              ['$scope', '$http',
-                              function ($scope, $http) {
+                              function ($scope, $http) {                                  
                                   console.debug('new content');
                               }]);
 
@@ -44,7 +44,8 @@ myBlogControllers.controller('ContentSaveCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
                                   $scope.data = {
-                                      published_at: (new Date()).toISOString(),
+                                      //published_at: (new Date()).toISOString(),
+                                      published_at: '2014-02-15',
                                   };
                                  
                                   $scope.submit = function(){

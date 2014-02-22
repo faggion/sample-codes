@@ -18,12 +18,14 @@
              ng-maxlength="200" required>
     </div>
 
-    <div class="form-group">
+    <div data-date-format="yyyy-mm-dd"
+         data-date="12-02-2012"
+         class="input-append date form-group">
       <label for="content_published_at" class="control-label">Publish Date</label>
-      <span ng-show="newContent.title.$error.required">required</span>
-      <span ng-show="newContent.title.$valid">OK</span>
-      <input type="text" value="" id="content_published_at" class="form-control"
-             ng-model="data.published_at"
+      <input type="text" value="" id="content_published_at"
+             class="form-control datepicker"
+             size="16"
+             ng-model="data.published_at" readonlye=""
              ng-maxlength="200" required>
     </div>
 
@@ -47,3 +49,7 @@
 </div>
 
 </form>
+
+<script>
+$('.datepicker').datepicker({'format':'yyyy-mm-dd'}).on('changeDate', function(){$('.datepicker').datepicker('hide');});
+</script>
