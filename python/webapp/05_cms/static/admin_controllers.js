@@ -44,8 +44,7 @@ myBlogControllers.controller('ContentSaveCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
                                   $scope.data = {
-                                      //published_at: (new Date()).toISOString(),
-                                      published_at: '2014-02-15',
+                                      "published": false,
                                   };
                                  
                                   $scope.submit = function(){
