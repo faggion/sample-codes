@@ -44,7 +44,7 @@ myBlogControllers.controller('ContentSaveCtrl',
                              ['$scope', '$http',
                               function ($scope, $http) {
                                   $scope.data = {
-                                      "published": false,
+                                      "published": true,
                                   };
                                  
                                   $scope.submit = function(){
