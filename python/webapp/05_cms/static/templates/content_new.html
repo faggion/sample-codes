@@ -12,7 +12,7 @@
       <label for="content_title" class="control-label">Title</label>
       <span ng-show="newContent.title.$error.required">required</span>
       <span ng-show="newContent.title.$valid">OK</span>
-      <input type="text" value="" id="content_title" class="form-control"
+      <input type="text" value="" class="form-control"
              name="title"
              ng-model="data.title"
              ng-maxlength="200" required>
@@ -51,7 +51,15 @@
 
     <div class="form-group">
       <label for="" class="control-label">Preview</label>
-      <div ng-bind-html="data.content" id="preview"></div>
+      <div id="main_contents">
+        <h2 class="content_title">||data.title||</h2>
+        <h3 class="content_published_at">||data.published_at||</h3>
+        <div ng-bind-html="data.content"></div>
+      </div>
+
+<!--
+
+-->
     </div>
   </div>
 </div>

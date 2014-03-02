@@ -48,7 +48,7 @@ myBlogControllers.controller('ContentSaveCtrl',
                                   };
                                  
                                   $scope.submit = function(){
-                                      $scope.data.content = $('#preview').html();
+                                      $scope.data.content = $('#main_contents').html();
                                       console.debug($scope.data);
                                       $http.put('/api/v1/content', $scope.data).success(
                                           function(data){
