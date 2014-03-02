@@ -144,23 +144,23 @@ class ols:
         print "Method: Least Squares"
         print "Date: ", time.strftime("%a, %d %b %Y",t)
         print "Time: ", time.strftime("%H:%M:%S",t)
-        print '# obs:       %5.0f' % self.nobs
-        print '# variables: %5.0f' % self.ncoef 
+        print '# obs:               %5.0f' % self.nobs
+        print '# variables:     %5.0f' % self.ncoef 
         print '=============================================================================='
-        print 'variable     coefficient       std. Error      t-statistic             prob.'
+        print 'variable     coefficient     std. Error      t-statistic     prob.'
         print '=============================================================================='
         for i in range(len(self.x_varnm)):
-            print '''% -5s   %+16.6f %+16.6f %+16.6f %+16.6f''' % tuple([self.x_varnm[i],self.b[i],self.se[i],self.t[i],self.p[i]]) 
+            print '''% -5s          % -5.6f     % -5.6f     % -5.6f     % -5.6f''' % tuple([self.x_varnm[i],self.b[i],self.se[i],self.t[i],self.p[i]]) 
         print '=============================================================================='
         print 'Models stats                         Residual stats'
         print '=============================================================================='
-        print 'R-squared            %+12.6f    Durbin-Watson stat  % -5.6f' % tuple([self.R2, self.dw()])
-        print 'Adjusted R-squared   %+12.6f    Omnibus stat        % -5.6f' % tuple([self.R2adj, omni])
-        print 'F-statistic          %+12.6f    Prob(Omnibus stat)  % -5.6f' % tuple([self.F, omnipv])
-        print 'Prob (F-statistic)   %+12.6f    JB stat             % -5.6f' % tuple([self.Fpv, JB])
-        print 'Log likelihood       %+12.6f    Prob(JB)            % -5.6f' % tuple([ll, JBpv])
-        print 'AIC criterion        %+12.6f    Skew                % -5.6f' % tuple([aic, skew])
-        print 'BIC criterion        %+12.6f    Kurtosis            % -5.6f' % tuple([bic, kurtosis])
+        print 'R-squared            % -5.6f         Durbin-Watson stat  % -5.6f' % tuple([self.R2, self.dw()])
+        print 'Adjusted R-squared   % -5.6f         Omnibus stat        % -5.6f' % tuple([self.R2adj, omni])
+        print 'F-statistic          % -5.6f         Prob(Omnibus stat)  % -5.6f' % tuple([self.F, omnipv])
+        print 'Prob (F-statistic)   % -5.6f			JB stat             % -5.6f' % tuple([self.Fpv, JB])
+        print 'Log likelihood       % -5.6f			Prob(JB)            % -5.6f' % tuple([ll, JBpv])
+        print 'AIC criterion        % -5.6f         Skew                % -5.6f' % tuple([aic, skew])
+        print 'BIC criterion        % -5.6f         Kurtosis            % -5.6f' % tuple([bic, kurtosis])
         print '=============================================================================='
 
 if __name__ == '__main__':

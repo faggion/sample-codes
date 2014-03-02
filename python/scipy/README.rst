@@ -12,3 +12,12 @@
   pip install cvxopt
   pip install openopt
   pip install FuncDesigner
+
+
+.. code-block:: none
+  
+  source 2.7.2/bin/activate
+  # install http://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg
+  xcode-select --install
+  curl -o install_superpack.sh https://raw.github.com/fonnesbeck/ScipySuperpack/master/install_superpack.sh
+  sh install_superpack.sh
