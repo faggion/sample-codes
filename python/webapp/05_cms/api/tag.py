@@ -7,10 +7,15 @@ app = Blueprint('api_v1_tag', __name__, url_prefix='/api/v1/tag')
 
 @app.route('', methods=['GET'])
 def tag_list():
-    tags = models.get_keys('Tag')
     ret = []
-    for t in tags:
-        ret.append(t.id())
+    if request.args.get('rg') == 'large':
+        records = models.get_all('Tag')
+        for t in records:
+            ret.append(t.format())
+    else:
+        records = models.get_keys('Content')
+        for t in records:
+            ret.append(t.id())
     return common.json_response(ret)
 
 @app.route('/num', methods=['GET'])
@@ -24,40 +29,42 @@ def tag_num_list():
 @app.route('', methods=['PUT'])
 @common.parse_request_body
 def tag_create(data):
-    num   = data.get('num')
-    name  = data.get('name')
+    logging.error(data)
+    num = data.get('num')
+    namespace = data.get('namespace')
     value = data.get('value')
-    tag1  = models.Tag.get_key_by_name_and_value(name, value)
+    tag1 = models.Tag.get_key_by_namespace_and_value(namespace, value)
     if tag1:
-        logging.info('tag1 name and value exists')
+        logging.info('tag1 namespace and value exists')
         return common.error_response(None, 400)
+
+    parent = None
+    if data.get('parentNum'):
+        parentNum = data.get('parentNum')
+        if not isinstance(parent, int):
+            logging.error('parentNum must be int type')
+            return common.error_response(None, 400)
+        parent = models.get_by_num('Tag', parentNum)
+        if not parent:
+            logging.error('parent_num(%d) not found' % parentNum)
+            return common.error_response(None, 400)
 
     if num:
         num  = int(num)
         tag2 = models.get_by_num('Tag', num)
         if tag2:
-            logging.info('tag2 name and value exists')
+            logging.info('tag2 namespace and value exists')
             return common.error_response(None, 400)
         tag = models.Tag(num=num,
-                         name=name,
+                         namespace=namespace,
                          value=value,
-                         is_end=data.get('is_end'))
+                         parent_tag = parent)
     else:
-        tag = models.Tag(name=name,
+        tag = models.Tag(namespace=namespace,
                          value=value,
-                         is_end=data.get('is_end'))
+                         parent_tag = parent)
         tag.put()
         tag.num = tag.key().id()
-
-    parent = data.get('parent')
-    if parent:
-        # FIXME: int cast error
-        parent_num = int(parent)
-        parent = models.get_by_num('Tag', parent_num)
-        if not parent:
-            logging.error('parent_num(%d) not found' % parent_num)
-            return common.error_response(None, 400)
-        tag.parent_tag = parent
 
     tag.put()
     return common.json_response(tag.format())

@@ -1,0 +1,73 @@
+<div ng-include="'/static/templates/partials/editor_tab_tag.html'"></div>
+
+<div class="row" ng-controller="TagListCtrl">
+  <div class="col-sm-8">
+    <h3>Tags</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="active">
+          <th>Number</th>
+          <th>Namespace</th>
+          <th>Value</th>
+          <th>Parent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tag in tags">
+          <td>||tag.num||</td>
+          <td>||tag.namespace||</td>
+          <td>||tag.value||</td>
+          <td>
+            <div ng-if="tag.parent">||tag.parent.num||</div>
+            <div ng-if="tag.parent == undefined">Nothing</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-4">
+    <h3>Create tag</h3>
+    <form name="formNewTag"
+          ng-controller="TagSaveCtrl"
+          ng-submit="submit()" novalidate>
+
+      <div class="form-group">
+        <label for="namespace" class="control-label">Namespace</label>
+        <span ng-show="formNewTag.namespace.$error.required">required</span>
+        <span ng-show="formNewTag.namespace.$valid">OK</span>
+        <input type="text"
+               class="form-control"
+               name="namespace"
+               ng-model="newTag.namespace"
+               ng-maxlength="200" required>
+      </div>
+
+      <div class="form-group">
+        <label for="value" class="control-label">Value</label>
+        <span ng-show="formNewTag.value.$error.required">required</span>
+        <span ng-show="formNewTag.value.$valid">OK</span>
+        <input type="text"
+               class="form-control"
+               name="value"
+               ng-model="newTag.value"
+               ng-maxlength="200" required>
+      </div>
+
+      <div class="form-group">
+        <label for="value" class="control-label">Parent number</label>
+        <input type="text"
+               class="form-control"
+               name="parentNum"
+               ng-model="newTag.parentNum">
+      </div>
+
+      <div class="form-group">
+        <a class="btn btn-default" href="#/tags">Cancel</a>
+        <button ng-disabled="newTag.$invalid" class="btn btn-success">Submit</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+

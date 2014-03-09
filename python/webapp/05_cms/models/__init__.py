@@ -41,9 +41,8 @@ class Content(db.Expando):
 
 class Tag(db.Expando):
     num        = db.IntegerProperty(required=False)
-    name       = db.StringProperty(required=True)
+    namespace  = db.StringProperty(required=True)
     value      = db.StringProperty(required=True)
-    is_end     = db.BooleanProperty(required=True)
     parent_tag = db.SelfReferenceProperty(required=False)
     created_at = db.DateTimeProperty(required=False, auto_now_add=True)
     updated_at = db.DateTimeProperty(required=False, auto_now=True)
@@ -59,16 +58,23 @@ class Tag(db.Expando):
         return GqlQuery(sql, num).get()
 
     @classmethod
-    def get_key_by_name_and_value(cls, name, value):
-        if not name or not value:
+    def get_key_by_namespace_and_value(cls, namespace, value):
+        if not namespace or not value:
             return None
-        sql = 'select __key__ from %s where name = :1 and value = :2' % cls.__name__
-        return GqlQuery(sql, name, value).get()
+        sql = 'select __key__ from %s where namespace = :1 and value = :2' % cls.__name__
+        return GqlQuery(sql, namespace, value).get()
 
     def format(self):
-        return {"id": self.key().id(),
-                "num": self.num,
-                "name": self.name,
-                "value": self.value,
-                "created_at": self.created_at.isoformat(),
-                "updated_at": self.updated_at.isoformat()}
+        ret = {"id": self.key().id(),
+               "num": self.num,
+               "namespace": self.namespace,
+               "value": self.value,
+               "created_at": self.created_at.isoformat(),
+               "updated_at": self.updated_at.isoformat()}
+        if self.parent_tag:
+            p = self.parent_tag
+            ret['parent'] = {'id': p.key().id(),
+                             'num': p.num,
+                             'namespace': p.namespace,
+                             'value': p.value}
+        return ret

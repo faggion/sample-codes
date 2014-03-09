@@ -18,14 +18,11 @@
              ng-maxlength="200" required>
     </div>
 
-    <div data-date-format="yyyy-mm-dd"
-         data-date="2014-02-14"
-         class="date input-append form-group">
+    <div class="date input-append form-group">
       <label for="content_published_at" class="control-label">Publish Date</label>
       <input type="text" value="" id="content_published_at" class="form-control datetimepicker"
-             name="title" data-format="YYYY/MM/DD hh:mm:ss"
-             ng-model="data.published_at"
-             ng-maxlength="200" required>
+             name="published_at" data-format="YYYY/MM/DD hh:mm:ss"
+             ng-model="data.published_at" required>
     </div>
 
     <div class="checkbox">
@@ -56,11 +53,8 @@
         <h3 class="content_published_at">||data.published_at||</h3>
         <div ng-bind-html="data.content"></div>
       </div>
-
-<!--
-
--->
     </div>
+
   </div>
 </div>
 
@@ -68,5 +62,4 @@
 
 <script>
 var datepicker = $('.datetimepicker').datetimepicker();
-//datepicker.on('changeDate', function(){ datepicker.datepicker('hide'); });
 </script>

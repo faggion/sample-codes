@@ -8,14 +8,13 @@ app = Blueprint('api_v1_content', __name__, url_prefix='/api/v1/content')
 
 @app.route('', methods=['GET'])
 def content_list():
+    ret = []
     if request.args.get('rg') == 'large':
-        records = GqlQuery('select * from Content order by updated_at desc')
-        ret = []
+        records = models.get_all('Content')
         for t in records:
             ret.append(t.format())
     else:
-        records = GqlQuery('select __key__ from Content order by updated_at desc')
-        ret = []
+        records = models.get_keys('Content')
         for t in records:
             ret.append(t.id())
     return common.json_response(ret)
