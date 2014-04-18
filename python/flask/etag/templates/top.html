@@ -11,9 +11,44 @@
   <p id="json"></p>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+/*
     $.get('/api.json', function(data){
         $('#json').html('hello, '+data['name']);
     });
+    $.get('http://i.yimg.jp/images/mh/pc/jp/rd/1.0.0/shopping.png', function(data){
+        console.log('png');
+    });
+*/
+
+getURL = (function(){
+    var xhr;
+    if (window.XDomainRequest){
+        xhr = new XDomainRequest();
+        return function(url, callback){
+            xhr.onload = function(){ callback(xhr.responseText, xhr.contentType) };
+            xhr.open('GET', url);
+            xhr.send();
+        };
+    }
+    else{
+        xhr = new XMLHttpRequest();
+        return function(url, callback){
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4) 
+                    console.debug("exp: " + xhr.getResponseHeader("Expires"));
+                    callback(xhr.responseText, xhr.getResponseHeader("Content-Type"));
+            };
+            xhr.open('GET', url, true);  
+            xhr.send();
+        };
+    }
+})();
+
+getURL('http://i.yimg.jp/images/mh/pc/jp/rd/1.0.0/shopping.png',
+       function(body, type){
+           console.log(type);
+       });
+
 </script>
 
 </body>
