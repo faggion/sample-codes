@@ -19,8 +19,8 @@ Vagrant::Config.run do |config|
 
   # root user configuration
   config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
-  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
-  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
+  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
   config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.gitconfig').read +  "' > /root/.gitconfig"
   config.vm.provision :shell, :inline => 'echo "%root ALL=(ALL) NOPASSWD: ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
 
@@ -29,6 +29,18 @@ Vagrant::Config.run do |config|
   # 
   config.vm.provision :shell, :inline => 'aptitude install -y zsh rsync tree git-core make libtool g++ libc6-dev libssl-dev valgrind'
   config.vm.provision :shell, :inline => 'aptitude install -y debianutils debconf debconf-i18n'
+
+  # 
+  # setup LL envs
+  # 
+  config.vm.provision :shell, :inline => 'git clone git://github.com/tokuhirom/plenv.git /opt/plenv && git clone git://github.com/tokuhirom/Perl-Build.git /opt/plenv/plugins/perl-build/'
+  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.8.9'
+  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.10.0'
+  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.10.1'
+  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.12.5'
+  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.14.4'
+  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.16.3'
+  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.18.2'
 
   # 
   # my user configuration
