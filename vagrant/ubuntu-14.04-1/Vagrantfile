@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# vagrant box add ubuntu-14.04-adm64 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
+
+Vagrant::Config.run do |config|
+  config.vm.box = "ubuntu-14.04-adm64"
+  config.vm.network :hostonly, "192.168.12.31"
+  config.vm.host_name = "u14test"
+
+  config.vm.customize do |vm|
+    vm.memory_size = 4096
+    vm.name = "u14test"
+  end
+
+  user = ENV['USER']
+
+  # initialization
+  config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
+
+  # root user configuration
+  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.gitconfig').read +  "' > /root/.gitconfig"
+  config.vm.provision :shell, :inline => 'echo "%root ALL=(ALL) NOPASSWD: ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
+
+  # 
+  # install apt packages
+  # 
+  config.vm.provision :shell, :inline => 'aptitude install -y zsh rsync tree git-core make libtool g++ libc6-dev libssl-dev valgrind'
+  config.vm.provision :shell, :inline => 'aptitude install -y debianutils debconf debconf-i18n'
+
+  # 
+  # my user configuration
+  # 
+  config.vm.provision :shell, :inline => 'perl /vagrant/make_user.pl ' + user
+
+  # finalization
+  config.vm.provision :shell, :inline => "/sbin/ldconfig"
+  config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
+end
