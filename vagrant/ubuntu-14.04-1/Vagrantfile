@@ -19,8 +19,9 @@ Vagrant::Config.run do |config|
 
   # root user configuration
   config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
-  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
-  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
+  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.emacs.el').read +   "' > /root/.emacs.el"
   config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.gitconfig').read +  "' > /root/.gitconfig"
   config.vm.provision :shell, :inline => 'echo "%root ALL=(ALL) NOPASSWD: ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
 
@@ -29,18 +30,25 @@ Vagrant::Config.run do |config|
   # 
   config.vm.provision :shell, :inline => 'aptitude install -y zsh rsync tree git-core make libtool g++ libc6-dev libssl-dev valgrind'
   config.vm.provision :shell, :inline => 'aptitude install -y debianutils debconf debconf-i18n'
+  config.vm.provision :shell, :inline => 'aptitude install -y emacs24-nox emacs24-el'
+  config.vm.provision :shell, :inline => 'aptitude install -y python-dev'
 
   # 
-  # setup LL envs
+  # setup plenv
+  #
+  #config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.10.0,5.8.9,5.18.2'
+  config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.10.1,5.18.2'
+
+  #
+  # setup pyenv
+  #
+  config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_pythons.pl --root=/opt/pyenv --install-versions=2.7.6,3.4.0'
+  config.vm.provision :shell, :inline => 'PYENV_ROOT=/opt/pyenv /opt/pyenv/shims/pip install virtualenv --upgrade'
+
   # 
-  config.vm.provision :shell, :inline => 'git clone git://github.com/tokuhirom/plenv.git /opt/plenv && git clone git://github.com/tokuhirom/Perl-Build.git /opt/plenv/plugins/perl-build/'
-  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.8.9'
-  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.10.0'
-  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.10.1'
-  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.12.5'
-  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.14.4'
-  #config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.16.3'
-  config.vm.provision :shell, :inline => 'PLENV_ROOT=/opt/plenv /opt/plenv/bin/plenv install 5.18.2'
+  # setup rbenv
+  #
+  config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_rubies.pl --root=/opt/rbenv --install-versions=1.9.3-p448,2.1.1'
 
   # 
   # my user configuration
@@ -48,6 +56,8 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => 'perl /vagrant/make_user.pl ' + user
 
   # finalization
+  config.vm.provision :shell, :inline => 'cp /vagrant/llenv.sh /opt/'
   config.vm.provision :shell, :inline => "/sbin/ldconfig"
+  # sudo chmod 644 /etc/cron.weekly/apt-xapian-index
   config.vm.provision :shell, :inline => 'echo "Finished provisioning normally"'
 end
