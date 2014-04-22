@@ -19,8 +19,8 @@ Vagrant::Config.run do |config|
 
   # root user configuration
   config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
-  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
-  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
+  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
+  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
   #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.emacs.el').read +   "' > /root/.emacs.el"
   config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.gitconfig').read +  "' > /root/.gitconfig"
   config.vm.provision :shell, :inline => 'echo "%root ALL=(ALL) NOPASSWD: ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
@@ -37,18 +37,19 @@ Vagrant::Config.run do |config|
   # setup plenv
   #
   #config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.10.0,5.8.9,5.18.2'
-  config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.10.1,5.18.2'
+  config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.18.2'
 
   #
   # setup pyenv
   #
+  config.vm.provision :shell, :inline => 'aptitude install libreadline-dev libsqlite3-dev libbz2-dev'
   config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_pythons.pl --root=/opt/pyenv --install-versions=2.7.6,3.4.0'
   config.vm.provision :shell, :inline => 'PYENV_ROOT=/opt/pyenv /opt/pyenv/shims/pip install virtualenv --upgrade'
 
   # 
   # setup rbenv
   #
-  config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_rubies.pl --root=/opt/rbenv --install-versions=1.9.3-p448,2.1.1'
+  config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_rubies.pl --root=/opt/rbenv --install-versions=2.1.1,1.9.3-p448'
 
   # 
   # my user configuration
