@@ -27,7 +27,9 @@ if(!-d $PLENV_ROOT){
 foreach my $ver (@INSTALL_PERL_VERS){
     $ret |= system("PLENV_ROOT=$PLENV_ROOT $PLENV_BIN install $ver");
     $ret |= system("PLENV_ROOT=$PLENV_ROOT $PLENV_BIN global  $ver");
-    $ret |= system("PLENV_ROOT=$PLENV_ROOT $PLENV_BIN install-cpanm");
+    #$ret |= system("PLENV_ROOT=$PLENV_ROOT $PLENV_BIN install-cpanm");
+    $ret |= system("wget http://xrl.us/cpanm -O $PLENV_ROOT/shims/cpanm");
+    $ret |= system("chmod +x $PLENV_ROOT/shims/cpanm");
     $ret |= system("LANG=C $PLENV_ROOT/shims/cpanm Carton");
 }
 

@@ -21,6 +21,7 @@ if(!-d $RBENV_ROOT){
     $ret |= system("rm -rf $RBENV_ROOT");
     $ret |= system("git clone https://github.com/sstephenson/rbenv.git $RBENV_ROOT");
     $ret |= system("git clone https://github.com/sstephenson/ruby-build.git $RBENV_ROOT/plugins/ruby-build/");
+    # curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | sudo RBENV_ROOT=/opt/rbenv /opt/rbenv/bin/rbenv install --patch 2.1.1
 }
 
 # install perl versions

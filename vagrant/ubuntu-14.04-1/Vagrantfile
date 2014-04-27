@@ -2,14 +2,17 @@
 # vi: set ft=ruby :
 # vagrant box add ubuntu-14.04-adm64 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
 
-Vagrant::Config.run do |config|
-  config.vm.box = "ubuntu-14.04-adm64"
-  config.vm.network :hostonly, "192.168.12.31"
-  config.vm.host_name = "u14test"
+Vagrant.configure("2") do |config|
+  hostname = "ubuntu14-1"
 
-  config.vm.customize do |vm|
-    vm.memory_size = 4096
-    vm.name = "u14test"
+  config.vm.box = "ubuntu-14.04-adm64"
+  config.vm.network "private_network", ip: "192.168.100.10"
+  config.vm.host_name = hostname
+
+  config.vm.provider "virtualbox" do |v|
+    v.name   = hostname
+    v.memory = 2048
+    v.cpus   = 1
   end
 
   user = ENV['USER']
@@ -18,11 +21,14 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "echo 'if [ \"\$BASH\" ]; then  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi; fi; if `tty -s`; then mesg n; fi' >/root/.profile"
 
   # root user configuration
-  config.vm.provision :shell, :inline => "mkdir -p /root/.ssh && echo '" + open(ENV['HOME'] + '/.ssh/authorized_keys').read + "' > /root/.ssh/authorized_keys"
-  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.ssh/config').read + "' > /root/.ssh/config"
-  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.zshrc').read +      "' > /root/.zshrc"
-  #config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.emacs.el').read +   "' > /root/.emacs.el"
-  config.vm.provision :shell, :inline => "echo '" + open(ENV['HOME'] + '/.gitconfig').read +  "' > /root/.gitconfig"
+  id_rsa_ssh_key  = File.read(File.join(Dir.home, ".ssh", "id_rsa"))
+  authorized_keys = File.read(File.join(Dir.home, ".ssh", "authorized_keys"))
+  zshrc           = File.read(File.join(Dir.home, ".zshrc"))
+  gitconfig       = File.read(File.join(Dir.home, ".gitconfig"))
+  config.vm.provision :shell, :inline => "echo '#{id_rsa_ssh_key}' > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa"
+  config.vm.provision :shell, :inline => "echo '#{authorized_keys}' > /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys"
+  config.vm.provision :shell, :inline => "echo '#{zshrc}' > /root/.zshrc"
+  config.vm.provision :shell, :inline => "echo '#{gitconfig}' > /root/.gitconfig"
   config.vm.provision :shell, :inline => 'echo "%root ALL=(ALL) NOPASSWD: ALL" > /tmp/root_group_nopass && chmod 0400 /tmp/root_group_nopass && mv /tmp/root_group_nopass /etc/sudoers.d/'
 
   # 
@@ -32,17 +38,21 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => 'aptitude install -y debianutils debconf debconf-i18n'
   config.vm.provision :shell, :inline => 'aptitude install -y emacs24-nox emacs24-el'
   config.vm.provision :shell, :inline => 'aptitude install -y python-dev'
+  config.vm.provision :shell, :inline => 'aptitude install -y libreadline-dev libsqlite3-dev libbz2-dev'
+
+  # 
+  # my user configuration
+  # 
+  config.vm.provision :shell, :inline => 'perl /vagrant/make_user.pl ' + user
 
   # 
   # setup plenv
   #
-  #config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.10.0,5.8.9,5.18.2'
   config.vm.provision :shell, :inline => '/usr/bin/perl /vagrant/setup_perls.pl --root=/opt/plenv --install-versions=5.18.2'
 
   #
   # setup pyenv
   #
-  config.vm.provision :shell, :inline => 'aptitude install libreadline-dev libsqlite3-dev libbz2-dev'
   config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_pythons.pl --root=/opt/pyenv --install-versions=2.7.6,3.4.0'
   config.vm.provision :shell, :inline => 'PYENV_ROOT=/opt/pyenv /opt/pyenv/shims/pip install virtualenv --upgrade'
 
@@ -50,11 +60,6 @@ Vagrant::Config.run do |config|
   # setup rbenv
   #
   config.vm.provision :shell, :inline => '/opt/plenv/shims/perl /vagrant/setup_rubies.pl --root=/opt/rbenv --install-versions=2.1.1,1.9.3-p448'
-
-  # 
-  # my user configuration
-  # 
-  config.vm.provision :shell, :inline => 'perl /vagrant/make_user.pl ' + user
 
   # finalization
   config.vm.provision :shell, :inline => 'cp /vagrant/llenv.sh /opt/'
