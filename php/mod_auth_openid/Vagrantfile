@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+VM_NAME = "openid"
+USER = ENV['USER']
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |conf|
+  conf.vm.box = "debian6"
+  conf.vm.network "private_network", ip: "192.168.20.15"
+  conf.vm.host_name = VM_NAME
+
+  conf.vm.provider "virtualbox" do |v|
+    v.name = VM_NAME
+    v.memory = 1024
+    v.cpus = 1
+  end
+
+  # initialization
+  conf.vm.provision "shell", :inline => "/vagrant/init_debian6.sh"
+
+  # root user
+  conf.vm.provision "shell", :inline => '/vagrant/setup_root_user.sh'
+
+  # 
+  # my user
+  # 
+  conf.vm.provision "shell", :inline => 'perl /vagrant/make_user_for_vagrant.pl ' + USER
+
+  # apt package libapache2-mod-auth-openid と http://findingscience.com/mod_auth_openid/ は違うので失敗する
+  conf.vm.provision "shell", :inline => 'aptitude update && aptitude install apache2-mpm-prefork php5 zsh libapache2-mod-auth-openid -y'
+
+  conf.vm.provision "shell", :inline => 'ln -s /vagrant/auth_page.conf /etc/apache2/sites-enabled/auth_page.conf'
+  conf.vm.provision "shell", :inline => 'rm -f /etc/apache2/sites-enabled/000-default'
+  #conf.vm.provision "shell", :inline => '/usr/sbin/a2enmod authopenid && /etc/init.d/apache2 restart'
+  conf.vm.provision "shell", :inline => '/etc/init.d/apache2 restart'
+
+  # finalization
+  conf.vm.provision "shell", :inline => "/sbin/ldconfig"
+  conf.vm.provision "shell", :inline => 'echo "Finished provisioning normally"'
+end
