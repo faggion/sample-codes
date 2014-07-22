@@ -22,6 +22,20 @@ function scene:enterScene( event )
 
    local pg = page:new("scene_1",
                        {"こんにちは", "ようこそ"})
+
+   -- map
+   local options = {
+      width = 32,
+      height = 32,
+      numFrames = 300,
+      sheetContentWidth=640,
+      sheetContentHeight=480
+   }
+   local map_tip = graphics.newImageSheet("img/map_tip.gif", options )
+   local tile1 = display.newImage(group, map_tip, 3)
+   tile1.x = 100
+   tile1.y = 100
+
 end
 
 function scene:exitScene( event )
