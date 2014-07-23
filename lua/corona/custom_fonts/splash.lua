@@ -20,9 +20,6 @@ function scene:enterScene( event )
                               DISPLAY_HEIGHT)
    bg:setFillColor(0.1,0.1,0.1)
 
-   local pg = page:new("scene_1",
-                       {"こんにちは", "ようこそ"})
-
    -- map
    local options = {
       width = 32,
@@ -32,9 +29,35 @@ function scene:enterScene( event )
       sheetContentHeight=480
    }
    local map_tip = graphics.newImageSheet("img/map_tip.gif", options )
-   local tile1 = display.newImage(group, map_tip, 3)
-   tile1.x = 100
-   tile1.y = 100
+   local tile1
+   for c = 1, 10 do
+      for r = 1, 15 do
+         tile1 = display.newImage(group, map_tip, 2)
+         tile1.x = (c-1) * 32 + 16
+         tile1.y = (r-1) * 32 + 16
+      end
+   end
+
+   local pg = page:new(group, "scene_1",
+                       {"こんにちは\nあああああああああああああああ\nあ\nあ\nあ\nあ", "ようこそ"})
+
+
+   --local options = {
+   --   width = 64,
+   --   height = 64,
+   --   numFrames = 300,
+   --   sheetContentWidth=1280,
+   --   sheetContentHeight=960
+   --}
+   --local map_tip = graphics.newImageSheet("img/map_tip.gif", options )
+   --local tile1
+   --for c = 1, 5 do
+   --   for r = 1, 7 do
+   --      tile1 = display.newImage(group, map_tip, 2)
+   --      tile1.x = (c-1) * 64 + 32
+   --      tile1.y = (r-1) * 64 + 32
+   --   end
+   --end
 
 end
 
