@@ -42,6 +42,8 @@ function scene:enterScene( event )
                        {"こんにちは\nあああああああああああああああ\nあ\nあ\nあ\nあ", "ようこそ"})
 
 
+   local person = display.newImage(group, "img/male.gif",  80, 80)
+
    --local options = {
    --   width = 64,
    --   height = 64,
