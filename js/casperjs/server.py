@@ -10,7 +10,9 @@ def index():
 
 @app.route('/update', methods=['POST'])
 def update():
+    logging.debug(request.form)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.DEBUG)
     app.run(debug=True)

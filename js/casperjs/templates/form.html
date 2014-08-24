@@ -1,5 +1,12 @@
+<script>
+function doSubmit(){
+    var p = document.getElementById('password');
+    p.value = 'valid_password';
+}
+</script>
+
 <form method="POST" action="/update">
-  <input type="text" name="username"><br>
-  <input type="password" name="password"><br>
-  <input type="submit">
+  <input id="username" type="text" name="username"><br>
+  <input id="password" type="password" name="password"><br>
+  <input id="submit"   type="submit" onclick="doSubmit();">
 </form>
