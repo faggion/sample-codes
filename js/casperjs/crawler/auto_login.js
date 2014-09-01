@@ -1,20 +1,20 @@
 var links = [];
 var casper = require('casper').create();
-//var domain = 'localhost';
 var domain = '.localhost';
+var utils = require('utils');
 
 casper.echo('Cookies enabled?: ' + phantom.cookiesEnabled);
 
-phantom.addCookie({
-    domain: domain,
-    name: 'name',
-    value: 'testname'
-});
-phantom.addCookie({
-    domain: domain,
-    name: 'name2',
-    value: 'testname2'
-});
+//phantom.addCookie({
+//    domain: domain,
+//    name: 'name',
+//    value: 'testname'
+//});
+//phantom.addCookie({
+//    domain: domain,
+//    name: 'name2',
+//    value: 'testname2'
+//});
 
 casper.start('http://localhost:5000/', function() {
     var needLogin = this.evaluate(function(){
@@ -39,7 +39,7 @@ casper.then(function() {
         return document.cookie;
     });
     //casper.echo(cookie);
-    console.log(cookie);
+    utils.dump(phantom.cookies);
     this.capture('mail.png');
 });
 casper.run();
