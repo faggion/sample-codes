@@ -3,8 +3,8 @@
 
 * rails 最初の1歩
  - http://qiita.com/youcune/items/222777415f00d19cccb4
-* config/route -> root 'welcome#index' -> controller/welcome_controller.rb
-* config/route -> namespace :api -> namespace :v1 -> resource articles
+* config/route.rb -> root 'welcome#index' -> controller/welcome_controller.rb
+* config/route.rb -> namespace :api -> namespace :v1 -> resource articles
 * mkdir -p app/controllers/api/v1
 * app/controllers/api/v1/articles_controller.rb  def index, def show
 * render :json => object
@@ -14,4 +14,7 @@
 * bundle exec rails generate rspec:install
 * bundle exec rspec -> no test
 * rm -rf test/
+* mkdir spec/request
+* spec/request/welcome_page_spec.rb
+* get "/", nil, { 'X-My-Header' => 'Foo' }
 
