@@ -1,0 +1,138 @@
+The following ports are currently installed:
+  apple-gcc42 @5666.3_13 (active)
+  autoconf @2.69_0 (active)
+  automake @1.13.1_0 (active)
+  bzip2 @1.0.6_0 (active)
+  cctools @855_1+llvm34 (active)
+  cctools-headers @855_0 (active)
+  curl @7.36.0_0+ssl (active)
+  curl-ca-bundle @7.36.0_0 (active)
+  db46 @4.6.21_7
+  db46 @4.6.21_9 (active)
+  db_select @0.1_2 (active)
+  djvulibre @3.5.25_7 (active)
+  emacs23 @23.4_2 (active)
+  expat @2.1.0_0 (active)
+  fftw-3 @3.3.3_0 (active)
+  fontconfig @2.10.2_0
+  fontconfig @2.11.0_1 (active)
+  fontforge @20110222_2 (active)
+  freetype @2.4.10_0 (active)
+  gcc_select @0.1_8 (active)
+  gdbm @1.10_2 (active)
+  gettext @0.18.2_0
+  gettext @0.18.2_2
+  gettext @0.18.3.1_1
+  gettext @0.18.3.2_0
+  gettext @0.19_0 (active)
+  ghostscript @9.06_3 (active)
+  giflib @4.2.1_0+x11 (active)
+  gnutls @2.12.19_0 (active)
+  go @1.1.1_0 (active)
+  gperf @3.0.4_2 (active)
+  gsed @4.2.2_0 (active)
+  help2man @1.41.1_0 (active)
+  ImageMagick @6.8.0-7_2+q16
+  ImageMagick @6.8.7-10_0+x11 (active)
+  jbig2dec @0.11_1 (active)
+  jpeg @8d_0
+  jpeg @9_1 (active)
+  lcms2 @2.4_2 (active)
+  ld64 @236.3_1+llvm34 (active)
+  libedit @20120601-3.0_0
+  libedit @20121213-3.0_0 (active)
+  libevent @2.0.19_0 (active)
+  libffi @3.0.13_0 (active)
+  libgcrypt @1.5.0_0 (active)
+  libgpg-error @1.10_0
+  libgpg-error @1.12_0 (active)
+  libiconv @1.14_0 (active)
+  libidn @1.25_0 (active)
+  libksba @1.0.8_0 (active)
+  libpaper @1.1.24_0 (active)
+  libpng @1.5.13_0
+  libpng @1.5.14_0 (active)
+  libtasn1 @2.11_0 (active)
+  libtool @2.4.2_3 (active)
+  libuninameslist @20091231_0 (active)
+  libxml2 @2.8.0_0 (active)
+  libyaml @0.1.6_0 (active)
+  llvm-3.4 @3.4_3 (active)
+  llvm_select @1.0_0 (active)
+  lua @5.1.4_4
+  lua @5.2.3_0 (active)
+  lua-luasocket @2.0.2_1 (active)
+  luarocks @2.0.13_2+curl+openssl (active)
+  lzo2 @2.05_1 (active)
+  m4 @1.4.16_0 (active)
+  mecab @0.996_0+ipadic (active)
+  mecab-base @0.996_1 (active)
+  mecab-ipadic @2.7.0-20070801_0 (active)
+  mhash @0.9.9.9_0 (active)
+  mysql55 @5.5.28_2 (active)
+  mysql55-server @5.5.28_0 (active)
+  mysql_select @0.1.2_0 (active)
+  ncurses @5.9_1
+  ncurses @5.9_2 (active)
+  nodejs @0.10.28_0+python27+ssl (active)
+  npm @1.4.10_0 (active)
+  openssl @1.0.1c_0
+  openssl @1.0.1e_0
+  openssl @1.0.1e_1
+  openssl @1.0.1g_0 (active)
+  p5.12-locale-gettext @1.50.0_7 (active)
+  pcre @8.31_0 (active)
+  perl5 @5.12.4_0+perl5_12 (active)
+  perl5.12 @5.12.4_1 (active)
+  phantomjs @1.9.7_0 (active)
+  php @5.4_1 (active)
+  php54 @5.4.10_0+libedit (active)
+  php_select @1.0_0 (active)
+  pkgconfig @0.27.1_2 (active)
+  pstree @2.33_1 (active)
+  py27-distribute @0.6.32_0 (active)
+  py27-virtualenv @1.8.4_1 (active)
+  python26 @2.6.8_0 (active)
+  python27 @2.7.3_1
+  python27 @2.7.6_0 (active)
+  python33 @3.3.3_0 (active)
+  python34 @3.4.0b1_2 (active)
+  python_select @0.3_2
+  python_select @0.3_3 (active)
+  readline @6.2.000_0
+  readline @6.3.003_0 (active)
+  sqlite3 @3.7.15_0
+  sqlite3 @3.7.15.2_0
+  sqlite3 @3.8.2_0
+  sqlite3 @3.8.4.3_0 (active)
+  tcp_wrappers @20_2 (active)
+  tiff @3.9.7_0
+  tiff @4.0.3_1 (active)
+  tmux @1.7_0 (active)
+  tree @1.6.0_0 (active)
+  urw-fonts @1.0.7pre44_0 (active)
+  virtualenv_select @0.1_0 (active)
+  webp @0.2.1_2 (active)
+  wget @1.14_0+ssl (active)
+  xorg-inputproto @2.2_0 (active)
+  xorg-kbproto @1.0.6_0 (active)
+  xorg-libice @1.0.8_0 (active)
+  xorg-libpthread-stubs @0.3_0 (active)
+  xorg-libsm @1.2.1_0 (active)
+  xorg-libX11 @1.5.0_0 (active)
+  xorg-libXau @1.0.7_0 (active)
+  xorg-libxcb @1.9_0+python27 (active)
+  xorg-libXdmcp @1.1.1_0 (active)
+  xorg-libXext @1.3.1_0 (active)
+  xorg-libXi @1.6.1_0 (active)
+  xorg-libxkbfile @1.0.8_0 (active)
+  xorg-libxkbui @1.0.2_0 (active)
+  xorg-libXt @1.1.3_0 (active)
+  xorg-xcb-proto @1.8_0+python27 (active)
+  xorg-xextproto @7.2.1_0 (active)
+  xorg-xproto @7.0.23_0 (active)
+  xz @5.0.4_0
+  xz @5.0.5_0 (active)
+  zlib @1.2.7_0
+  zlib @1.2.8_0 (active)
+  zsh @5.0.0_0 (active)
