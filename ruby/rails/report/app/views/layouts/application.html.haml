@@ -24,10 +24,18 @@
               %a{:href=>logout_path,"data-method"=>:post}
                 %span.glyphicon.glyphicon-log-out
                 #{current_user["email"]}
-
     .container-fluid
       .row
         .col-md-10.col-md-push-2.main
+          - if notice
+            .alert.alert-success.fade.in{:role=>"alert"}
+              %button.close{"data-dismiss"=>"alert", :type=>"button"}
+                %span{"aria-hidden"=>"true"}
+                  ×
+                %span.sr-only
+                  Close
+              %strong
+                = notice
           = content_for :content
         .col-md-2.col-md-pull-10.sidebar
           %h4
@@ -35,7 +43,16 @@
           %ul.nav.nav-pills.nav-stacked
             %li{:class => ("active" if request.original_fullpath() == tool_admin_top_path)}
               %a{:href=>tool_admin_top_path}
-                Summary
+                メディア
             %li
               %a{:href=>tool_admin_top_path}
-                Some Page
+                広告主
+          %h4
+            運用
+          %ul.nav.nav-pills.nav-stacked
+            %li
+              %a{:href=>tool_admin_accounts_path}
+                アカウント
+            %li
+              %a{:href=>tool_admin_users_path}
+                ユーザ

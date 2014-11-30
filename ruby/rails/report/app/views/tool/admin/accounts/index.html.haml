@@ -1,0 +1,49 @@
+- content_for :title do
+  Summary
+- content_for :content do
+  .row
+    .col-md-12
+      %h2
+        accounts
+      %hr
+      - if @accounts
+        %table.table.table-bordered
+          %thead
+            %tr.active
+              %th
+                id
+              %th
+                name
+              %th
+                status
+          %tbody
+            - @accounts.each do |account|
+              %tr
+                %th
+                  = account.id
+                %th
+                  = account.name
+                %th
+                  = account.status
+      %hr
+      = form_tag '', :class => "form-horizontal", :role => "form", :method => "POST" do
+        %legend.scheduler-border
+          追加
+        .form-group
+          %label.col-md-2.control-label
+            ステータス
+          .col-md-3
+            %select.form-control{ :name => 'status'}
+              %option{:value => 1}
+                1: active
+              %option{:value => 2}
+                2: stopped
+        .form-group
+          %label.col-md-2.control-label
+            名前
+          .col-md-3
+            %input.form-control{:name=>"name"}
+        .form-group
+          .col-md-offset-2.col-md-10
+            %button.btn.btn-primary{ :type=>"submit"}
+              追加
