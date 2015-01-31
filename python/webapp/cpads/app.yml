@@ -17,14 +17,14 @@ handlers:
 libraries:
 - name: webapp2
   version: latest
-- name: markupsafe                                                              
+- name: markupsafe
   version: latest 
 - name: PIL
   version: latest
 - name: pycrypto
   version: latest
-- name: jinja2                                                                  
-  version: latest                                                               
+- name: jinja2
+  version: latest
 
 builtins: 
 - remote_api: on
