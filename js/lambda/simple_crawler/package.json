@@ -1,0 +1,21 @@
+{
+    "name": "simple_stock_price_crawler",
+    "version": "0.0.1",
+    "private": true,
+    "engines" : { "node" : "0.10.33" },
+    "main": "simple_stock_price_crawler.js",
+    "dependencies": {
+        "cheerio":"*"
+    },
+    "devDependencies": {
+        "aws-sdk": "*",
+        "mocha": "*",
+        "eslint": "*",
+        "istanbul": "*"
+    },
+    "scripts" : {
+        "build": "node ./scripts/build.js",
+        "initLambda" : "node ./scripts/initLambda.js",
+        "publish": "node ./scripts/publish.js"
+    }
+}
