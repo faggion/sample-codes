@@ -1,0 +1,21 @@
+{
+    "name": "rss_crawler",
+    "version": "0.0.1",
+    "private": true,
+    "engines" : { "node" : "0.10.33" },
+    "main": "rss_crawler.js",
+    "dependencies": {
+        "cheerio":"*"
+    },
+    "devDependencies": {
+        "aws-sdk": "*",
+        "mocha": "*",
+        "eslint": "*",
+        "istanbul": "*"
+    },
+    "scripts" : {
+        "build": "node ./scripts/build.js",
+        "initLambda" : "node ./scripts/initLambda.js",
+        "publish": "node ./scripts/publish.js"
+    }
+}
