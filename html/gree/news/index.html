@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>GREE ニュース</title>
+    <link rel="stylesheet" type="text/css" href="http://aimg-static.gree.net/ggp/css/v2/aurora/moz_news.css">
+
+    <script src="http://aimg-sns.gree.net/js/vendor/zepto.js" type="text/javascript"></script>
+    <script src="http://aimg-static.gree.net/js/LAB-2.0.3.min.js" type="text/javascript"></script>
+    <script src="http://aimg-static.gree.net/js/handlebars.runtime-1.0.0.min.js" type="text/javascript"></script>
+    <script src="http://aimg-static.gree.net/js/navigation_v2_ja.js" type="text/javascript"></script>
+    <script src="http://gimage-cpf.gree.jp/px/58548?url=http%3A%2F%2Fjp.news.gree.net%2Fjs%2Flazy-load.js%3Fdae4f5e" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+window.twttr=(function(d,s,id){
+    var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};
+    if(d.getElementById(id))return;
+    js=d.createElement(s);
+    js.id=id;
+    js.src="https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js,fjs);
+    t._e=[];
+    t.ready=function(f){
+        t._e.push(f);
+    };
+    return t;
+}(document,"script","twitter-wjs"));
+      
+queue.setState('production');
+queue.lazyLoad('dae4f5e', 'http://news.gree.net/');
+queue.scriptReady(function () {
+    var load_js = "";
+    queue.loadExtra(load_js, function () {
+        gree_games.app.init(false);
+        gree_news.app.init(false);
+        if (gree_games.app.isApp()) {
+            proton.app.init();
+            proton.app.setPullToRefresh(true);
+        }
+        GGPFRONTJS.hideAddressBar();
+    });
+});
+queue.scriptReady(function () {
+    if (gree_games.app.isApp() == false) {
+        var params = {
+            pattern_id: '',
+            footer: { silent: true }
+        };
+        gree_common_navigation.init(params);
+        gree_common_navigation.show();
+    }
+});
+  </script>
+  </head>
+  <body>
+    <div id="glContr" class="glContr">
+      <div class="navWrap">
+        <header id="navigation" class="nav">
+          <div class="contr">
+            <span class="logoGree">
+              <a class="tap" href="http://games.gree.net/">
+                <span class="spr logoImg">GREE</span>
+              </a>
+            </span>
+          </div>
+        </header>
+      </div>
+    </div>
+
+    <script src="http://aimg-notice.gree.net/js/gree.notification.online.min.js"></script>
+    
+  </body>
+</html>
