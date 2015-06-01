@@ -1,3 +1,11 @@
+Drawer比較
+-----------------------------
+
+- bootstrapで作る（simple-drawer.html） -> menu部分のスクロールに非対応
+- sidr -> 端末を縦横にしたときにおかしくなりそう
+- drawer.js = http://git.blivesta.com/drawer/responsive-left/ -> iscrollとか使ってて重い
+- trunk.js -> 軽いしコード量も少ない、動作は大丈夫か？
+
 必要なJS
 -----------------------------
 
