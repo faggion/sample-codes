@@ -43,6 +43,12 @@ ol>li {
     padding:0;
     margin:0;
 }
+.row {
+    background-color:#fff;
+}
+.pdt-20 {
+    padding-top:20px;
+}
 /** /Original **/
 /** Bamboo.css **/
 .overflow {
@@ -182,7 +188,7 @@ header.primary hgroup h1 {
         -webkit-overflow-scrolling: touch;
     }
     #scroller {
-        background:#f9f9f9;
+        background:#f3f3f3;
     }
     header.primary {
         height: 50px;
