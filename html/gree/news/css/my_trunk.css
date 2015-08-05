@@ -1,8 +1,8 @@
+/* PC */
 body {
     background-color: #fff;
-
-    font: 12px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
     color: #9aa6af;
+
     text-rendering: optimizelegibility;
 
     -webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -17,7 +17,9 @@ body {
     -ms-text-size-adjust: none;
     -ms-font-smoothing: antialiased;
 }
-a {text-decoration: none;}
+a {
+    text-decoration: none;
+}
 
 .container {
     overflow: hidden;
@@ -28,9 +30,6 @@ a {text-decoration: none;}
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
 }
-
-
-
 
 header {
     height: 60px;
@@ -84,20 +83,21 @@ nav.slide li a {
 
     display: block;
 }
-nav.slide li a:hover {color: #000;}
+nav.slide li a:hover {
+    color: #000;
+}
+/* PC */
 
 
 
-
-/*  Removable CSS  */
-
+/* Removable CSS */
 .header-section,
 .body-section,
-.footer-section
- {padding: 20px;}
-
+.footer-section{
+    padding: 20px;
+}
 .header-section {
-    background-color: #ffffff;
+    background-color: #dadee1;
 }
 .body-section {
     background-color: #f4f5f6;
@@ -108,22 +108,17 @@ nav.slide li a:hover {color: #000;}
 .placefiller {
     text-align: center;
     font-size: 20px;
-    border: 1px dashed rgba(190, 196, 202, 0.5);
 }
 .header-section .placefiller {line-height: 300px;}
 .body-section .placefiller {line-height: 900px;}
 .footer-section .placefiller {
     line-height: 200px;
-    border: 1px dashed rgba(190, 196, 202, 0.9);
 }
+/* Removable CSS */
 
 
-
-
-
-
+/* Smatphone/Tablet */
 @media only screen and (max-width: 780px) {
-
     header {
         height: 60px;
         z-index: 2;
