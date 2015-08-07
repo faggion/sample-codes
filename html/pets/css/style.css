@@ -13,9 +13,18 @@ Version: 0.1
 body {
     font-family: inherit;
 }
+h1,h2,h3,h4 {
+    margin-top: 5px;
+}
 h2,h3,h4 {
     font-size: 18px;
-    margin-top: 5px;
+}
+h1 {
+    font-weight: bold;
+    font-size: 24px;
+}
+.article-header {
+    margin: 20px 0 20px 0;
 }
 ol {
     padding:0;
