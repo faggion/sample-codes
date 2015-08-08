@@ -14,10 +14,13 @@ body {
     font-family: inherit;
 }
 h1,h2,h3,h4 {
-    margin-top: 5px;
+    margin:15px 10px 15px 10px;
 }
 h2,h3,h4 {
     font-size: 18px;
+}
+h4.media-heading {
+    margin: 0 0 5px 0;
 }
 h1 {
     font-weight: bold;
@@ -27,7 +30,7 @@ h1 {
     margin: 20px 0 20px 0;
 }
 ol {
-    padding:0;
+    padding: 0 10px;
 }
 ol>li {
     list-style:none;
@@ -43,6 +46,7 @@ ol>li {
 .panel {
     box-shadow:none;
     border-radius:0;
+    margin-top: 10px;
 }
 .nav-tabs {
     margin-top: 10px;
@@ -55,8 +59,22 @@ ol>li {
 .row {
     background-color:#fff;
 }
-.pdt-20 {
-    padding-top:20px;
+.nav-tabs {
+    border-bottom: none;
+}
+.btn {
+    margin: 2px;
+}
+.btn-info {
+    background-color: #fbcfcf;
+    border-color: #cbbb99;
+    color: #755c3b;
+}
+.btn-info:hover {
+    background-color: #755c3b;
+}
+a {
+    color: #1d3994;
 }
 /** /Original **/
 /** Bamboo.css **/
@@ -93,7 +111,7 @@ ol>li {
 header.primary {
     height: 50px;
     color: #333;
-    background-color: #eee;
+    background-color: #FBCFCF;
     position: relative;
 }
 header.primary .icon {
@@ -120,18 +138,19 @@ header.primary hgroup h1 {
     top: 0;
     left: 50px;
     right: 50px;
-    color: #333;
+    color: #755C3B;
     margin: 0;
     line-height: 49px;
     margin: 0;
-    font-size: 20px;
+    font-size: 32px;
+    font-family: 'Indie Flower', cursive;
 }
 
 .navigation {
-    background: #f3f3f3;
+    background: #f8f8f8;
     color: #888;
     z-index: 1;
-    width: 100%;
+    width: 300px;
     position: absolute;
     top: 0;
     right: 0;
@@ -146,7 +165,6 @@ header.primary hgroup h1 {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 300px;
     position: relative;
 }
 .navigation li {
@@ -197,7 +215,7 @@ header.primary hgroup h1 {
         -webkit-overflow-scrolling: touch;
     }
     #scroller {
-        background:#f3f3f3;
+        background:#f8f8f8;
     }
     header.primary {
         height: 50px;
@@ -208,15 +226,6 @@ header.primary hgroup h1 {
     }
     header.primary hgroup {
         padding: 20px 20px 5px 20px;
-    }
-    header.primary hgroup h1 {
-        position: absolute;
-        top: 0;
-        left: 14px;
-        color: #333;
-        margin: 0;
-        font-size: 20px;
-        line-height: 49px;
     }
     .navigation {
         max-width: 300px;
