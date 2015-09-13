@@ -48,5 +48,7 @@ end
 gem 'devise'
 gem 'cancancan'
 gem 'enum_help'
+gem "haml-rails"
+gem "erb2haml"
 
 

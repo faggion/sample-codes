@@ -1,0 +1,9 @@
+%h1
+  service top page
+
+- if user_signed_in?
+  %a{:href => my_path}
+    go to mypage
+- else
+  %a{:href => my_path}
+    login
