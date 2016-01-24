@@ -1,6 +1,6 @@
 # coding: utf-8
 # standard modules
-import logging, functools, os, json, hashlib, twython, dateutil.parser, datetime
+import logging, functools, os, json, hashlib, datetime
 
 # appengine modules
 from google.appengine.api import users, memcache
