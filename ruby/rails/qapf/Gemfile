@@ -51,4 +51,10 @@ gem 'enum_help'
 gem "haml-rails"
 gem "erb2haml"
 
+gem 'sidekiq'
+gem 'sidetiq'
+gem 'sinatra', require: false
 
+gem 'redis'
+gem 'redis-namespace'
+gem 'slim'
