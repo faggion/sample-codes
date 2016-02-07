@@ -2,8 +2,14 @@
 
 import UIKit
 
+//other setup
+
+let uiButton   = UIButton(type: UIButtonType.System) as UIButton
+uiButton.frame  = CGRectMake(0, 0, 200, 200)
+uiButton.setTitle("Test", forState: UIControlState.Normal);
+
 var imgurl = NSURL(string:"http://img.tiqav.com/1oM.jpg")
-var data = NSData(contentsOfURL: imgurl!, options: nil, error: nil)
+var data = NSData(contentsOfURL: imgurl!)
 var image = UIImage(data:data!)
 
 
