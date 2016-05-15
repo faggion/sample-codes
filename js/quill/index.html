@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+  <haed>
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.0.0-beta.1/quill.snow.css" rel="stylesheet">
+    <style>
+      #editor {
+        height: 100%;
+      }
+      html {
+        font-size: 16px;
+      }
+      .ql-editor {
+        font-size: 18px;
+      }
+      .ql-editor img {
+        max-width: 300px;
+      }
+    </style>
+  </haed>
+  <body>
+    <!-- Create the editor container -->
+    hello<br>
+    <p>hello</p>
+    <div id="toolbar">
+      <select class="ql-header">
+        <option value="2"></option>
+        <option value="3"></option>
+        <option selected></option>
+      </select>
+      <!--
+      <select class="ql-size">
+        <option value="small"></option>
+        <option selected></option>
+        <option value="large"></option>
+        <option value="huge"></option>
+      </select>-->
+      <span class="ql-formats">
+        <button class="ql-bold"></button>
+        <button class="ql-italic"></button>
+        <button class="ql-underline"></button>
+        <button class="ql-strike"></button>
+      </span>
+      <span class="ql-formats">
+        <button class="ql-link"></button>
+        <button class="ql-image"></button>
+        <button class="ql-video"></button>
+      </span>
+      <!--
+      <span class="ql-formats">
+        <select class="ql-color"></select>
+        <select class="ql-background"></select>
+      </span>
+      -->
+      <span class="ql-formats">
+        <button class="ql-list" value="ordered"></button>
+        <button class="ql-list" value="bullet"></button>
+        <button class="ql-indent" value="-1"></button>
+        <button class="ql-indent" value="+1"></button>
+      </span>
+      <span class="ql-formats">
+        <select class="ql-align">
+          <option selected></option>
+          <option value="center"></option>
+          <option value="right"></option>
+          <option value="justify"></option>
+        </select>
+      </span>
+    </div>
+    <div id="editor">
+      <p>Hello World!</p>
+      <p>Some initial <strong>bold</strong> text</p>
+      <p><br></p>
+    </div>
+    <button>Submit</button>
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.0.0-beta.1/quill.js"></script>
+
+    <!-- Initialize Quill editor -->
+    <script type="text/javascript">
+var quill = new Quill('#editor', {
+    modules: {
+        toolbar: '#toolbar'
+    },
+    theme: 'snow'
+});
+//var toolbar = quill.getModule('toolbar');
+//toolbar.addHandler('video', function(value) {
+//    if (value) {
+//        var href = prompt('Enter the youtube id');
+//        this.quill.format('video', href);
+//    } else {
+//        this.quill.format('video', false);
+//    }
+//});
+    </script>
+  </body>
+</html>
+
+
